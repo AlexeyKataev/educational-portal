@@ -1,0 +1,72 @@
+@{
+	ViewData["Title"] = "Мои работы";	
+    Layout = "~/Views/Work/_WorkLayout.cshtml";
+}
+<!-- Layout = "~/Views/Work/_WorkLayout.cshtml"; -->
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action active" asp-area="" asp-controller="Work" asp-action="MyWorks">Сводка, оценки</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="InProgress">Выполняются</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="CompletedWork">Завершённые</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="EditsRequired">Требуются правки</a>
+	</ul>
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="Notices">Уведомления</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	<div class="alert alert-primary mb-2" role="alert">
+		Оценки на котнрольные точки (1 тримест)
+	</div>
+	<div class="card mb-2">
+		<div class="card-body overflow-auto">
+		  	<h5 class="card-title">Английский язык</h5>
+			<table class="table table-hover">
+				<thead>
+					<tr class="text-align-top">
+						<td scope="col">Тема и вид работы</td>
+						<td scope="col">Вид контроля</td>
+						<td scope="col">Итоговый балл</td>
+						<td scope="col">Дата сдачи</td>
+						<td scope="col">Преподаватель</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="card mb-2">
+		<div class="card-body overflow-auto">
+		  	<h5 class="card-title">Физическая культура</h5>
+			<table class="table table-hover">
+				<thead>
+					<tr class="text-align-top">
+						<td scope="col">Тема и вид работы</td>
+						<td scope="col">Вид контроля</td>
+						<td scope="col">Итоговый балл</td>
+						<td scope="col">Дата сдачи</td>
+						<td scope="col">Преподаватель</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+

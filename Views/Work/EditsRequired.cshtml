@@ -1,0 +1,24 @@
+@{
+	ViewData["Title"] = "Требуются правки";	
+    Layout = "~/Views/Work/_WorkLayout.cshtml";
+}
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="MyWorks">Сводка, оценки</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="InProgress">Выполняются</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="CompletedWork">Завершённые</a>
+		<a class="list-group-item list-group-item-action active" asp-area="" asp-controller="Work" asp-action="EditsRequired">Требуются правки</a>
+	</ul>
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="Notices">Уведомления</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	<select class="custom-select">
+		<option selected>Все предметы</option>
+		<option value="1">Предмет 1</option>
+		<option value="2">Предмет 2</option>
+		<option value="3">Предмет 3</option>
+	</select>
+</div>

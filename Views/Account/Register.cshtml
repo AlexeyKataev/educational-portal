@@ -1,0 +1,50 @@
+@{
+	ViewData["Title"] = "Регистрация";
+}
+
+@model Dotnet.ViewModels.RegisterModel
+ 
+<h2 class="display-4 mb-4">Регистрация</h2>
+ 
+<form asp-action="Register" asp-controller="Account" asp-anti-forgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        <div class="form-group">
+            <label asp-for="FirstName">Введите Ваше имя</label>
+            <input type="text" asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" />
+        </div>
+        <div class="form-group">
+            <label asp-for="SecondName">Введите Вашу фамилию</label>
+            <input type="text" asp-for="SecondName" class="form-control" />
+            <span asp-validation-for="SecondName" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Email">Введите E-Mail</label>
+            <input type="email" asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" />
+        </div>
+		<div class="form-group">
+            <label asp-for="Login">Введите имя пользователя</label>
+            <input type="text" asp-for="Login" class="form-control" />
+            <span asp-validation-for="Login" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Password">Введите пароль</label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" />
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword">Повторите пароль</label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Регистрация" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+
+<div>
+	<a asp-action="Login" asp-controller="Account">Войти</a>
+</div>

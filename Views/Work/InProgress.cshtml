@@ -1,0 +1,80 @@
+@{
+	ViewData["Title"] = "Выполняются";	
+    Layout = "~/Views/Work/_WorkLayout.cshtml";
+}
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="MyWorks">Сводка, оценки</a>
+		<a class="list-group-item list-group-item-action active" asp-area="" asp-controller="Work" asp-action="InProgress">Выполняются</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="CompletedWork">Завершённые</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="EditsRequired">Требуются правки</a>
+	</ul>
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="Notices">Уведомления</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	<select class="custom-select">
+		<option selected>Все предметы</option>
+		<option value="1">Предмет 1</option>
+		<option value="2">Предмет 2</option>
+		<option value="3">Предмет 3</option>
+	</select>
+	<div class="alert alert-primary mt-4 mb-2" role="alert">
+		Ноябрь, 2017
+	</div>
+	<div class="card mb-2">
+		<div class="card-body">
+		  	<h5 class="card-title"><span class="badge badge-primary mr-2">Обязательно</span><span class="badge badge-info mr-2">Онлайн-тест</span>Математическая логика</h5>
+		 	<p class="card-text">Описание отсутствует.</p>
+		 	<p class="card-text mb-0">Преподаватель: <a href="">Ежова М. А.</a></p>
+		 	<p class="card-text mb-0">Добавлено: 03 ноября 2017 13:56</p>
+		 	<p class="card-text">Срок сдачи: 10 ноября 2017 00:00</p>
+		  	<a href="#" class="btn btn-light btn-block">Подробнее</a>
+		</div>
+	</div>
+	<div class="card mb-2">
+		<div class="card-body">
+			<h5 class="card-title"><span class="badge badge-primary mr-2">Обязательно</span>Математическая логика</h5>
+			<p class="card-text">Описание отсутствует.</p>
+			<p class="card-text mb-0">Преподаватель: <a href="">Ежова М. А.</a></p>
+			<p class="card-text mb-0">Добавлено: 03 ноября 2017 13:54</p>
+			<p class="card-text">Срок сдачи: 10 ноября 2017 00:00</p>
+			<a href="#" class="btn btn-light btn-block">Подробнее</a>
+		</div>
+	</div>
+	<div class="card mb-2">
+		<div class="card-body">
+		  	<h5 class="card-title"><span class="badge badge-primary mr-2">Обязательно</span><span class="badge badge-info mr-2">Лаб. работа</span>Английский язык</h5>
+			<p class="card-text">Описание отсутствует.</p>
+			<p class="card-text mb-0">Преподаватель: <a href="">Шугаева Е. В.</a></p>
+			<p class="card-text mb-0">Добавлено: 01 ноября 2017 09:03</p>
+			<p class="card-text">Срок сдачи: 05 ноября 2017 00:00</p>
+			<a href="#" class="btn btn-light btn-block">Подробнее</a>
+		</div>
+	</div>
+	<div class="alert alert-primary mt-4 mb-2" role="alert">
+		Октябрь, 2017
+	</div>
+	<div class="card mb-2">
+		<div class="card-body">
+		  	<h5 class="card-title"><span class="badge badge-warning mr-2">Опрос, голосование</span>Информатика</h5>
+			<p class="card-text">Описание отсутствует.</p>
+			<p class="card-text mb-0">Преподаватель: -</p>
+			<p class="card-text mb-0">Добавлено: 01 ноября 2017 09:00</p>
+			<p class="card-text">Срок сдачи: бессрочно</p>
+			<a href="#" class="btn btn-light btn-block">Подробнее</a>
+		</div>
+	</div>
+	<div class="card mb-2">
+		<div class="card-body">
+		  	<h5 class="card-title"><span class="badge badge-success mr-2">Доп. задание</span><span class="badge badge-info mr-2">Лаб. работа</span>Английский язык</h5>
+			<p class="card-text">Описание отсутствует.</p>
+			<p class="card-text mb-0">Преподаватель: <a href="">Шугаева Е. В.</a></p>
+			<p class="card-text mb-0">Добавлено: 26 октября 2017 09:03</p>
+			<p class="card-text">Срок сдачи: 20 ноября 2017 00:00</p>
+			<a href="#" class="btn btn-light btn-block">Подробнее</a>
+		</div>
+	</div>
+</div>
