@@ -27,13 +27,22 @@ namespace Dotnet
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
+
+			/* Установка контекста для развёртывания веб-приложения */
+
+			// Контекст для базы данных по пользоателям
             services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
+
+			// Контекст для базы данных по ролям и базовым свойствам пользователей
+			services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
  
-            // установка конфигурации подключения
+            /* Конфигурация подключения */
+			
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => //CookieAuthenticationOptions
+                .AddCookie(options =>
                 {
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+					options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                 });
 
             services.AddControllersWithViews();
@@ -57,8 +66,8 @@ namespace Dotnet
 
             app.UseRouting();
 
-			app.UseAuthentication();    // аутентификация
-            app.UseAuthorization();     // авторизация
+			app.UseAuthentication(); 
+            app.UseAuthorization(); 
 
             app.UseAuthorization();
 

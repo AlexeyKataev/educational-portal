@@ -12,32 +12,19 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-
-
+ 
 namespace Dotnet.Controllers
 {
     public class AccountController : Controller
     {
-		private UserContext db;
-        private readonly ILogger<HomeController> _logger;
+        private ApplicationContext _context;
 
-        public AccountController(ILogger<HomeController> logger, UserContext context)
+        public AccountController(ApplicationContext context)
         {
-            _logger = logger;
-			db = context;
+            _context = context;
         }
 
-		[HttpGet]
-        public IActionResult Login()
-        {
-			if (User.Identity.IsAuthenticated)
-			{
-				return RedirectToAction("Index", "Home");
-			}
-			return View();
-        }
-
-		[HttpGet]
+        [HttpGet]
         public IActionResult Register()
         {
 			if (User.Identity.IsAuthenticated)
@@ -48,7 +35,49 @@ namespace Dotnet.Controllers
         }
 
 		[HttpGet]
-        public IActionResult Recovery()
+		[Authorize]
+		public async Task<IActionResult> Logout() 
+		{ 
+			await HttpContext.SignOutAsync(); 
+			return RedirectToAction("Index", "Home"); 
+		} 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                if (user == null)
+                {
+                    // Добавление записи об учётной записи в базу данных
+                    user = new User { 
+						FirsftName	= model.FirstName,
+						SecondName	= model.SecondName,
+						Email 		= model.Email, 
+						Login		= model.Login,
+						Password	= model.Password,
+					};
+                    Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
+                    if (userRole != null)
+                        user.Role = userRole;
+ 
+                    _context.Users.Add(user);
+                    await _context.SaveChangesAsync();
+ 
+                    await Authenticate(user); // аутентификация
+ 
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
         {
 			if (User.Identity.IsAuthenticated)
 			{
@@ -63,77 +92,45 @@ namespace Dotnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await db.Users.FirstOrDefaultAsync(u => (u.Email == model.Email || u.Login == model.Email) && u.Password == model.Password);
+                User user = await _context.Users
+                    .Include(u => u.Role)
+                    .FirstOrDefaultAsync(u => (u.Email == model.Email || u.Login == model.Email) && u.Password == model.Password);
                 if (user != null)
                 {
-                    await Authenticate(model.Email); // аутентификация
+                    await Authenticate(user); // аутентификация
  
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Неверное имя пользователя или E-Mail и (или) пароль");
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
             return View(model);
         }
 		
-		[HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterModel model)
+        private async Task Authenticate(User user)
         {
-            if (ModelState.IsValid)
-            {
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-                if (user == null)
-                {
-                    // добавляем пользователя в бд
-                    db.Users.Add(new User 
-					{ 
-						FirsftName = model.FirstName,
-						SecondName = model.SecondName,
-						Email = model.Email, 
-						Login = model.Login, 
-						Password = model.Password,
-					});
-                    await db.SaveChangesAsync();
- 
-                    await Authenticate(model.Email); // аутентификация
- 
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                    ModelState.AddModelError("", "Некорректные входные данные");
-            }
-            return View(model);
-        }
- 
-        private async Task Authenticate(string userName)
-        {
-            // создаем один claim
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
-            };
-            // создаем объект ClaimsIdentity
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
+			var claims = new List<Claim> {};
+
+			if (user.Login != null)
+			{
+				claims = new List<Claim>
+				{
+					new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+					new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
+				};
+			}
+			else if (user.Email != null)
+			{
+				claims = new List<Claim>
+				{
+					new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+					new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
+				};
+			}
+
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
+				
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
- 
-		[HttpGet]
-		[Authorize]
-		public async Task<IActionResult> Logout() 
-		{ 
-			await HttpContext.SignOutAsync(); 
-			return RedirectToAction("Index", "Home"); 
-		} 
-
-		/*
-		Возможно следует добавить контроллер вывода окна ошибки
-		*/
-
-/*         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        } */
     }
 }
