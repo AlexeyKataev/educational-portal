@@ -110,6 +110,7 @@ namespace Dotnet.Controllers
         {
 			var claims = new List<Claim> {};
 
+			// Если в объекте пользователя есть Login, проводим аутентификацию по логину
 			if (user.Login != null)
 			{
 				claims = new List<Claim>
@@ -118,6 +119,8 @@ namespace Dotnet.Controllers
 					new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
 				};
 			}
+
+			// Если в объекте пользователя есть Email, проводит аутентификацию по адресу электронной почты
 			else if (user.Email != null)
 			{
 				claims = new List<Claim>
