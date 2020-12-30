@@ -1,13 +1,13 @@
 @{
-	ViewData["Title"] = "Авторизация";
+	ViewData["Title"] = "Вход на сайт";
 }
 
 @model Dotnet.ViewModels.LoginModel
  
-<h2 class="display-4 mb-4">Вход на сайт</h2>
+<h2 class="display-4 mb-4">@ViewData["Title"]</h2>
  
 <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
-	<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show p-3" style="* ul {margin-bottom: 0;}" role="alert">
+	<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		</button>
@@ -33,7 +33,7 @@
 	<a asp-action="Register" asp-controller="Account">Регистрация</a>
 </div>
 <div>
-	<a asp-action="Recovery" asp-controller="Account">Восстановить пароль</a>
+	<a asp-action="Recovery" asp-controller="Account">Восстановление пароля</a>
 </div>
 
 

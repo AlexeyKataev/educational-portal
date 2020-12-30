@@ -34,6 +34,12 @@ namespace Dotnet.Controllers
 			return View();
         }
 
+		        [HttpGet]
+        public IActionResult Recovery()
+        {
+			return View();
+        }
+
 		[HttpGet]
 		[Authorize]
 		public async Task<IActionResult> Logout() 
