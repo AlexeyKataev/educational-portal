@@ -34,7 +34,7 @@ namespace Dotnet.Controllers
 			return View();
         }
 
-		        [HttpGet]
+		[HttpGet]
         public IActionResult Recovery()
         {
 			return View();
@@ -54,13 +54,16 @@ namespace Dotnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                User user = await _context.Users.FirstOrDefaultAsync(u => (u.Email == model.Email || u.Login == model.Login));
                 if (user == null)
                 {
                     // Добавление записи об учётной записи в базу данных
                     user = new User { 
 						FirsftName	= model.FirstName,
 						SecondName	= model.SecondName,
+						MiddleName	= null,
+						DateOfBirth = new DateTime(0001, 1, 1, 1, 1, 1),
+						DateAdded	= DateTime.Now,
 						Email 		= model.Email, 
 						Login		= model.Login,
 						Password	= model.Password,
@@ -72,12 +75,12 @@ namespace Dotnet.Controllers
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
  
-                    await Authenticate(user); // аутентификация
- 
+                    await Authenticate(user); 
+					
                     return RedirectToAction("Index", "Home");
                 }
                 else
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                    ModelState.AddModelError("", "Некорректные логин и (или) пароль");
             }
             return View(model);
         }
@@ -103,11 +106,11 @@ namespace Dotnet.Controllers
                     .FirstOrDefaultAsync(u => (u.Email == model.Email || u.Login == model.Email) && u.Password == model.Password);
                 if (user != null)
                 {
-                    await Authenticate(user); // аутентификация
+                    await Authenticate(user); 
  
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("", "Некорректные логин и (или) пароль");
             }
             return View(model);
         }

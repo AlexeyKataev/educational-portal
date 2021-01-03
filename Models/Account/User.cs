@@ -8,6 +8,12 @@ namespace Dotnet.Models
 		
         public string SecondName { get; set; }
 
+        public string MiddleName { get; set; }
+
+        public System.DateTime DateOfBirth { get; set; }
+
+		public System.DateTime DateAdded { get; set; }
+
         public string Email { get; set; }
 
         public string Login { get; set; }
