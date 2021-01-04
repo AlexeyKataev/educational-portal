@@ -20,21 +20,31 @@
 				{
 					<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 						<ul class="navbar-nav flex-grow-1">
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Расписание</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Work" asp-action="MyWorks">Работы и оценки</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Преподаватели</a>
-							</li>
+							@if (User.IsInRole("student"))
+							{
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Расписание</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-area="" asp-controller="Work" asp-action="MyWorks">Работы и оценки</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Преподаватели</a>
+								</li>
+							}
+							@if (User.IsInRole("admin"))
+							{
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Администрирование</a>
+								</li>
+							}
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="MyProfile">Мой профиль</a>
 							</li>
 						</ul>
 					</div>
 				}
+
             </div>
         </nav>
     </header>
