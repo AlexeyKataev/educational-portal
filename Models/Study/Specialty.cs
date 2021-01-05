@@ -17,9 +17,10 @@ namespace Dotnet.Models
 
 
 		// Много специальностей - один факультет
-		public Faculty FacultyId { get; set; }
+		public int FacultyId { get; set; }
+		public Faculty Faculty { get; set; }
 
-		// Одна специальность - один учебный план 
-		public Faculty FileId { get; set; }
+		// Много специальностей - много документов  
+		public List<File> Files { get; set; } = new List<File>();
 	}
 }

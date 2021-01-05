@@ -20,8 +20,10 @@ namespace Dotnet.Models
 
         public string Password { get; set; }
 
+
+
+		// Один пользователь - много ролей... ЭЭЭЭЭ, говно какое-то, должно быть не так
 		public int? RoleId { get; set; }
-		
     	public Role Role { get; set; }
     }
 }

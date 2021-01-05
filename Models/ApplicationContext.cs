@@ -6,6 +6,13 @@ namespace Dotnet.Models
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+		public DbSet<Faculty> Faculties { get; set; }
+		public DbSet<File> Files { get; set; }
+		public DbSet<Institution> Institutions { get; set; }
+		public DbSet<Specialty> Specialties { get; set; }
+		public DbSet<Subject> Subjects { get; set; }
+		public DbSet<Teacher> Teachers { get; set; }
+
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {

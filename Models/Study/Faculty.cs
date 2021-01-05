@@ -19,7 +19,8 @@ namespace Dotnet.Models
 
 
 		// Много факультетов - одно учебное заведение 
-		public Institution InstitutionId { get; set; }
+		public int InstitutionId { get; set; }
+		public Institution Institution { get; set; }
 
 		// Один факультет - много специальностей
 		public List<Faculty> Faculties { get; set; } = new List<Faculty>();
