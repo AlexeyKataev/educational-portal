@@ -3,7 +3,7 @@
     Layout = "~/Views/Work/_WorkLayout.cshtml";
 }
 
-@model Dotnet.ViewModels.ChangeMeModel
+@model Dotnet.ViewModels.ProfileModel
 
 <div class="col-sm-4">
 	<ul class="list-group mb-4">
@@ -18,7 +18,7 @@
 	</ul>
 </div>
 <div class="col-sm-8">
-	<form asp-action="ChangeMe" asp-controller="Profile" asp-anti-forgery="true">
+	<form asp-action="MyProfile" asp-controller="Profile" asp-anti-forgery="true">
 		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
@@ -26,17 +26,35 @@
 		</div>
 		<div>
 			<div class="form-group">
+				<label asp-for="FirstName">Имя <span>*</span></label>
+				<input type="text" asp-for="FirstName" class="form-control" value=@ViewData["FirstName"] required />
+				<span asp-validation-for="FirstName" />
+			</div>
+			<div class="form-group">
+				<label asp-for="SecondName">Фамилия <span>*</span></label>
+				<input type="text" asp-for="SecondName" class="form-control" value=@ViewData["SecondName"] required />
+				<span asp-validation-for="SecondName" />
+			</div>
+			<div class="form-group">
+				<label asp-for="MiddleName">Отчество (при наличии)</label>
+				<input type="text" asp-for="MiddleName" class="form-control" value=@ViewData["MiddleName"] />
+				<span asp-validation-for="MiddleName" />
+			</div>
+			<div class="form-group">
 				<label asp-for="Email">E-Mail</label>
-				<input type="text" asp-for="Email" class="form-control" />
+				<input type="text" asp-for="Email" class="form-control" value=@ViewData["Email"] />
 				<span asp-validation-for="Email" />
 			</div>
 			<div class="form-group">
-				<label asp-for="DateOfBirth">Дата рождения</label>
-				<input type="date" asp-for="DateOfBirth" class="form-control" />
+				<label asp-for="DateOfBirth">Дата рождения <span>*</span></label>
+				<input type="date" asp-for="DateOfBirth" class="form-control" value=@ViewData["DateOfBirth"] required />
 				<span asp-validation-for="DateOfBirth" />
 			</div>
+			<div class="alert alert-info" role="alert">
+				* Поля обязательны к заполнению
+		 	 </div>
 			<div class="form-group">
-				<input type="submit" value="Жопа" class="btn btn-primary" />
+				<input type="submit" value="Сохранить" class="btn btn-primary" />
 			</div>
 		</div>
 	</form>

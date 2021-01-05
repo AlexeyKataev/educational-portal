@@ -26,21 +26,73 @@ namespace Dotnet.Controllers
             _logger = logger;
         }
 		
-
+		[HttpGet]
 		[Authorize]
         public IActionResult MyProfile()
         {
-            return View();
+			User user = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
+
+			ViewData["FirstName"] = user.FirstName;
+			ViewData["SecondName"] = user.SecondName;
+			ViewData["MiddleName"] = user.MiddleName;
+			ViewData["Email"] = user.Email;
+			if (user.DateOfBirth == new DateTime(0001, 1, 1, 1, 1, 1))
+				ViewData["DateOfBirth"] = new DateTime(2001, 1, 1, 0, 0, 0).ToString("yyyy-MM-dd");
+			else
+				ViewData["DateOfBirth"] = user.DateOfBirth.ToString("yyyy-MM-dd");
+
+			return View();
         }
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		/* [Authorize(Roles="admin")] */
-		public async Task<IActionResult> ChangeMe(ChangeMeModel model)
+		public async Task<IActionResult> MyProfile(ProfileModel model)
 		{
-			User user = await _context.Users.FirstOrDefaultAsync(u => (u.Login == (string)User.Identity.Name));
+			if (ModelState.IsValid)
+			{
+				User userEdt = await _context.Users.FirstOrDefaultAsync(u => (u.Login == User.Identity.Name));
 
-			return View(model);
+				User userEmailCheck = await _context.Users.FirstOrDefaultAsync(u => (u.Email == model.Email));
+				string email = model.Email;
+
+				// Проверка на занятость запрашиваемого адреса электронной почты
+				if (userEmailCheck != null)
+					email = null;
+
+				if (userEdt != null)
+				{
+					// Изменение записи об учётной записи в базе данных
+					User userUpd = new User { 
+						FirstName	= model.FirstName,
+						SecondName	= model.SecondName,
+						MiddleName	= model.MiddleName,
+						DateOfBirth = Convert.ToDateTime(model.DateOfBirth),
+						DateAdded	= DateTime.Now,
+						Email 		= email, 
+						Login		= userEdt.Login,
+						Password	= userEdt.Password,
+					};
+
+					userUpd.Id = userEdt.Id;
+					userUpd.RoleId = userEdt.RoleId;
+
+					_context.Entry(userEdt).CurrentValues.SetValues(userUpd);
+					_context.SaveChanges();
+
+					return RedirectToAction("MyProfile", "Profile");
+				}
+				else
+				{
+					ViewData["Email"] = ModelState.Values;
+					ModelState.AddModelError("", "Произошла ошибка");
+				}
+			}
+			else
+				ModelState.AddModelError("", "Некорректные данные");
+
+			//return View(model);
+			return RedirectToAction("MyProfile", "Profile");
 		}
 	}
 }

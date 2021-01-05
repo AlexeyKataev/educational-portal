@@ -59,7 +59,7 @@ namespace Dotnet.Controllers
                 {
                     // Добавление записи об учётной записи в базу данных
                     user = new User { 
-						FirsftName	= model.FirstName,
+						FirstName	= model.FirstName,
 						SecondName	= model.SecondName,
 						MiddleName	= null,
 						DateOfBirth = new DateTime(0001, 1, 1, 1, 1, 1),
