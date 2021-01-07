@@ -15,10 +15,21 @@
 	</ul>
 </div>
 <div class="col-sm-8">
-<!-- 	<div class="alert alert-info" role="alert">
-		<h4>Существующие в системе роли пользователей</h4>
-		<p class="mb-0">TODO: добавить описание всех возможных ролей пользователей</p>
-	</div> -->
+	<div class="alert alert-info" role="alert">
+		<h5 class="mt-2 mb-2">Досупные для учётных записей роли</h5>
+		<ul>
+			<li>admin - главный администратор;</li>
+			<li>systemAdmin - системный администратор;</li>
+			<li>humanResources - специалист отдела кадров;</li>
+			<li>trainingDivision - специалист учебного отдела;</li>
+			<li>authorArticles - автор информационных рассылок и создатеть новостных статей;</li>
+			<li>teacher - преподаватель;</li>
+			<li>enrolle - абитуриент;</li>
+			<li>graduate - выпускник;</li>
+			<li>student - студент;</li>
+			<li>user - пользователь.</li>
+		</ul>
+	</div>
 
 	@foreach (var role in ViewBag.allRoles)
 	{
@@ -51,7 +62,16 @@
 										<td>@role.Name</td>
 										<td>@dtBth.ToString("dd.MM.yyyy")</td>
 										<td>@user.DateAdded</td>
-										<td>@user.Email</td>
+										<td>
+											@if (User.IsInRole("admin")) 
+											{
+												@user.Email 
+											} 
+											else 
+											{ 
+												<p>Скрыто</p>
+											}
+										</td>
 									</tr>
 								</tbody>
 							</table>

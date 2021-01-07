@@ -14,7 +14,7 @@ using CustomIdentityApp.ViewModels; */
 
 namespace Dotnet.Controllers
 {
-	[Authorize(Roles="admin")]
+	[Authorize(Roles="admin, systemAdmin")]
     public class AdminController : Controller
     {
 		private ApplicationContext _context;
