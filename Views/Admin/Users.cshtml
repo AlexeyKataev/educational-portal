@@ -1,0 +1,51 @@
+@{
+	ViewData["Title"] = "Управление учётными записями";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+@* @model Dotnet.ViewModels.ProfileModel *@
+@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action active" asp-area="" asp-controller="Admin" asp-action="Users">Управление учётными записями</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">Настройки приложения</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">Резервное копирование</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">Сводка</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+<!-- 	<div class="alert alert-info" role="alert">
+		<h4>Существующие в системе роли пользователей</h4>
+		<p class="mb-0">TODO: добавить описание всех возможных ролей пользователей</p>
+	</div> -->
+	<div class="alert alert-primary mb-2" role="alert">
+		Администраторы
+	</div>
+	<div class="card mb-2">
+		<div class="card-body">
+		  	<h5 class="card-title">(admin) Катаев Алексей Александрович</h5>
+			  <table class="table table-hover">
+				<thead>
+					<tr class="text-align-top">
+						<td scope="col">ID</td>
+						<td scope="col">Роль</td>
+						<td scope="col">Дата рождения</td>
+						<td scope="col">Дата регистрации</td>
+						<td scope="col">E-Mail</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="#" class="btn btn-light btn-block">Редактировать</a>
+		</div>
+	</div>
+</div>

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class ChangeRoleViewModel
 {
-    public string UserId { get; set; }
+    public int UserId { get; set; }
 
     public string UserEmail { get; set; }
 

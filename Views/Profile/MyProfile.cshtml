@@ -1,6 +1,6 @@
 @{
 	ViewData["Title"] = "Мой профиль";	
-    Layout = "~/Views/Work/_WorkLayout.cshtml";
+    Layout = "~/Views/Profile/_ProfileLayout.cshtml";
 }
 
 @model Dotnet.ViewModels.ProfileModel
@@ -36,7 +36,7 @@
 				<span asp-validation-for="SecondName" />
 			</div>
 			<div class="form-group">
-				<label asp-for="MiddleName">Отчество (при наличии)</label>
+				<label asp-for="MiddleName">Отчество</label>
 				<input type="text" asp-for="MiddleName" class="form-control" value=@ViewData["MiddleName"] />
 				<span asp-validation-for="MiddleName" />
 			</div>

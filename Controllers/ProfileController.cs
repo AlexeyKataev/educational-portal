@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Dotnet.Controllers
 {
+	[Authorize]
     public class ProfileController : Controller
     {
 		private ApplicationContext _context;
@@ -27,7 +28,6 @@ namespace Dotnet.Controllers
         }
 		
 		[HttpGet]
-		[Authorize]
         public IActionResult MyProfile()
         {
 			User user = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
@@ -46,7 +46,6 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		/* [Authorize(Roles="admin")] */
 		public async Task<IActionResult> MyProfile(ProfileModel model)
 		{
 			if (ModelState.IsValid)
@@ -57,7 +56,7 @@ namespace Dotnet.Controllers
 				string email = model.Email;
 
 				// Проверка на занятость запрашиваемого адреса электронной почты
-				if (userEmailCheck != null)
+				if (userEmailCheck != null && userEdt.Email != email)
 					email = null;
 
 				if (userEdt != null)
