@@ -19,10 +19,52 @@
 		<h4>Существующие в системе роли пользователей</h4>
 		<p class="mb-0">TODO: добавить описание всех возможных ролей пользователей</p>
 	</div> -->
-	<div class="alert alert-primary mb-2" role="alert">
-		Администраторы
-	</div>
-	<div class="card mb-2">
+
+	@foreach (var role in ViewBag.allRoles)
+	{
+		<div class="alert alert-primary mb-2" role="alert">
+			Пользователи с ролью @role.Name
+		</div>
+		@foreach (var usersInRole in ViewBag.allUsers)
+		{
+			@foreach (var user in usersInRole)
+			{
+				@if (role.Id == user.RoleId)
+				{
+					<div class="card mb-2">
+						<div class="card-body overflow-auto">
+							<h5 class="card-title ">(@user.Login) @user.FirstName @user.MiddleName @user.SecondName</h5>
+							<table class="table table-hover">
+								<thead>
+									<tr class="text-align-top">
+										<td scope="col">ID</td>
+										<td scope="col">Роль</td>
+										<td scope="col">Дата рождения</td>
+										<td scope="col">Момент регистрации</td>
+										<td scope="col">E-Mail</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										@{ DateTime dtBth = Convert.ToDateTime(@user.DateOfBirth); }
+										<td>@user.Id</td>
+										<td>@role.Name</td>
+										<td>@dtBth.ToString("dd.MM.yyyy")</td>
+										<td>@user.DateAdded</td>
+										<td>@user.Email</td>
+									</tr>
+								</tbody>
+							</table>
+							<a href="#" class="btn btn-light btn-block">Редактировать</a>
+						</div>
+					</div>
+				}
+			}
+		}
+	}
+
+
+@* 	<div class="card mb-2">
 		<div class="card-body">
 		  	<h5 class="card-title">(admin) Катаев Алексей Александрович</h5>
 			  <table class="table table-hover">
@@ -47,5 +89,5 @@
 			</table>
 			<a href="#" class="btn btn-light btn-block">Редактировать</a>
 		</div>
-	</div>
+	</div> *@
 </div>

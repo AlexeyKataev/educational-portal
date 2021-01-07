@@ -32,10 +32,10 @@ namespace Dotnet.Controllers
         {
 			User user = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
 
-			ViewData["FirstName"] = user.FirstName;
-			ViewData["SecondName"] = user.SecondName;
-			ViewData["MiddleName"] = user.MiddleName;
-			ViewData["Email"] = user.Email;
+			ViewData["FirstName"] 	= user.FirstName;
+			ViewData["SecondName"] 	= user.SecondName;
+			ViewData["MiddleName"] 	= user.MiddleName;
+			ViewData["Email"] 		= user.Email;
 			if (user.DateOfBirth == new DateTime(0001, 1, 1, 1, 1, 1))
 				ViewData["DateOfBirth"] = new DateTime(2001, 1, 1, 0, 0, 0).ToString("yyyy-MM-dd");
 			else

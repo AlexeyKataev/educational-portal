@@ -28,24 +28,23 @@ namespace Dotnet.Controllers
 
         public IActionResult Users()
         {
-			// Списки с информацией о пользователях
-			ViewBag.AllUsers = null;
-			List<List<User>> allUsers = new List<List<User>>();
+			List<List<User>> users = new List<List<User>>();
 
 			// Получение всех существующих в системе ролей в виде списка
 			List<Role> roles = _context.Roles.ToList();
 
-			// Сборка массивов с выборками пользователей, упорядоченных по ролям
-			foreach (Role role in roles)
+			foreach (Role role in roles.ToList())
 			{
-				// Получение всех пользователей для определённой роли
-				var tmpAllUsers = _context.Users.Where(u => u.RoleId == (role.Id)).ToList();
+				List<User> tmpUsers = _context.Users.Where(u => u.RoleId == (role.Id)).ToList();
 
-				if (tmpAllUsers.Count != 0)
-				{
-					allUsers.Add(tmpAllUsers);
-				}
+				if (tmpUsers.Count != 0)
+					users.Add(tmpUsers);
+				else 
+					roles.RemoveAt(roles.IndexOf(role));
 			}
+
+			ViewBag.allUsers = users;
+			ViewBag.allRoles = roles;
 
             return View();
         }
