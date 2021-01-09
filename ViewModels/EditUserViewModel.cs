@@ -1,0 +1,28 @@
+using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+/* Редактирование пользователей */
+
+namespace Dotnet.ViewModels
+{
+	public class EditUserViewModel
+	{
+       [Required]
+        public string Id { get; set; }
+
+        [Required(ErrorMessage = "Введите имя")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Введите фамилию")]
+        public string SecondName { get; set; }
+
+        public string MiddleName { get; set; }
+
+        [Required(ErrorMessage = "Введите дату рождения")]
+        [DataType(DataType.DateTime)]
+        public string DateOfBirth { get; set; }
+		
+        public string Email { get; set; }
+	}
+}

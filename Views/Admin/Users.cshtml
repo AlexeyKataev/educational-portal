@@ -15,7 +15,7 @@
 	</ul>
 </div>
 <div class="col-sm-8">
-	<div class="alert alert-info" role="alert">
+	<div class="shadow p-3 mb-4 bg-white rounded">
 		<h5 class="mt-2 mb-2">Досупные для учётных записей роли</h5>
 		<ul>
 			<li>admin - главный администратор;</li>
@@ -45,7 +45,7 @@
 					<div class="card mb-2">
 						<div class="card-body overflow-auto">
 							<h5 class="card-title ">(@user.Login) @user.FirstName @user.MiddleName @user.SecondName</h5>
-							<table class="table table-hover">
+							<table class="table table-hover mb-0">
 								<thead>
 									<tr class="text-align-top">
 										<td scope="col">ID</td>
@@ -75,39 +75,14 @@
 									</tr>
 								</tbody>
 							</table>
-							<a href="#" class="btn btn-light btn-block">Редактировать</a>
+							@if (User.IsInRole("admin"))
+							{
+								<a class="btn btn-light btn-block" asp-action="EditUser" asp-route-userId="@user.Id">Редактировать</a>
+							}
 						</div>
 					</div>
 				}
 			}
 		}
 	}
-
-
-@* 	<div class="card mb-2">
-		<div class="card-body">
-		  	<h5 class="card-title">(admin) Катаев Алексей Александрович</h5>
-			  <table class="table table-hover">
-				<thead>
-					<tr class="text-align-top">
-						<td scope="col">ID</td>
-						<td scope="col">Роль</td>
-						<td scope="col">Дата рождения</td>
-						<td scope="col">Дата регистрации</td>
-						<td scope="col">E-Mail</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-					</tr>
-				</tbody>
-			</table>
-			<a href="#" class="btn btn-light btn-block">Редактировать</a>
-		</div>
-	</div> *@
 </div>

@@ -11,9 +11,13 @@ D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Dotnet.RazorCoreGenerate.cache
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Account\Recovery.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Admin\EditUser.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Users.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Admin\_AdminLayout.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Profile\MyProfile.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Profile\_ProfileLayout.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -43,6 +47,9 @@ D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Dotnet.Views.dll
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Dotnet.Views.pdb
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Humanizer.dll
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.AspNet.Identity.Core.dll
+D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Data.Sqlite.dll
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
@@ -58,6 +65,8 @@ D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configurati
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
+D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
+D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
 D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
@@ -112,11 +121,3 @@ D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Dotnet.csproj.CopyComplete
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\staticwebassets\Dotnet.StaticWebAssets.Manifest.cache
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\staticwebassets\Dotnet.StaticWebAssets.xml
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Dotnet.genruntimeconfig.cache
-D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Admin\_AdminLayout.cshtml.g.cs
-D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Profile\_ProfileLayout.cshtml.g.cs
-D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
-D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
-D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
-D:\Dotnet\CollegePortal\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
-D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Users.cshtml.g.cs

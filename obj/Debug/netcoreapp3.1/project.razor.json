@@ -14442,6 +14442,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Admin\\EditUser.cshtml",
+      "TargetPath": "Views\\Admin\\EditUser.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Admin\\Users.cshtml",
       "TargetPath": "Views\\Admin\\Users.cshtml",
       "FileKind": "mvc"

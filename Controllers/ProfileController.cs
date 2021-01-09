@@ -90,7 +90,6 @@ namespace Dotnet.Controllers
 			else
 				ModelState.AddModelError("", "Некорректные данные");
 
-			//return View(model);
 			return RedirectToAction("MyProfile", "Profile");
 		}
 	}

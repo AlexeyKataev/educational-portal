@@ -1,0 +1,73 @@
+@{
+	ViewData["Title"] = "Редактировать пользователя";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.EditUserViewModel
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action active" asp-area="" asp-controller="Admin" asp-action="Users">Управление учётными записями</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">Настройки приложения</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">Резервное копирование</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">Сводка</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	<div class="shadow p-3 mb-4 bg-white rounded">
+		<h5 class="mt-2 mb-2">Досупные для учётных записей роли</h5>
+		<ul>
+			<li>admin - главный администратор;</li>
+			<li>systemAdmin - системный администратор;</li>
+			<li>humanResources - специалист отдела кадров;</li>
+			<li>trainingDivision - специалист учебного отдела;</li>
+			<li>authorArticles - автор информационных рассылок и создатеть новостных статей;</li>
+			<li>teacher - преподаватель;</li>
+			<li>enrolle - абитуриент;</li>
+			<li>graduate - выпускник;</li>
+			<li>student - студент;</li>
+			<li>user - пользователь.</li>
+		</ul>
+	</div>
+		<form asp-action="ApplyChangesUser" asp-controller="Admin" asp-anti-forgery="true">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div>
+			<input type="hidden" asp-for="Id" class="form-control" value=@ViewBag.user.Id required />
+			<div class="form-group">
+				<label asp-for="FirstName">Имя <span>*</span></label>
+				<input type="text" asp-for="FirstName" class="form-control" value=@ViewBag.user.FirstName required />
+				<span asp-validation-for="FirstName" />
+			</div>
+			<div class="form-group">
+				<label asp-for="SecondName">Фамилия <span>*</span></label>
+				<input type="text" asp-for="SecondName" class="form-control" value=@ViewBag.user.SecondName required />
+				<span asp-validation-for="SecondName" />
+			</div>
+			<div class="form-group">
+				<label asp-for="MiddleName">Отчество</label>
+				<input type="text" asp-for="MiddleName" class="form-control" value=@ViewBag.user.MiddleName />
+				<span asp-validation-for="MiddleName" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Email">E-Mail</label>
+				<input type="text" asp-for="Email" class="form-control" value=@ViewBag.user.Email />
+				<span asp-validation-for="Email" />
+			</div>
+			<div class="form-group">
+				<label asp-for="DateOfBirth">Дата рождения <span>*</span></label>
+				<input type="date" asp-for="DateOfBirth" class="form-control" value=@ViewBag.user.DateOfBirth required />
+				<span asp-validation-for="DateOfBirth" />
+			</div>
+			<div class="alert alert-info" role="alert">
+				* Поля обязательны к заполнению
+		 	 </div>
+			<div class="form-group">
+				<input type="submit" value="Сохранить" class="btn btn-primary" />
+			</div>
+		</div>
+	</form>
+</div>

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dotnet.Models;
+using Dotnet.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-/*using CustomIdentityApp.Models;
-using CustomIdentityApp.ViewModels; */
+using Microsoft.EntityFrameworkCore;
 
 namespace Dotnet.Controllers
 {
@@ -30,7 +30,6 @@ namespace Dotnet.Controllers
         {
 			List<List<User>> users = new List<List<User>>();
 
-			// Получение всех существующих в системе ролей в виде списка
 			List<Role> roles = _context.Roles.ToList();
 
 			foreach (Role role in roles.ToList())
@@ -48,5 +47,34 @@ namespace Dotnet.Controllers
 
             return View();
         }
+
+		[HttpGet]
+		[Authorize(Roles="admin")]
+		public IActionResult EditUser(int userId)
+		{
+			User userEdt = _context.Users.FirstOrDefault(u => (u.Id == userId));
+			
+			List<Role> roles = _context.Roles.ToList();
+
+			if (userEdt.DateOfBirth == new DateTime(0001, 1, 1, 1, 1, 1))
+				userEdt.DateOfBirth = new DateTime(2001, 1, 1, 0, 0, 0).ToString("yyyy-MM-dd");
+			else
+				userEdt.DateOfBirth = userEdt.DateOfBirth.ToString("yyyy-MM-dd");
+
+			ViewBag.user = userEdt;
+			ViewBag.roles = roles;
+
+			return View();
+		}
+		
+
+		[Authorize(Roles="admin")]
+		public async Task<IActionResult> ApplyChangesUser(string userId)
+		{
+			// Добавить ViewModel епта
+			User userEdt = await _context.Users.FirstOrDefaultAsync(u => (u.Login == User.Identity.Name));
+
+			return View();
+		}
     }
 }
