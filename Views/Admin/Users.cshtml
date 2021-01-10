@@ -16,7 +16,7 @@
 </div>
 <div class="col-sm-8">
 	<div class="shadow p-3 mb-4 bg-white rounded">
-		<h5 class="mt-2 mb-2">Досупные для учётных записей роли</h5>
+		<h6 class="mt-2 mb-2">Досупные для учётных записей роли</h6>
 		<ul>
 			<li>admin - главный администратор;</li>
 			<li>systemAdmin - системный администратор;</li>
@@ -33,7 +33,7 @@
 
 	@foreach (var role in ViewBag.allRoles)
 	{
-		<div class="alert alert-primary mb-2" role="alert">
+		<div class="shadow p-3 mb-2 bg-white rounded">
 			Пользователи с ролью @role.Name
 		</div>
 		@foreach (var usersInRole in ViewBag.allUsers)
@@ -44,7 +44,7 @@
 				{
 					<div class="card mb-2">
 						<div class="card-body overflow-auto">
-							<h5 class="card-title ">(@user.Login) @user.FirstName @user.MiddleName @user.SecondName</h5>
+							<h6 class="card-title ">(@user.Login) @user.FirstName @user.MiddleName @user.SecondName</h6>
 							<table class="table table-hover mb-0">
 								<thead>
 									<tr class="text-align-top">
