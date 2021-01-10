@@ -52,29 +52,75 @@ namespace Dotnet.Controllers
 		[Authorize(Roles="admin")]
 		public IActionResult EditUser(int userId)
 		{
-			User userEdt = _context.Users.FirstOrDefault(u => (u.Id == userId));
+			User user = _context.Users.FirstOrDefault(u => (u.Id == userId));
 			
 			List<Role> roles = _context.Roles.ToList();
 
-			if (userEdt.DateOfBirth == new DateTime(0001, 1, 1, 1, 1, 1))
-				userEdt.DateOfBirth = new DateTime(2001, 1, 1, 0, 0, 0).ToString("yyyy-MM-dd");
+			ViewData["id"]			= user.Id;
+			ViewData["RoleId"]		= user.RoleId;
+			ViewData["FirstName"] 	= user.FirstName;
+			ViewData["SecondName"] 	= user.SecondName;
+			ViewData["MiddleName"] 	= user.MiddleName;
+			ViewData["Email"] 		= user.Email;
+			if (user.DateOfBirth == new DateTime(0001, 1, 1, 1, 1, 1))
+				ViewData["DateOfBirth"] = new DateTime(2001, 1, 1, 0, 0, 0).ToString("yyyy-MM-dd");
 			else
-				userEdt.DateOfBirth = userEdt.DateOfBirth.ToString("yyyy-MM-dd");
+				ViewData["DateOfBirth"] = user.DateOfBirth.ToString("yyyy-MM-dd");
 
-			ViewBag.user = userEdt;
 			ViewBag.roles = roles;
 
 			return View();
 		}
 		
-
+		[HttpPost]
 		[Authorize(Roles="admin")]
-		public async Task<IActionResult> ApplyChangesUser(string userId)
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> ApplyChangesUser(EditUserViewModel model)
 		{
-			// Добавить ViewModel епта
-			User userEdt = await _context.Users.FirstOrDefaultAsync(u => (u.Login == User.Identity.Name));
+			if (ModelState.IsValid)
+			{
+				User userEdt = await _context.Users.FirstOrDefaultAsync(u => (u.Id == model.Id));
 
-			return View();
+				User userEmailCheck = await _context.Users.FirstOrDefaultAsync(u => (u.Email == model.Email));
+				string email = model.Email;
+
+				// Проверка на занятость запрашиваемого адреса электронной почты
+				if (userEmailCheck != null && userEdt.Email != email)
+					email = null;
+
+				User meCheck = await _context.Users.FirstOrDefaultAsync(u => (u.Login == User.Identity.Name));
+				int someoneId = model.Id;
+
+				if (meCheck.Id != someoneId)
+				{
+					// Изменение записи об учётной записи в базе данных
+					User userUpd = new User { 
+						Id 			= userEdt.Id,
+						FirstName	= model.FirstName,
+						SecondName	= model.SecondName,
+						MiddleName	= model.MiddleName,
+						DateOfBirth = Convert.ToDateTime(model.DateOfBirth),
+						DateAdded	= DateTime.Now,
+						Email 		= email, 
+						Login		= userEdt.Login,
+						Password	= userEdt.Password,
+						RoleId		= model.RoleId,
+					};
+
+					_context.Entry(userEdt).CurrentValues.SetValues(userUpd);
+					_context.SaveChanges();
+					
+					return RedirectToAction("Users", "Admin");
+				}
+				else
+				{
+					ModelState.AddModelError("", "Произошла ошибка");
+				}
+			}
+			else
+				ModelState.AddModelError("", "Некорректные данные");
+			
+			return RedirectToAction("Users", "Admin");
 		}
     }
 }

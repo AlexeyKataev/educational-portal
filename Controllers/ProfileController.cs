@@ -46,7 +46,7 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> MyProfile(ProfileModel model)
+		public async Task<IActionResult> MyProfile(ProfileViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -62,7 +62,8 @@ namespace Dotnet.Controllers
 				if (userEdt != null)
 				{
 					// Изменение записи об учётной записи в базе данных
-					User userUpd = new User { 
+					User userUpd = new User { 						
+						Id 			= userEdt.Id,
 						FirstName	= model.FirstName,
 						SecondName	= model.SecondName,
 						MiddleName	= model.MiddleName,
@@ -71,10 +72,8 @@ namespace Dotnet.Controllers
 						Email 		= email, 
 						Login		= userEdt.Login,
 						Password	= userEdt.Password,
+						RoleId		= userEdt.RoleId,
 					};
-
-					userUpd.Id = userEdt.Id;
-					userUpd.RoleId = userEdt.RoleId;
 
 					_context.Entry(userEdt).CurrentValues.SetValues(userUpd);
 					_context.SaveChanges();
@@ -83,7 +82,6 @@ namespace Dotnet.Controllers
 				}
 				else
 				{
-					ViewData["Email"] = ModelState.Values;
 					ModelState.AddModelError("", "Произошла ошибка");
 				}
 			}

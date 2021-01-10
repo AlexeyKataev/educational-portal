@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
  
 namespace Dotnet.ViewModels
 {
-    public class ProfileModel
+    public class ProfileViewModel
     {
         [Required(ErrorMessage = "Введите имя")]
         public string FirstName { get; set; }

@@ -9,7 +9,7 @@ namespace Dotnet.ViewModels
 	public class EditUserViewModel
 	{
        [Required]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Введите имя")]
         public string FirstName { get; set; }
@@ -24,5 +24,8 @@ namespace Dotnet.ViewModels
         public string DateOfBirth { get; set; }
 		
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Укажите роль пользователя")]
+        public int RoleId { get; set; }
 	}
 }

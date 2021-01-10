@@ -36,31 +36,47 @@
 			</button>
 		</div>
 		<div>
-			<input type="hidden" asp-for="Id" class="form-control" value=@ViewBag.user.Id required />
+			<input type="hidden" asp-for="Id" class="form-control" value=@ViewData["Id"] required />
 			<div class="form-group">
 				<label asp-for="FirstName">Имя <span>*</span></label>
-				<input type="text" asp-for="FirstName" class="form-control" value=@ViewBag.user.FirstName required />
+				<input type="text" asp-for="FirstName" class="form-control" value=@ViewData["FirstName"] required />
 				<span asp-validation-for="FirstName" />
 			</div>
 			<div class="form-group">
 				<label asp-for="SecondName">Фамилия <span>*</span></label>
-				<input type="text" asp-for="SecondName" class="form-control" value=@ViewBag.user.SecondName required />
+				<input type="text" asp-for="SecondName" class="form-control" value=@ViewData["SecondName"] required />
 				<span asp-validation-for="SecondName" />
 			</div>
 			<div class="form-group">
 				<label asp-for="MiddleName">Отчество</label>
-				<input type="text" asp-for="MiddleName" class="form-control" value=@ViewBag.user.MiddleName />
+				<input type="text" asp-for="MiddleName" class="form-control" value=@ViewData["MiddleName"] />
 				<span asp-validation-for="MiddleName" />
 			</div>
 			<div class="form-group">
 				<label asp-for="Email">E-Mail</label>
-				<input type="text" asp-for="Email" class="form-control" value=@ViewBag.user.Email />
+				<input type="text" asp-for="Email" class="form-control" value=@ViewData["Email"] />
 				<span asp-validation-for="Email" />
 			</div>
 			<div class="form-group">
 				<label asp-for="DateOfBirth">Дата рождения <span>*</span></label>
-				<input type="date" asp-for="DateOfBirth" class="form-control" value=@ViewBag.user.DateOfBirth required />
+				<input type="date" asp-for="DateOfBirth" class="form-control" value=@ViewData["DateOfBirth"] required />
 				<span asp-validation-for="DateOfBirth" />
+			</div>
+			<div class="form-group">
+				<label asp-for="RoleId">Роль пользователя <span>*</span></label>
+				<select class="custom-select" asp-for="RoleId">
+					@foreach (var role in ViewBag.roles)
+					{
+						if (role.Id == (int)ViewData["RoleId"])
+						{
+							<option value=@role.Id selected>@role.Name</option>
+						}	
+						else
+						{
+							<option value=@role.Id>@role.Name</option>
+						}					
+					}
+				</select>
 			</div>
 			<div class="alert alert-info" role="alert">
 				* Поля обязательны к заполнению
