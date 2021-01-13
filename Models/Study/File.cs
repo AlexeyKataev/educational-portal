@@ -22,13 +22,7 @@ namespace Dotnet.Models
 
 
 
-		// Много документов - много специальностей
-		public List<Specialty> Specialty { get; set; } = new List<Specialty>();
-
-		// Много документов - много учебных предметов
-		public List<Subject> Subjects { get; set; } = new List<Subject>();
-
-		// Много файлов - один пользователь
-		public User UserId { get; set; }
+		// Много файлов - одно задание
+		public List<Work> Works { get; set; } = new List<Work>();
 	}
 }

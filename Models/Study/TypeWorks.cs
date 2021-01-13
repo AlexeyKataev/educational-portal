@@ -11,5 +11,11 @@ namespace Dotnet.Models
 		public int Id { get; set; }
 
 		public string Name { get; set; }
+
+
+
+		// Одна подгруппа - много заданий
+		public int WorkId { get; set; }
+		public Work Work { get; set; }	
 	}
 }
