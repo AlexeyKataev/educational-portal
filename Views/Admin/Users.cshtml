@@ -15,7 +15,7 @@
 	</ul>
 </div>
 <div class="col-sm-8">
-	<div class="shadow p-3 mb-4 bg-white rounded">
+	<div class="shadow p-3 bg-white rounded">
 		<h6 class="mt-2 mb-2">Досупные для учётных записей роли</h6>
 		<ul>
 			<li>admin - главный администратор;</li>
@@ -33,7 +33,7 @@
 
 	@foreach (var role in ViewBag.allRoles)
 	{
-		<div class="shadow p-3 mb-2 bg-white rounded">
+		<div class="shadow p-3 mt-4 mb-2 bg-white rounded">
 			Пользователи с ролью @role.Name
 		</div>
 		@foreach (var usersInRole in ViewBag.allUsers)

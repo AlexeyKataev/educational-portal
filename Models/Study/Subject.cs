@@ -15,9 +15,6 @@ namespace Dotnet.Models
 
 
 		// Много предметов - много файлов
-		public List<File> Files { get; set; } = new List<File>();
-
-		// Много предметов - много преподавателей
-		public List<Teacher> Teachers { get; set; } = new List<Teacher>();		
+		public List<File> Files { get; set; } = new List<File>();		
 	}
 }

@@ -18,7 +18,7 @@ namespace Dotnet.Models
 
 
 
-		// Много преподавателей - много предметов
-		public List<Specialty> Specialty { get; set; } = new List<Specialty>();
+		// Один преподавателей - одно задание
+		public Work Work { get; set; }
 	}
 }

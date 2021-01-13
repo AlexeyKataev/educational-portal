@@ -32,6 +32,18 @@
 									<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Преподаватели</a>
 								</li>
 							}
+							@if (User.IsInRole("teacher"))
+							{
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Задания</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Учебные группы</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Файлы</a>
+								</li>
+							}
 							@if (User.IsInRole("admin") || User.IsInRole("systemAdmin"))
 							{
 								<li class="nav-item">

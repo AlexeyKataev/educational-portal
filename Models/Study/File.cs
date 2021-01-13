@@ -16,7 +16,7 @@ namespace Dotnet.Models
 
 		public bool Vanish { get; set; }
 
-		public bool NeedToDelete { get; set; }
+		public System.DateTime NeedToDelete { get; set; }
 
 		public System.DateTime dateAdded { get; set; }
 
