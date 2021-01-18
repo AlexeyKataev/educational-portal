@@ -36,6 +36,21 @@ namespace Dotnet.Controllers
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
         public IActionResult Teachers()
         {
+			List<List<User>> users = new List<List<User>>();
+
+			List<Teacher> teachers = _context.Teachers.ToList();
+
+			foreach (Teacher teacher in teachers.ToList())
+			{
+				List<User> tmpUsers = _context.Users.Where(u => u.Id == (teacher.UserId)).ToList();
+
+				if (tmpUsers.Count != 0)
+					users.Add(tmpUsers);
+			}
+			
+			ViewBag.allUsers = users;
+			ViewBag.allTeachers = teachers;
+
             return View();
         }
 

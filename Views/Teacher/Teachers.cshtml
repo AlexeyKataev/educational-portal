@@ -6,11 +6,45 @@
 @model Dotnet.ViewModels.TeacherModel
 
 <div class="col-sm-4">
-	<ul class="list-group mb-4">
-		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Teacher" asp-action="AddTeacher">Добавить преподавателя</a>
-		<a class="list-group-item list-group-item-action active" asp-area="" asp-controller="Teacher" asp-action="Teachers">Список преподавателей</a>
+	<ul class="list-group mb-4">		
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Teacher" asp-action="AddTeacher">
+			<i class="bi bi-person-plus-fill mr-2"></i>Добавить преподавателя	
+		</a>
+		<a class="list-group-item list-group-item-action active" asp-area="" asp-controller="Teacher" asp-action="Teachers">	
+			<i class="bi bi-person-lines-fill mr-2"></i>Список преподавателей
+		</a>
 	</ul>
 </div>
 <div class="col-sm-8">
-
+	@for (int i = 0; i < ViewBag.allTeachers.Count; i++ )
+	{
+		<div class="card mb-2">
+			<div class="card-body overflow-auto">
+				<h6 class="card-title ">(@ViewBag.allUsers[i][0].Login) @ViewBag.allUsers[i][0].FirstName @ViewBag.allUsers[i][0].MiddleName @ViewBag.allUsers[i][0].SecondName</h6>
+				<table class="table table-hover mb-0">
+					<thead>
+						<tr class="text-align-top">
+							<td scope="col">ID</td>
+							<td scope="col">Дата рождения</td>
+							<td scope="col">Момент регистрации</td>
+							<td scope="col">E-Mail</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							@{ DateTime dtBth = Convert.ToDateTime(@ViewBag.allUsers[i][0].DateOfBirth); }
+							<td>@ViewBag.allUsers[i][0].Id</td>
+							<td>@dtBth.ToString("dd.MM.yyyy")</td>
+							<td>@ViewBag.allUsers[i][0].DateAdded</td>
+							<td>@ViewBag.allUsers[i][0].Email</td>
+						</tr>
+					</tbody>
+				</table>
+				@if (User.IsInRole("admin"))
+				{
+					<a class="btn btn-light btn-block" asp-action="" asp-route-userId="@ViewBag.allUsers[i][0].Id">Редактировать</a>
+				}
+			</div>
+		</div>
+	}
 </div>
