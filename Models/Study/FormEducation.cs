@@ -13,5 +13,8 @@ namespace Dotnet.Models
 		public string Name { get; set; }
 
 		public string Code { get; set; }
+
+		// Много групп - одна форма обучения
+		public List<StudyGroup> StudyGroups { get; set; } = new List<StudyGroup>();
 	}
 }

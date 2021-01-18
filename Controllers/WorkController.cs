@@ -45,7 +45,7 @@ namespace Dotnet.Controllers
             return View();
         }
 
-		[Authorize]
+		[Authorize(Roles="teacher")]
         public IActionResult AddWork()
         {
             return View();

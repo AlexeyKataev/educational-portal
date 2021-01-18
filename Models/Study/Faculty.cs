@@ -23,6 +23,6 @@ namespace Dotnet.Models
 		public Institution Institution { get; set; }
 
 		// Один факультет - много специальностей
-		public List<Faculty> Faculties { get; set; } = new List<Faculty>();
+		public List<Specialty> Specialty { get; set; } = new List<Specialty>();
 	}
 }

@@ -20,7 +20,8 @@ namespace Dotnet.Models
 		public int FacultyId { get; set; }
 		public Faculty Faculty { get; set; }
 
-		// Много специальностей - много документов  
-		public List<File> Files { get; set; } = new List<File>();
+		// Одна специальность - много учебный групп
+		public List<StudyGroup> StudyGroups { get; set; } = new List<StudyGroup>();
+
 	}
 }

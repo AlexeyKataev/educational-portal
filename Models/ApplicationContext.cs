@@ -41,6 +41,10 @@ namespace Dotnet.Models
 			string adminLogin = "admin";						// Логин по умолчанию от учётной записи администратора
             string adminPassword = "123";						// Пароль по умолчанию от учётной записи администратора
 
+            string adminFirstName = "Укажите имя";						
+            string adminSecondName = "Укажите фамилию";					
+            string adminEmail = "Укажите E-Mail";					
+
             string adminRoleName = "admin";						// Название роли
             Role adminRole = new Role { Id = 1, Name = adminRoleName };
 
@@ -161,7 +165,15 @@ namespace Dotnet.Models
 
 
 			// Создаём объект учётной записи администратора
-            User adminUser = new User { Id = 1, Login = adminLogin, Password = adminPassword, RoleId = adminRole.Id };
+            User adminUser = new User { 
+				Id 			= 1, 
+				Login		= adminLogin, 
+				FirstName 	= adminFirstName,
+				SecondName	= adminSecondName,
+				Email 		= adminEmail,
+				Password 	= adminPassword, 
+				RoleId 		= adminRole.Id 
+			};
  
             modelBuilder.Entity<Role>().HasData(new Role[] { 
 				adminRole,

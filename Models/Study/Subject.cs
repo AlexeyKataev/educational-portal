@@ -17,8 +17,8 @@ namespace Dotnet.Models
 		// Много предметов - много файлов
 		public List<File> Files { get; set; } = new List<File>();	
 
-		// Один предмет - много заданий
-		public int WorkId { get; set; }
-		public Work Work { get; set; }	
+		// Один предмет - много заданий	
+		public List<Work> Works { get; set; } = new List<Work>();
+
 	}
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Dotnet.Models
 {
     public class User
@@ -22,8 +24,11 @@ namespace Dotnet.Models
 
 
 
-		// Один пользователь - много ролей... ЭЭЭЭЭ, говно какое-то, должно быть не так
+		// Роли
 		public int? RoleId { get; set; }
     	public Role Role { get; set; }
+
+		// Один пользователь - много файлов
+		public List<File> Files { get; set; } = new List<File>();
     }
 }

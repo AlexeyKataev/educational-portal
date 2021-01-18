@@ -1,0 +1,16 @@
+@{
+	ViewData["Title"] = "Список преподавателей";	
+    Layout = "~/Views/Teacher/_TeacherLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.TeacherModel
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Teacher" asp-action="AddTeacher">Добавить преподавателя</a>
+		<a class="list-group-item list-group-item-action active" asp-area="" asp-controller="Teacher" asp-action="Teachers">Список преподавателей</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+
+</div>

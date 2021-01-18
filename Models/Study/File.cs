@@ -12,6 +12,8 @@ namespace Dotnet.Models
 
 		public string Name { get; set; }
 
+		public string Pseudonym { get; set; }
+
 		public string PathFile { get; set; }
 
 		public bool Vanish { get; set; }
@@ -22,7 +24,11 @@ namespace Dotnet.Models
 
 
 
-		// Много файлов - одно задание
+		// Много файлов - много заданий
 		public List<Work> Works { get; set; } = new List<Work>();
+
+		// Много файлов - один пользователь
+		public int UserId { get; set; }
+		public User User { get; set; }
 	}
 }

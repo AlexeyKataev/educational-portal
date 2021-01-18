@@ -23,7 +23,12 @@ namespace Dotnet.Models
 		// Одна группа - одна подгруппа
 		public StudySubgroup StudySubgroup { get; set; }
 
-		// Много групп - одна форма обучения
-		public List<FormEducation> FormsEducation { get; set; } = new List<FormEducation>();
+		// Много групп - одна группа обучения
+		public int FormEducationId { get; set; }
+		public FormEducation FormEducation { get; set; }	
+
+		// Много групп - одна специальность
+		public int SpecialtyId { get; set; }
+		public Specialty Specialty { get; set; }	
 	}
 }

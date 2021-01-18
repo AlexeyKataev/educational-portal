@@ -1,0 +1,45 @@
+@{
+	ViewData["Title"] = "Добавить преподавателя";	
+    Layout = "~/Views/Teacher/_TeacherLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.TeacherModel
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action active" asp-area="" asp-controller="Teacher" asp-action="AddTeacher">Добавить преподавателя</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Teacher" asp-action="Teachers">Список преподавателей</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	<form asp-action="CreateTeacher" asp-controller="Teacher" asp-anti-forgery="true">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div>
+			<div class="form-group">
+				<label asp-for="UserId">ID пользователя <span>*</span></label>
+				<input type="number" asp-for="UserId" class="form-control" required />
+				<span asp-validation-for="UserId" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Post">Должность</label>
+				<input type="text" asp-for="Post" class="form-control" />
+				<span asp-validation-for="Post" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Specialization">Специализация</label>
+				<input type="text" asp-for="Specialization" class="form-control" />
+				<span asp-validation-for="Specialization" />
+			</div>
+			<div class="alert alert-info" role="alert">
+				* Поля обязательны к заполнению
+		 	 </div>
+			<div class="form-group">
+				<input type="submit" value="Добавить" class="btn btn-primary" />
+			</div>
+		</div>
+	</form>
+</div>
