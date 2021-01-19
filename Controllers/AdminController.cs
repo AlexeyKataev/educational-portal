@@ -100,7 +100,7 @@ namespace Dotnet.Controllers
 						SecondName	= model.SecondName,
 						MiddleName	= model.MiddleName,
 						DateOfBirth = Convert.ToDateTime(model.DateOfBirth),
-						DateAdded	= DateTime.Now,
+						DateAdded	= userEdt.DateAdded,
 						Email 		= email, 
 						Login		= userEdt.Login,
 						Password	= userEdt.Password,

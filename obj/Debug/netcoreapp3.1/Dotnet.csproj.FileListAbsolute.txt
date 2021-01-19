@@ -124,3 +124,4 @@ D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Dotnet.genruntimeconfig.cache
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Teacher\AddTeacher.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Teacher\_TeacherLayout.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Teacher\Teachers.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Teacher\EditTeacher.cshtml.g.cs

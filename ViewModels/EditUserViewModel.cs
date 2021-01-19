@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 /* Редактирование пользователей */
@@ -8,7 +6,7 @@ namespace Dotnet.ViewModels
 {
 	public class EditUserViewModel
 	{
-       [Required]
+       	[Required]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Введите имя")]

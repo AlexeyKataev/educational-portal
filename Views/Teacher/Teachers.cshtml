@@ -42,7 +42,7 @@
 				</table>
 				@if (User.IsInRole("admin"))
 				{
-					<a class="btn btn-light btn-block" asp-action="" asp-route-userId="@ViewBag.allUsers[i][0].Id">Редактировать</a>
+					<a class="btn btn-light btn-block" asp-action="EditTeacher" asp-route-teacherId="@ViewBag.allUsers[i][0].Id">Редактировать</a>
 				}
 			</div>
 		</div>

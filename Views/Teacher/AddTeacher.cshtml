@@ -24,8 +24,13 @@
 		</div>
 		<div>
 			<div class="form-group">
-				<label asp-for="UserId">ID пользователя <span>*</span></label>
-				<input type="number" asp-for="UserId" class="form-control" required />
+				<label asp-for="UserId">Пользователь <span>*</span></label>
+				<select asp-for="UserId" class="form-control" required>
+					@foreach (var user in ViewBag.allUsers)
+					{
+						<option value=@user.Id>@user.Login - @user.FirstName @user.SecondName - @user.Email</option>
+					}
+				</select>
 				<span asp-validation-for="UserId" />
 			</div>
 			<div class="form-group">

@@ -1,0 +1,73 @@
+@{
+	ViewData["Title"] = "Редактировать преподавателя";
+    Layout = "~/Views/Teacher/_TeacherLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.EditTeacherViewModel
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Teacher" asp-action="Teachers">
+			<i class="bi bi-back mr-2"></i>Назад
+		</a>
+	</ul>
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Teacher" asp-action="AddTeacher">
+			<i class="bi bi-person-plus-fill mr-2"></i>Добавить преподавателя	
+		</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Teacher" asp-action="Teachers">	
+			<i class="bi bi-person-lines-fill mr-2"></i>Список преподавателей
+		</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	<form asp-action="ApplyChangesTeacher" asp-controller="Teacher" asp-anti-forgery="true">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div>
+			<div class="form-group">
+				<label asp-for="UserId">Пользователь <span>*</span></label>
+				<select class="custom-select" asp-for="UserId">
+					@if (ViewBag.allUsers.Count > 0)
+					{
+						@foreach (var user in ViewBag.allUsers)
+						{
+							@if (user.Id == (int)ViewData["Id"])
+							{
+								<option value=@user.Id selected>@user.Login - @user.FirstName @user.MiddleName - @user.Email</option>
+							}	
+							else
+							{
+								<option value=@user.Id>@user.Login - @user.FirstName @user.MiddleName - @user.Email</option>
+							}					
+						}
+					}	
+					else
+					{
+						<option value=@ViewData["Id"] selected>Смена пользователя в данный момент недоступна</option>
+					}
+				</select>
+			</div>
+			<input type="hidden" asp-for="Id" class="form-control" value=@ViewData["Id"] />
+			<div class="form-group">
+				<label asp-for="Post">Должность</label>
+				<input type="text" asp-for="Post" class="form-control" value=@ViewData["Post"] />
+				<span asp-validation-for="Post" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Specialization">Специализация</label>
+				<input type="text" asp-for="Specialization" class="form-control" value=@ViewData["Specialization"] />
+				<span asp-validation-for="Specialization" />
+			</div>
+			<div class="alert alert-info" role="alert">
+				* Поля обязательны к заполнению
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Сохранить" class="btn btn-primary" />
+			</div>
+		</div>
+	</form>
+</div>
