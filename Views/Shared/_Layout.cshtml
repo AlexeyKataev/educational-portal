@@ -33,7 +33,7 @@
 									<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Преподаватели</a>
 								</li>
 							}
-							@if (User.IsInRole("teacher"))
+@* 							@if (User.IsInRole("teacher"))
 							{
 								<li class="nav-item">
 									<a class="nav-link text-dark" asp-area="" asp-controller="Work" asp-action="AddWork">Задания</a>
@@ -50,8 +50,8 @@
 								<li class="nav-item">
 									<a class="nav-link text-dark" asp-area="" asp-controller="Teacher" asp-action="AddTeacher">Преподаватели</a>
 								</li>
-							}
-							@if (User.IsInRole("admin") || User.IsInRole("systemAdmin"))
+							} *@
+							@if (User.IsInRole("admin") || User.IsInRole("systemAdmin") || User.IsInRole("humanResources") || User.IsInRole("teacher"))
 							{
 								<li class="nav-item">
 									<a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Администрирование</a>
