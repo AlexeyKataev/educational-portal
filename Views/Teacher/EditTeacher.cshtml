@@ -99,29 +99,29 @@
 		</div>
 		<div>
 			<div class="form-group">
+				<input type="hidden" asp-for="Id" class="form-control" value=@ViewData["Id"] />
 				<label asp-for="UserId">Пользователь <span>*</span></label>
 				<select class="custom-select" asp-for="UserId">
 					@if (ViewBag.allUsers.Count > 0)
 					{
 						@foreach (var user in ViewBag.allUsers)
 						{
-							@if (user.Id == (int)ViewData["Id"])
+							@if (user.Id == (int)ViewData["UserId"])
 							{
-								<option value=@user.Id selected>@user.Login - @user.FirstName @user.MiddleName - @user.Email</option>
+								<option value=@user.Id selected>@user.Login - @user.FirstName @user.SecondName - @user.Email</option>
 							}	
 							else
 							{
-								<option value=@user.Id>@user.Login - @user.FirstName @user.MiddleName - @user.Email</option>
+								<option value=@user.Id>@user.Login - @user.FirstName @user.SecondName - @user.Email</option>
 							}					
 						}
 					}	
 					else
 					{
-						<option value=@ViewData["Id"] selected>Смена пользователя в данный момент недоступна</option>
+						<option value=@ViewData["UserId"] selected>Смена пользователя в данный момент недоступна</option>
 					}
 				</select>
 			</div>
-			<input type="hidden" asp-for="Id" class="form-control" value=@ViewData["Id"] />
 			<div class="form-group">
 				<label asp-for="Post">Должность</label>
 				<input type="text" asp-for="Post" class="form-control" value=@ViewData["Post"] />

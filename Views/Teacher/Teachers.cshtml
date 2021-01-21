@@ -95,6 +95,8 @@
 					<thead>
 						<tr class="text-align-top">
 							<td scope="col">ID</td>
+							<td scope="col">Должность</td>
+							<td scope="col">Специализация</td>
 							<td scope="col">Дата рождения</td>
 							<td scope="col">Момент регистрации</td>
 							<td scope="col">E-Mail</td>
@@ -104,6 +106,8 @@
 						<tr>
 							@{ DateTime dtBth = Convert.ToDateTime(@ViewBag.allUsers[i][0].DateOfBirth); }
 							<td>@ViewBag.allUsers[i][0].Id</td>
+							<td>@ViewBag.allTeachers[i].Post</td>
+							<td>@ViewBag.allTeachers[i].Specialization</td>
 							<td>@dtBth.ToString("dd.MM.yyyy")</td>
 							<td>@ViewBag.allUsers[i][0].DateAdded</td>
 							<td>@ViewBag.allUsers[i][0].Email</td>

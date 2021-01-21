@@ -79,11 +79,12 @@ namespace Dotnet.Controllers
 			{
 				Teacher teacherTmp = _context.Teachers.FirstOrDefault(u => (u.UserId == user.Id));
 
-				if (teacherTmp != null)
+				if (teacherTmp != null && teacherTmp.Id != teacher.Id)
 					users.RemoveAt(users.IndexOf(user));
 			}
 
-			ViewData["Id"]				= teacher.UserId;
+			ViewData["Id"]				= teacher.Id;
+			ViewData["UserId"]			= teacher.UserId;
 			ViewData["Post"]			= teacher.Post;
 			ViewData["Specialization"]	= teacher.Specialization;
 
@@ -94,29 +95,35 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> ApplyChangesUser(EditTeacherViewModel model)
+		public async Task<IActionResult> ApplyChangesTeacher(EditTeacherViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
-				User teacherEdt = await _context.Users.FirstOrDefaultAsync(u => (u.Id == model.Id));
+				Teacher teacherEdt = await _context.Teachers.FirstOrDefaultAsync(u => (u.Id == model.Id));
 
-				// !!!!! ТУТ КАКОЕ-ТО ПОЛНОЕ ГОВНО, НЕ ПОНЯЛ ЧТО НАПИСАЛ. ПОЗЖЕ ПОСМОТРЕТЬ
-				// ПОКА ПУСТЬ ТАК
+				// Проверка, есть ли данный пользователь в таблице преподавателей
+				Teacher teacherCheck = await _context.Teachers.FirstOrDefaultAsync(u => (u.UserId == model.UserId));
 
-				// Изменение записи об учётной записи в базе данных
-				Teacher teacherUpd = new Teacher { 
+				if (teacherCheck == null || teacherCheck.UserId == teacherEdt.UserId)
+				{
+					Teacher teacherUpd = new Teacher { 
+						Id 				= teacherEdt.Id,
+						UserId 			= model.UserId,
+						Post 			= model.Post,
+						Specialization 	= model.Specialization,
+						//Work			= teacherEdt.Work,
+					};
 
-				};
-
-				_context.Entry(teacherEdt).CurrentValues.SetValues(teacherUpd);
-				_context.SaveChanges();
+					_context.Entry(teacherEdt).CurrentValues.SetValues(teacherUpd);
+					_context.SaveChanges();
+				}
 				
-				return RedirectToAction("Users", "Admin");				
+				return RedirectToAction("Teachers", "Teacher");				
 			}
 			else
 				ModelState.AddModelError("", "Некорректные данные");
 			
-			return RedirectToAction("Users", "Admin");
+			return RedirectToAction("Teachers", "Teacher");
 		}
 
 		[HttpPost]
