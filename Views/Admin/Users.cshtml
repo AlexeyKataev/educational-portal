@@ -87,7 +87,7 @@
 	</ul>
 </div>
 <div class="col-sm-8">
-	<div class="shadow p-3 bg-white rounded">
+	<div class="shadow-sm card p-3 bg-white rounded">
 		<h6 class="mt-2 mb-2">Досупные для учётных записей роли</h6>
 		<ul>
 			<li>admin - главный администратор;</li>
@@ -105,7 +105,7 @@
 
 	@foreach (var role in ViewBag.allRoles)
 	{
-		<div class="shadow p-3 mt-4 mb-2 bg-white rounded">
+		<div class="shadow-sm card p-3 mt-4 mb-2 bg-white rounded">
 			Пользователи с ролью @role.Name
 		</div>
 		@foreach (var usersInRole in ViewBag.allUsers)
@@ -149,7 +149,9 @@
 							</table>
 							@if (User.IsInRole("admin"))
 							{
-								<a class="btn btn-light btn-block" asp-action="EditUser" asp-route-userId="@user.Id">Редактировать</a>
+								<a class="btn btn-light btn-block" asp-action="EditUser" asp-route-userId="@user.Id">
+									<i class="bi bi-pencil-square mr-2"></i>Редактировать
+								</a>
 							}
 						</div>
 					</div>

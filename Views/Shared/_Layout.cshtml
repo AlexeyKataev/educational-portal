@@ -33,24 +33,6 @@
 									<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Преподаватели</a>
 								</li>
 							}
-@* 							@if (User.IsInRole("teacher"))
-							{
-								<li class="nav-item">
-									<a class="nav-link text-dark" asp-area="" asp-controller="Work" asp-action="AddWork">Задания</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Учебные группы</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Файлы</a>
-								</li>
-							}
-							@if (User.IsInRole("admin") || User.IsInRole("systemAdmin") || User.IsInRole("humanResources"))
-							{
-								<li class="nav-item">
-									<a class="nav-link text-dark" asp-area="" asp-controller="Teacher" asp-action="AddTeacher">Преподаватели</a>
-								</li>
-							} *@
 							@if (User.IsInRole("admin") || User.IsInRole("systemAdmin") || User.IsInRole("humanResources") || User.IsInRole("teacher"))
 							{
 								<li class="nav-item">
@@ -63,7 +45,6 @@
 						</ul>
 					</div>
 				}
-
             </div>
         </nav>
     </header>

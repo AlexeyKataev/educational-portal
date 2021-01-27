@@ -1,9 +1,9 @@
 @{
-	ViewData["Title"] = "Добавить преподавателя";	
-    Layout = "~/Views/Teacher/_TeacherLayout.cshtml";
+	ViewData["Title"] = "Добавить группу или подгруппу";	
+    Layout = "~/Views/StudyGroup/_StudyGroupLayout.cshtml";
 }
 
-@model Dotnet.ViewModels.TeacherModel
+@model Dotnet.ViewModels.StudyGroup.StudyViewModel
 
 <div class="col-sm-4">
 	<ul class="list-group mb-4">
@@ -29,7 +29,7 @@
 	</ul>
 	<ul class="list-group mb-4">
 		<div class="list-group-item">Преподаватели</div>
-		<a class="list-group-item list-group-item-action active" asp-area="" asp-controller="Teacher" asp-action="AddTeacher">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Teacher" asp-action="AddTeacher">
 			<i class="bi bi-person-plus-fill mr-2"></i>Добавить преподавателя	
 		</a>
 		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Teacher" asp-action="Teachers">	
@@ -38,7 +38,7 @@
 	</ul>
 	<ul class="list-group mb-4">
 		<div class="list-group-item">Учебные группы</div>
-		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Teacher" asp-action="AddTeacher">
+		<a class="list-group-item list-group-item-action active" asp-area="" asp-controller="Teacher" asp-action="AddTeacher">
 			<i class="bi bi-plus-circle mr-2"></i>Добавить группу или подгруппу	
 		</a>
 		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Teacher" asp-action="Teachers">	
@@ -86,7 +86,10 @@
 	</ul>
 </div>
 <div class="col-sm-8">
-	<form asp-action="CreateTeacher" asp-controller="Teacher" asp-anti-forgery="true">
+	<div class="shadow-sm card p-3 mb-2 bg-white rounded">
+		Добавление учебной группы
+	</div>
+	<form asp-action="CreateStudyGroup" asp-controller="StudyGroup" asp-anti-forgery="true">
 		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
@@ -94,27 +97,66 @@
 		</div>
 		<div>
 			<div class="form-group">
-				<label asp-for="UserId">Пользователь <span>*</span></label>
-				<select asp-for="UserId" class="form-control" required>
-					@foreach (var user in ViewBag.allUsers)
-					{
-						<option value=@user.Id>@user.Login - @user.FirstName @user.SecondName - @user.Email</option>
-					}
-				</select>
-				<span asp-validation-for="UserId" />
+				<label asp-for="StudyGroupViewModel.Name">Название <span>*</span></label>
+				<input type="text" asp-for="StudyGroupViewModel.Name" class="form-control" />
+				<span asp-validation-for="StudyGroupViewModel.Name" />
 			</div>
 			<div class="form-group">
-				<label asp-for="Post">Должность</label>
-				<input type="text" asp-for="Post" class="form-control" />
-				<span asp-validation-for="Post" />
+				<label asp-for="StudyGroupViewModel.Code">Код</label>
+				<input type="text" asp-for="StudyGroupViewModel.Code" class="form-control" />
+				<span asp-validation-for="StudyGroupViewModel.Code" />
 			</div>
 			<div class="form-group">
-				<label asp-for="Specialization">Специализация</label>
-				<input type="text" asp-for="Specialization" class="form-control" />
-				<span asp-validation-for="Specialization" />
+				<label asp-for="StudyGroupViewModel.FormEducationId">Форма обучения <span>*</span></label>
+				<input type="text" asp-for="StudyGroupViewModel.FormEducationId" class="form-control" />
+				<span asp-validation-for="StudyGroupViewModel.FormEducationId" />
 			</div>
 			<div class="form-group">
-				<input type="submit" value="Добавить" class="btn btn-primary" />
+				<label asp-for="StudyGroupViewModel.DateStart">Дата начала обучения <span>*</span></label>
+				<input type="date" asp-for="StudyGroupViewModel.DateStart" class="form-control" />
+				<span asp-validation-for="StudyGroupViewModel.DateStart" />
+			</div>
+			<div class="form-group">
+				<label asp-for="StudyGroupViewModel.DateEnd">Дата окончания обучения <span>*</span></label>
+				<input type="date" asp-for="StudyGroupViewModel.DateEnd" class="form-control" />
+				<span asp-validation-for="StudyGroupViewModel.DateEnd" />
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">
+					<i class="bi bi-plus-circle mr-2"></i>Добавить группу
+				</button>
+			</div>
+		</div>
+	</form>
+	<div class="shadow-sm card p-3 mt-4 mb-2 bg-white rounded">
+		Добавление учебной подгруппы
+	</div>
+	<form asp-action="CreateStudySubgroup" asp-controller="StudyGroup" asp-anti-forgery="true">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div>
+			<div class="form-group">
+				<label asp-for="StudySubgroupViewModel.StudyGroupId">ID учебной группы <span>*</span></label>
+				<input type="text" asp-for="StudySubgroupViewModel.StudyGroupId" class="form-control" />
+				<span asp-validation-for="StudySubgroupViewModel.StudyGroupId" />
+			</div>
+			<div class="form-group">
+				<label asp-for="StudySubgroupViewModel.Name">Название <span>*</span></label>
+				<input type="text" asp-for="StudySubgroupViewModel.Name" class="form-control" />
+				<span asp-validation-for="StudySubgroupViewModel.Name" />
+			</div>
+			<div class="form-group">
+				<label asp-for="StudySubgroupViewModel.Code">Код</label>
+				<input type="text" asp-for="StudySubgroupViewModel.Code" class="form-control" />
+				<span asp-validation-for="StudySubgroupViewModel.Code" />
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">
+					<i class="bi bi-plus-circle mr-2"></i>Добавить подгруппу
+				</button>
 			</div>
 		</div>
 	</form>

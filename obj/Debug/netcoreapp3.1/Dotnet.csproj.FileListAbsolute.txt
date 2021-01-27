@@ -125,3 +125,8 @@ D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\staticwebassets\Dotnet.StaticWeb
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Dotnet.dll
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Dotnet.pdb
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Dotnet.genruntimeconfig.cache
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\StudyGroup\AddStudyGroup.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\StudyGroup\EditStudyGroup.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\StudyGroup\EditStudySubgroup.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\StudyGroup\Groups.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\StudyGroup\_StudyGroupLayout.cshtml.g.cs
