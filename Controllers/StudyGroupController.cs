@@ -68,7 +68,27 @@ namespace Dotnet.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> CreateStudyGroup(StudyGroup model)
 		{
-			return null;
+			if (ModelState.IsValid)
+			{
+				StudyGroup studyGroup = await _context.StudyGroups.FirstAsync(g => (g.Name == model.Name));
+				if (studyGroup == null)
+				{
+					studyGroup = new StudyGroup {
+						Name		= model.Name,
+						Code		= model.Code,
+						DateStart	= Convert.ToDateTime(model.DateStart),
+						DateEnd		= Convert.ToDateTime(model.DateEnd),
+					};
+
+					_context.StudyGroups.Add(studyGroup);
+					await _context.SaveChangesAsync();
+
+					RedirectToAction("AddStudyGroup", "StudyGroup");
+				}
+				else
+					ModelState.AddModelError("", "Некорретные данные");
+			}
+			return View(model);
 		}
 		
 		[HttpPost]
