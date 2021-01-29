@@ -15,7 +15,10 @@ namespace Dotnet.ViewModels
 		[Required(ErrorMessage = "Укажите дату окончания обучения")]
 		public System.DateTime DateEnd { get; set; }
 
-		[Required(ErrorMessage = "Укажите форму обучения")]
+		[Required(ErrorMessage = "Укажите специальность")]
 		public int FormEducationId { get; set; }
+
+		[Required(ErrorMessage = "Укажите форму обучения")]
+		public int SpecialtyId { get; set; }
     }
 }

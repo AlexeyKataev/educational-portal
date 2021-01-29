@@ -107,6 +107,11 @@
 				<span asp-validation-for="StudyGroupViewModel.Code" />
 			</div>
 			<div class="form-group">
+				<label asp-for="StudyGroupViewModel.SpecialtyId">Специальность <span>*</span></label>
+				<input type="text" asp-for="StudyGroupViewModel.SpecialtyId" class="form-control" />
+				<span asp-validation-for="StudyGroupViewModel.SpecialtyId" />
+			</div>
+			<div class="form-group">
 				<label asp-for="StudyGroupViewModel.FormEducationId">Форма обучения <span>*</span></label>
 				<input type="text" asp-for="StudyGroupViewModel.FormEducationId" class="form-control" />
 				<span asp-validation-for="StudyGroupViewModel.FormEducationId" />
