@@ -1,0 +1,47 @@
+@{
+	ViewData["Title"] = "Список учебных заведений";	
+    Layout = "~/Views/Institution/_InstitutionLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.InstitutionViewModel
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<div class="list-group-item">Навигация</div>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">
+			Навигационное меню
+		</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	@for (int i = 0; i < ViewBag.allInstitutions.Count; i++ )
+	{
+		<div class="card mb-2">
+			<div class="card-body overflow-auto">
+				<h6 class="card-title ">@ViewBag.allInstitutions[i].Name</h6>
+				<table class="table table-hover mb-0">
+					<thead>
+						<tr class="text-align-top">
+							<td scope="col">ID</td>
+							<td scope="col">Адрес</td>
+							<td scope="col">Контактная информация</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>@ViewBag.allInstitutions[i].Id</td>
+							<td>@ViewBag.allInstitutions[i].AddressId</td>
+							<td>@ViewBag.allInstitutions[i].ContactInformationId</td>
+						</tr>
+					</tbody>
+				</table>
+				@if (User.IsInRole("admin"))
+				{
+					<a class="btn btn-light btn-block" asp-action="EditInstitution" asp-route-teacherId="@ViewBag.allInstitutions[i].Id">
+						<i class="bi bi-pencil-square mr-2"></i>Редактировать
+					</a>
+				}
+			</div>
+		</div>
+	}
+</div>

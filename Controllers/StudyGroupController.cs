@@ -90,7 +90,10 @@ namespace Dotnet.Controllers
 				else
 					ModelState.AddModelError("", "Некорретные данные");
 			}
-			return View(model);
+			else
+				ModelState.AddModelError("", "Некорретные данные");
+
+			return RedirectToAction("AddStudyGroup", "StudyGroup");
 		}
 		
 		[HttpPost]

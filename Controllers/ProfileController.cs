@@ -81,9 +81,7 @@ namespace Dotnet.Controllers
 					return RedirectToAction("MyProfile", "Profile");
 				}
 				else
-				{
 					ModelState.AddModelError("", "Произошла ошибка");
-				}
 			}
 			else
 				ModelState.AddModelError("", "Некорректные данные");

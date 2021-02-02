@@ -30,6 +30,10 @@ namespace Dotnet.Controllers
 
         public IActionResult Institutions()
         {
+			List<Institution> institutions = _context.Institutions.ToList();
+
+			ViewBag.allInstitutions = institutions;
+
             return View();
         }
 
@@ -74,7 +78,10 @@ namespace Dotnet.Controllers
 				else
 					ModelState.AddModelError("", "Некорретные данные");
 			}
-			return View(model);
+			else 
+				ModelState.AddModelError("", "Некорректные данные");
+
+			return RedirectToAction("AddInstitution", "Institution");
 		}
 	}
 }

@@ -73,7 +73,10 @@ namespace Dotnet.Controllers
 				else
 					ModelState.AddModelError("", "Некорретные данные");
 			}
-			return View(model);
+			else
+				ModelState.AddModelError("", "Некорректные данные");
+
+			return RedirectToAction("AddFormEducation", "FormEducation");
 		}
 	}
 }
