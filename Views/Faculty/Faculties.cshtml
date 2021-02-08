@@ -1,0 +1,66 @@
+@{
+	ViewData["Title"] = "Список всех факультетов";	
+    Layout = "~/Views/Faculty/_FacultyLayout.cshtml";
+}
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<div class="list-group-item">Навигация</div>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">
+			Навигационное меню
+		</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	@for (int i = 0; i < ViewBag.allFaculties.Count; i++ )
+	{
+		<div class="card mb-2">
+			<div class="card-body overflow-auto">
+				<h6 class="card-title ">@ViewBag.allFaculties[i].Name, @ViewBag.allFaculties[i].Code</h6>
+				<table class="table table-hover mb-0">
+					<thead>
+						<tr class="text-align-top">
+							<td scope="col">ID</td>
+							<td scope="col">Учебное заведение</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>@ViewBag.allFaculties[i].Id</td>
+							@foreach (var institution in ViewBag.allInstitutions)
+							{
+								@if (institution.Id == ViewBag.allFaculties[i].Id)
+								{
+									<td>@institution.Name</td>
+								}
+							}
+						</tr>
+					</tbody>
+					<thead>
+						<tr class="text-align-top">
+							<td scope="col">Описание</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							@if (@ViewBag.allFaculties[i].About == null)
+							{
+								<td>Отсутствует</td>
+							}
+							else
+							{
+								<td>@ViewBag.allFaculties[i].About</td>
+							}
+						</tr>
+					</tbody>
+				</table>
+				@if (User.IsInRole("admin"))
+				{
+					<a class="btn btn-light btn-block" asp-action="EditFaculty" asp-route-facultyId="@ViewBag.allFaculties[i].Id">
+						<i class="bi bi-pencil-square mr-2"></i>Редактировать
+					</a>
+				}
+			</div>
+		</div>
+	}
+</div>

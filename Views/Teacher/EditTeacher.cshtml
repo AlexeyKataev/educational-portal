@@ -98,8 +98,8 @@
 			</button>
 		</div>
 		<div>
+			<input type="hidden" asp-for="Id" class="form-control" value=@ViewData["Id"] />
 			<div class="form-group">
-				<input type="hidden" asp-for="Id" class="form-control" value=@ViewData["Id"] />
 				<label asp-for="UserId">Пользователь <span>*</span></label>
 				<select class="custom-select" asp-for="UserId">
 					@if (ViewBag.allUsers.Count > 0)
