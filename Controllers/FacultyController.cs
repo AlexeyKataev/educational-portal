@@ -41,6 +41,10 @@ namespace Dotnet.Controllers
 
         public IActionResult AddFaculty()
         {
+			List<Institution> institutions = _context.Institutions.ToList();
+
+			ViewBag.allInstitutions = institutions;
+
             return View();
         }
 
@@ -53,6 +57,7 @@ namespace Dotnet.Controllers
 
 			List<Institution> institutions = _context.Institutions.ToList();
 
+			ViewData["Id"] 				= faculty.Id;
 			ViewData["Name"] 			= faculty.Name;
 			ViewData["Code"] 			= faculty.Code;
 			ViewData["About"] 			= faculty.About;
@@ -64,6 +69,7 @@ namespace Dotnet.Controllers
 		}	
 
 		[HttpPost]
+		[Authorize(Roles="admin")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> ApplyChangesFaculty(EditFacultyViewModel model)
 		{
@@ -73,11 +79,27 @@ namespace Dotnet.Controllers
 					f => (f.Id == model.Id)
 				);
 
-				// Проверка, УАПТОЛПЛТОПВЛ
-				Institution institution = await _context.Institutions.FirstOrDefaultAsync(
-					i => (i.Name == model.Name)
+				// Проверка наличия факультета с данными названием и кодом в указанном учебном заведении
+				Faculty nameAndCodeFacultyCheck = await _context.Faculties.FirstOrDefaultAsync(
+						f => ((f.Name == model.Name || f.Code == model.Code) && 
+						f.InstitutionId == model.InstitutionId && f.Id != model.Id
+					)
 				);
+
+				if (nameAndCodeFacultyCheck == null)
+				{
+					facultyEdt.Name 			= model.Name;
+					facultyEdt.Code 			= model.Code;
+					facultyEdt.InstitutionId 	= model.InstitutionId;
+					facultyEdt.About		 	= model.About;
+
+					_context.SaveChanges();
+				}
+				else
+					ModelState.AddModelError("", "В указанном учебном заведении уже есть факультет с таким названием и (или) кодом");
 			}
+			else 
+				ModelState.AddModelError("", "Некорректные данные");
 
 			return RedirectToAction("Faculties", "Faculty");
 		}

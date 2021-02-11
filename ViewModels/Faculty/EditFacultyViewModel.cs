@@ -1,11 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
+/* Редактирование факультета */
+
 namespace Dotnet.ViewModels
 {
-	/* 
-	Создание объекта "Факультет"	
-	*/
-
 	public class EditFacultyViewModel
 	{
 		[Required]

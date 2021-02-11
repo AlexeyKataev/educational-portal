@@ -96,11 +96,16 @@ D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.csh
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Admin\EditUser.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Users.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Admin\_AdminLayout.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Faculty\AddFaculty.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Faculty\EditFaculty.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Faculty\Faculties.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Faculty\_FacultyLayout.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\FormEducation\AddFormEducation.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\FormEducation\_FormEducationLayout.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Institution\AddInstitution.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Institution\Institutions.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Institution\_InstitutionLayout.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Profile\MyProfile.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Profile\_ProfileLayout.cshtml.g.cs
@@ -134,8 +139,3 @@ D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\staticwebassets\Dotnet.StaticWeb
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Dotnet.dll
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Dotnet.pdb
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Dotnet.genruntimeconfig.cache
-D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Institution\Institutions.cshtml.g.cs
-D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Faculty\AddFaculty.cshtml.g.cs
-D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Faculty\_FacultyLayout.cshtml.g.cs
-D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Faculty\Faculties.cshtml.g.cs
-D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Faculty\EditFaculty.cshtml.g.cs

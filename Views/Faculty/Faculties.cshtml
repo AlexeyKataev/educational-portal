@@ -22,6 +22,7 @@
 						<tr class="text-align-top">
 							<td scope="col">ID</td>
 							<td scope="col">Учебное заведение</td>
+							<td scope="col">Описание</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -34,15 +35,6 @@
 									<td>@institution.Name</td>
 								}
 							}
-						</tr>
-					</tbody>
-					<thead>
-						<tr class="text-align-top">
-							<td scope="col">Описание</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
 							@if (@ViewBag.allFaculties[i].About == null)
 							{
 								<td>Отсутствует</td>

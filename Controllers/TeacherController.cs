@@ -111,7 +111,6 @@ namespace Dotnet.Controllers
 						UserId 			= model.UserId,
 						Post 			= model.Post,
 						Specialization 	= model.Specialization,
-						//Work			= teacherEdt.Work,
 					};
 
 					_context.Entry(teacherEdt).CurrentValues.SetValues(teacherUpd);
