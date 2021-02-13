@@ -20,9 +20,9 @@ namespace Dotnet.Controllers
     public class StudyGroupController : Controller
     {
 		private ApplicationContext _context;
-		private readonly ILogger<HomeController> _logger;
+		private readonly ILogger<StudyGroupController> _logger;
 
-        public StudyGroupController(ILogger<HomeController> logger, ApplicationContext context)
+        public StudyGroupController(ILogger<StudyGroupController> logger, ApplicationContext context)
         {			
 			_context = context;
             _logger = logger;

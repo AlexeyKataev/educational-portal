@@ -1,0 +1,60 @@
+@{
+	ViewData["Title"] = "Список всех специальностей";	
+    Layout = "~/Views/Specialty/_SpecialtyLayout.cshtml";
+}
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<div class="list-group-item">Навигация</div>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">
+			Навигационное меню
+		</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	@foreach (var faculty in ViewBag.allFaculties)
+	{
+		@foreach (var institution in ViewBag.allInstitutions)
+		{
+			@if (faculty.InstitutionId == institution.Id)
+			{
+				<div class="shadow-sm card p-3 mb-2 bg-white rounded">
+					Специальности - @faculty.Name, @institution.Name
+				</div>	
+			}
+		}
+		@foreach (var specialty in ViewBag.allSpecialties)
+		{
+			@if (faculty.Id == specialty.FacultyId)
+			{
+				<div class="card mb-2">
+					<div class="card-body overflow-auto">
+						<h6 class="card-title">@specialty.Name</h6>
+						<table class="table table-hover mb-0">
+							<thead>
+								<tr class="text-align-top">
+									<td scope="col">ID</td>
+									<td scope="col">Код специальности</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>@specialty.Id</td>
+									<td>@specialty.Code</td>
+								</tr>
+							</tbody>
+						</table>
+						@if (User.IsInRole("admin"))
+						{
+							<a class="btn btn-light btn-block" asp-action="EditSpecialty" asp-route-specialtyId="@specialty.Id">
+								<i class="bi bi-pencil-square mr-2"></i>Редактировать
+							</a>
+						}
+					</div>
+				</div>
+			}
+		}
+
+
+	}
+</div>

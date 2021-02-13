@@ -20,9 +20,9 @@ namespace Dotnet.Controllers
     public class InstitutionController : Controller
     {
 		private ApplicationContext _context;
-		private readonly ILogger<HomeController> _logger;
+		private readonly ILogger<InstitutionController> _logger;
 
-        public InstitutionController(ILogger<HomeController> logger, ApplicationContext context)
+        public InstitutionController(ILogger<InstitutionController> logger, ApplicationContext context)
         {			
 			_context = context;
             _logger = logger;
@@ -57,7 +57,7 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateInstitution(Institution model)
+		public async Task<IActionResult> CreateInstitution(InstitutionViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -72,8 +72,6 @@ namespace Dotnet.Controllers
 
 					_context.Institutions.Add(institution);
 					await _context.SaveChangesAsync();
-
-					return RedirectToAction("AddInstitution", "Institution");
 				}
 				else
 					ModelState.AddModelError("", "Некорретные данные");

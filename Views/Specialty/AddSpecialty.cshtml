@@ -1,0 +1,63 @@
+@{
+	ViewData["Title"] = "Добавить специальность";	
+    Layout = "~/Views/Specialty/_SpecialtyLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.SpecialtyViewModel
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<div class="list-group-item">Навигация</div>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">
+			Навигационное меню
+		</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	<form asp-action="CreateSpecialty" asp-controller="Specialty" asp-anti-forgery="true">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div>
+			<div class="form-group">
+				<label asp-for="Name">Название специальности <span>*</span></label>
+				<input type="text" asp-for="Name" class="form-control" />
+				<span asp-validation-for="Name" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Code">Код специальности <span>*</span></label>
+				<input type="text" asp-for="Code" class="form-control" />
+				<span asp-validation-for="Code" />
+			</div>
+			<div class="form-group">
+				<label asp-for="FacultyId">Факультет <span>*</span></label>
+				<select class="custom-select" asp-for="FacultyId">
+					@if (ViewBag.allFaculties.Count > 0)
+					{
+						@foreach (var faculty in ViewBag.allFaculties)
+						{
+							@foreach (var institution in ViewBag.allInstitutions)
+							{
+								@if (faculty.InstitutionId == institution.Id)
+								{
+									<option value=@faculty.Id>@faculty.Id - @faculty.Name (@faculty.Code). Учебное заведение - @institution.Name</option>											
+								}
+							}
+						}
+					}	
+					else
+					{
+						<option>Нет доступных факультетов</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">
+					<i class="bi bi-plus-circle mr-2"></i>Добавить специальность
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

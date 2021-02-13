@@ -19,9 +19,9 @@ namespace Dotnet.Controllers
     public class ProfileController : Controller
     {
 		private ApplicationContext _context;
-		private readonly ILogger<HomeController> _logger;
+		private readonly ILogger<ProfileController> _logger;
 
-        public ProfileController(ILogger<HomeController> logger, ApplicationContext context)
+        public ProfileController(ILogger<ProfileController> logger, ApplicationContext context)
         {			
 			_context = context;
             _logger = logger;

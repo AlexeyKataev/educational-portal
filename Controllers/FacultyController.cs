@@ -20,9 +20,9 @@ namespace Dotnet.Controllers
     public class FacultyController : Controller
     {
 		private ApplicationContext _context;
-		private readonly ILogger<HomeController> _logger;
+		private readonly ILogger<FacultyController> _logger;
 
-        public FacultyController(ILogger<HomeController> logger, ApplicationContext context)
+        public FacultyController(ILogger<FacultyController> logger, ApplicationContext context)
         {			
 			_context = context;
             _logger = logger;
@@ -80,13 +80,16 @@ namespace Dotnet.Controllers
 				);
 
 				// Проверка наличия факультета с данными названием и кодом в указанном учебном заведении
-				Faculty nameAndCodeFacultyCheck = await _context.Faculties.FirstOrDefaultAsync(
-						f => ((f.Name == model.Name || f.Code == model.Code) && 
-						f.InstitutionId == model.InstitutionId && f.Id != model.Id
+				Faculty rowsCheck = await _context.Faculties.FirstOrDefaultAsync(
+					f => 
+					(
+						(f.Name == model.Name || f.Code == model.Code) && 
+						(f.InstitutionId == model.InstitutionId) && 
+						(f.Id != model.Id)
 					)
 				);
 
-				if (nameAndCodeFacultyCheck == null)
+				if (rowsCheck == null)
 				{
 					facultyEdt.Name 			= model.Name;
 					facultyEdt.Code 			= model.Code;

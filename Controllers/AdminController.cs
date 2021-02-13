@@ -18,9 +18,9 @@ namespace Dotnet.Controllers
     public class AdminController : Controller
     {
 		private ApplicationContext _context;
-		private readonly ILogger<HomeController> _logger;
+		private readonly ILogger<AdminController> _logger;
 
-        public AdminController(ILogger<HomeController> logger, ApplicationContext context)
+        public AdminController(ILogger<AdminController> logger, ApplicationContext context)
         {			
 			_context = context;
             _logger = logger;

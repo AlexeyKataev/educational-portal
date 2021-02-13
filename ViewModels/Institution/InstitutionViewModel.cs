@@ -7,8 +7,8 @@ namespace Dotnet.ViewModels
 		[Required(ErrorMessage = "Укажите название учебного заведения")]
 		public string Name { get; set; }
 
-		public string AddressId { get; set; }
+		public int AddressId { get; set; }
 
-		public string ContactInformationId { get; set; }
+		public int ContactInformationId { get; set; }
     }
 }

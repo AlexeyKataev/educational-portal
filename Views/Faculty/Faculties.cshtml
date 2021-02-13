@@ -30,7 +30,7 @@
 							<td>@ViewBag.allFaculties[i].Id</td>
 							@foreach (var institution in ViewBag.allInstitutions)
 							{
-								@if (institution.Id == ViewBag.allFaculties[i].Id)
+								@if (institution.Id == ViewBag.allFaculties[i].InstitutionId)
 								{
 									<td>@institution.Name</td>
 								}

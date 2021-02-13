@@ -1,11 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
+/* Объект "факультет" */
+
 namespace Dotnet.ViewModels
 {
-	/* 
-	Создание объекта "Факультет"	
-	*/
-
 	public class FacultyViewModel
 	{
 		[Required(ErrorMessage = "Укажите название факультета")]

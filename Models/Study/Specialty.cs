@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 
+/* Объект "специальность" */
+
 namespace Dotnet.Models
 {
-	/* 
-	Создание объекта "Специальность"	
-	*/
-
 	public class Specialty
 	{
 		public int Id { get; set; }

@@ -38,14 +38,7 @@
 					{
 						@foreach (var institution in ViewBag.allInstitutions)
 						{
-							@if (institution.Id == (int)ViewData["InstitutionId"])
-							{
-								<option value=@institution.Id selected>@institution.Id - @institution.Name</option>
-							}	
-							else
-							{
-								<option value=@institution.Id>@institution.Id - @institution.Name</option>
-							}					
+							<option value=@institution.Id>@institution.Id - @institution.Name</option>					
 						}
 					}	
 					else

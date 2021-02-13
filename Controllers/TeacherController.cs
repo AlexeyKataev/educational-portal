@@ -20,9 +20,9 @@ namespace Dotnet.Controllers
     public class TeacherController : Controller
     {
 		private ApplicationContext _context;
-		private readonly ILogger<HomeController> _logger;
+		private readonly ILogger<TeacherController> _logger;
 
-        public TeacherController(ILogger<HomeController> logger, ApplicationContext context)
+        public TeacherController(ILogger<TeacherController> logger, ApplicationContext context)
         {			
 			_context = context;
             _logger = logger;

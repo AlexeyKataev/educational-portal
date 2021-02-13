@@ -12,12 +12,12 @@ namespace Dotnet.Controllers
 {
     public class WorkController : Controller
     {
-		private UserContext db;
-		private readonly ILogger<HomeController> _logger;
+		private ApplicationContext _context;
+		private readonly ILogger<WorkController> _logger;
 
-        public WorkController(ILogger<HomeController> logger, UserContext context)
+        public WorkController(ILogger<WorkController> logger, ApplicationContext context)
         {			
-			db = context;
+			_context = context;
             _logger = logger;
         }
 
