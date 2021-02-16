@@ -36,8 +36,9 @@ namespace Dotnet.Models
 		public int StudyGroupId { get; set; }
 		public StudyGroup StudyGroup { get; set; }
 
-		// Много заданий - один предмет
-		public List<TypeWorks> TypesWorks { get; set; } = new List<TypeWorks>();
+		// Один тип работы - много заданий
+		public int TypeWorksId { get; set; }
+		public TypeWorks TypeWorks { get; set; }
 
 		// Много заданий - много файлов
 		public List<File> Files { get; set; } = new List<File>();

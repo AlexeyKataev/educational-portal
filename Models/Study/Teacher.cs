@@ -20,5 +20,8 @@ namespace Dotnet.Models
 
 		// Один преподавателей - одно задание
 		public Work Work { get; set; }
+
+		// Много преподавателей - много предметов
+		public List<Subject> Subjects { get; set; } = new List<Subject>();
 	}
 }
