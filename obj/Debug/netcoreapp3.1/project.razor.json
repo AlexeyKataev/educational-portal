@@ -14437,6 +14437,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\FormEducation\\EditFormEducation.cshtml",
+      "TargetPath": "Views\\FormEducation\\EditFormEducation.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Profile\\MyProfile.cshtml",
       "TargetPath": "Views\\Profile\\MyProfile.cshtml",
       "FileKind": "mvc"
@@ -14514,6 +14519,11 @@
     {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Admin\\Users.cshtml",
       "TargetPath": "Views\\Admin\\Users.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\FormEducation\\FormsEducation.cshtml",
+      "TargetPath": "Views\\FormEducation\\FormsEducation.cshtml",
       "FileKind": "mvc"
     },
     {

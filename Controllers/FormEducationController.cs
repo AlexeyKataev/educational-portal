@@ -30,6 +30,10 @@ namespace Dotnet.Controllers
 
         public IActionResult FormsEducation()
         {
+			List<FormEducation> formsEducation = _context.FormsEducation.ToList();
+
+			ViewBag.allFormsEducation = formsEducation;
+
             return View();
         }
 
@@ -39,36 +43,73 @@ namespace Dotnet.Controllers
         }
 
 		[HttpGet]
-		public IActionResult EditFormEducation(int groupId)
+		public IActionResult EditFormEducation(int formEducationId)
 		{
+			FormEducation formEducation = _context.FormsEducation.FirstOrDefault(
+				f => (f.Id == formEducationId)
+			);
+
+			ViewData["Id"]		= formEducation.Id;
+			ViewData["Name"]	= formEducation.Name;
+			ViewData["Code"]	= formEducation.Code;
+
 			return View();
 		}	
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> ApplyChangesFormEducation() // ПЕРЕДАТЬ МОДЕЛЬ
+		public async Task<IActionResult> ApplyChangesFormEducation(EditFormEducationViewModel model)
 		{
-			return null;
+			if (ModelState.IsValid)
+			{
+				FormEducation formEducationEdt = await _context.FormsEducation.FirstOrDefaultAsync(
+					f =>
+					(
+						f.Id == model.Id
+					)
+				);
+
+				FormEducation rowCheck = await _context.FormsEducation.FirstOrDefaultAsync(
+					f =>
+					(
+						f.Name == model.Name
+					)
+				);
+
+				if (rowCheck == null)
+				{
+					formEducationEdt.Name	= model.Name;
+					formEducationEdt.Code	= model.Code;
+
+					await _context.SaveChangesAsync();
+				}
+				else
+					ModelState.AddModelError("", "Данная форма обучения уже существует");
+			}
+			else
+				ModelState.AddModelError("", "Некорректные данные");
+
+			return RedirectToAction("FormsEducation", "FormEducation");
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateFormEducation(FormEducation model)
+		public async Task<IActionResult> CreateFormEducation(FormEducationViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
-				FormEducation formEducation = await _context.FormsEducation.FirstOrDefaultAsync(f => (f.Name == model.Name)); // ПЕРЕДЕЛАТЬ
+				FormEducation formEducation = await _context.FormsEducation.FirstOrDefaultAsync(
+					f => 
+					(
+						(f.Name == model.Name)
+					)
+				);
 				if (formEducation == null)
-				{
-					formEducation = new FormEducation {
-						Name	= model.Name,
-						Code	= model.Code,
-					};
+				{					
+					formEducation.Name	= model.Name;
+					formEducation.Code	= model.Code;
 
-					_context.FormsEducation.Add(formEducation);
 					await _context.SaveChangesAsync();
-
-					return RedirectToAction("AddFormEducation", "FormEducation");
 				}
 				else
 					ModelState.AddModelError("", "Некорретные данные");

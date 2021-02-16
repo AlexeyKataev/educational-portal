@@ -1,0 +1,39 @@
+@{
+	ViewData["Title"] = "Редактировать форму обучения";
+    Layout = "~/Views/FormEducation/_FormEducationLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.EditFormEducationViewModel
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Faculty" asp-action="Faculties">
+			<i class="bi bi-back mr-2"></i>Назад
+		</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	<form asp-action="ApplyChangesFormEducation" asp-controller="FormEducation" asp-anti-forgery="true">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div>
+			<input type="hidden" asp-for="Id" class="form-control" value=@ViewData["Id"] />
+			<div class="form-group">
+				<label asp-for="Name">Название <span>*</span></label>
+				<input type="text" asp-for="Name" class="form-control" value=@ViewData["Name"] />
+				<span asp-validation-for="Name" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Code">Код формы обучения</label>
+				<input type="text" asp-for="Code" class="form-control" value=@ViewData["Code"] />
+				<span asp-validation-for="Code" />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Сохранить" class="btn btn-primary" />
+			</div>
+		</div>
+	</form>
+</div>

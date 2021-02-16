@@ -96,7 +96,7 @@ namespace Dotnet.Controllers
 					facultyEdt.InstitutionId 	= model.InstitutionId;
 					facultyEdt.About		 	= model.About;
 
-					_context.SaveChanges();
+					await _context.SaveChangesAsync();
 				}
 				else
 					ModelState.AddModelError("", "В указанном учебном заведении уже есть факультет с таким названием и (или) кодом");

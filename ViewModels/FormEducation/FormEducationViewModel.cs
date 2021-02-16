@@ -1,11 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
+/* Объект "Форма обучения" */
+
 namespace Dotnet.ViewModels
 {
-	/* 
-	Создание объекта "Форма обучения"	
-	*/
-
 	public class FormEducationViewModel
 	{
 		[Required(ErrorMessage = "Укажите название формы обучения")]

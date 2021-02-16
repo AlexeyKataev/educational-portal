@@ -100,7 +100,7 @@ namespace Dotnet.Controllers
 					specialtyEdt.Code		= model.Code;
 					specialtyEdt.FacultyId	= model.FacultyId;
 
-					_context.SaveChanges();
+					await _context.SaveChangesAsync();
 				}
 				else
 					ModelState.AddModelError("", "В указанном факультете уже есть специальнось с таким названием и (или) кодом");

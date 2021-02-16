@@ -143,3 +143,5 @@ D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Specialty\AddSpecial
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Specialty\EditSpecialty.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Specialty\Specialties.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Specialty\_SpecialtyLayout.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\FormEducation\FormsEducation.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\FormEducation\EditFormEducation.cshtml.g.cs

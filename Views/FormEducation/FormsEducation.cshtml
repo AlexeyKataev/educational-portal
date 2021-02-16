@@ -1,0 +1,43 @@
+@{
+	ViewData["Title"] = "Список всех форм обучения";	
+    Layout = "~/Views/FormEducation/_FormEducationLayout.cshtml";
+}
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<div class="list-group-item">Навигация</div>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">
+			Навигационное меню
+		</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	@foreach (var fE in ViewBag.allFormsEducation)
+	{
+		<div class="card mb-2">
+			<div class="card-body overflow-auto">
+				<h6 class="card-title ">@fE.Name</h6>
+				<table class="table table-hover mb-0">
+					<thead>
+						<tr class="text-align-top">
+							<td scope="col">ID</td>
+							<td scope="col">Код</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>@fE.Id</td>
+							<td>@fE.Code</td>
+						</tr>
+					</tbody>
+				</table>
+				@if (User.IsInRole("admin"))
+				{
+					<a class="btn btn-light btn-block" asp-action="EditFormEducation" asp-route-formEducationId="@fE.Id">
+						<i class="bi bi-pencil-square mr-2"></i>Редактировать
+					</a>
+				}
+			</div>
+		</div>
+	}
+</div>
