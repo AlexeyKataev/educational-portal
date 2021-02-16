@@ -1,19 +1,23 @@
 @{
 	ViewData["Title"] = "Редактировать пользователя";
-    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+    Layout = "~/Views/User/_UserLayout.cshtml";
 }
 
 @model Dotnet.ViewModels.EditUserViewModel
 
 <div class="col-sm-4">
 	<ul class="list-group mb-4">
-		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Admin" asp-action="Users">
-			<i class="bi bi-back mr-2"></i>Назад
+		<div class="list-group-item">Пользователи</div>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="" asp-action="">
+			<i class="bi bi-person-plus-fill mr-2"></i>Добавить пользователя (не реализовано)
+		</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="User" asp-action="Users">
+			<i class="bi bi-person-lines-fill mr-2"></i>Список пользователей
 		</a>
 	</ul>
 </div>
 <div class="col-sm-8">
-	<div class="shadow p-3 mb-4 bg-white rounded">
+	<div class="shadow-sm card p-3 mb-2 bg-white rounded">
 		<h6 class="mt-2 mb-2">Досупные для учётных записей роли</h6>
 		<ul>
 			<li>admin - главный администратор;</li>
@@ -28,7 +32,7 @@
 			<li>user - пользователь.</li>
 		</ul>
 	</div>
-	<form asp-action="ApplyChangesUser" asp-controller="Admin" asp-anti-forgery="true">
+	<form asp-action="ApplyChangesUser" asp-controller="User" asp-anti-forgery="true">
 		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>

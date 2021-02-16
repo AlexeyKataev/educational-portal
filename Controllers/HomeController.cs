@@ -12,12 +12,12 @@ namespace Dotnet.Controllers
 {
     public class HomeController : Controller
     {
-		private UserContext db;
+		private ApplicationContext _context;
 		private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, UserContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationContext context)
         {			
-			db = context;
+			_context = context;
             _logger = logger;
         }
 
@@ -26,6 +26,12 @@ namespace Dotnet.Controllers
         {
             return View();
         }
+
+		[Authorize]
+		public IActionResult Services()
+		{
+			return View();
+		}
 
         public IActionResult Privacy()
         {
@@ -37,13 +43,5 @@ namespace Dotnet.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-		/*
-		[HttpPost] 
-		public async Task<IActionResult> Logout() 
-		{ 
-			await _signManager.SignOutAsync(); 
-			return RedirectToAction("Index", "Home"); 
-		}
-		*/
 	}
 }

@@ -93,9 +93,6 @@ D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Dotnet.RazorCoreGenerate.cache
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Account\Recovery.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
-D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Admin\EditUser.cshtml.g.cs
-D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Users.cshtml.g.cs
-D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Admin\_AdminLayout.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Faculty\AddFaculty.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Faculty\EditFaculty.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Faculty\Faculties.cshtml.g.cs
@@ -145,3 +142,8 @@ D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Specialty\Specialtie
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Specialty\_SpecialtyLayout.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\FormEducation\FormsEducation.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\FormEducation\EditFormEducation.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Home\_HomeLayout.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Home\Services.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\User\EditUser.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\User\Users.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\User\_UserLayout.cshtml.g.cs

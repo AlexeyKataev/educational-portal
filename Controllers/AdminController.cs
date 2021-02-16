@@ -15,12 +15,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Dotnet.Controllers
 {
 	[Authorize(Roles="admin, systemAdmin")]
-    public class AdminController : Controller
+    public class UserController : Controller
     {
 		private ApplicationContext _context;
-		private readonly ILogger<AdminController> _logger;
+		private readonly ILogger<UserController> _logger;
 
-        public AdminController(ILogger<AdminController> logger, ApplicationContext context)
+        public UserController(ILogger<UserController> logger, ApplicationContext context)
         {			
 			_context = context;
             _logger = logger;
@@ -109,18 +109,14 @@ namespace Dotnet.Controllers
 
 					_context.Entry(userEdt).CurrentValues.SetValues(userUpd);
 					_context.SaveChanges();
-					
-					return RedirectToAction("Users", "Admin");
 				}
 				else
-				{
 					ModelState.AddModelError("", "Произошла ошибка");
-				}
 			}
 			else
 				ModelState.AddModelError("", "Некорректные данные");
 			
-			return RedirectToAction("Users", "Admin");
+			return RedirectToAction("Users", "User");
 		}
     }
 }

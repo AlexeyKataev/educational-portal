@@ -14402,6 +14402,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\User\\_UserLayout.cshtml",
+      "TargetPath": "Views\\User\\_UserLayout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Home\\Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
@@ -14419,6 +14424,11 @@
     {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Profile\\_ProfileLayout.cshtml",
       "TargetPath": "Views\\Profile\\_ProfileLayout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\User\\EditUser.cshtml",
+      "TargetPath": "Views\\User\\EditUser.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14472,6 +14482,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\User\\Users.cshtml",
+      "TargetPath": "Views\\User\\Users.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\StudyGroup\\EditStudyGroup.cshtml",
       "TargetPath": "Views\\StudyGroup\\EditStudyGroup.cshtml",
       "FileKind": "mvc"
@@ -14497,11 +14512,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Admin\\EditUser.cshtml",
-      "TargetPath": "Views\\Admin\\EditUser.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\FormEducation\\_FormEducationLayout.cshtml",
       "TargetPath": "Views\\FormEducation\\_FormEducationLayout.cshtml",
       "FileKind": "mvc"
@@ -14517,11 +14527,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Admin\\Users.cshtml",
-      "TargetPath": "Views\\Admin\\Users.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\FormEducation\\FormsEducation.cshtml",
       "TargetPath": "Views\\FormEducation\\FormsEducation.cshtml",
       "FileKind": "mvc"
@@ -14529,6 +14534,11 @@
     {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Teacher\\EditTeacher.cshtml",
       "TargetPath": "Views\\Teacher\\EditTeacher.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Home\\_HomeLayout.cshtml",
+      "TargetPath": "Views\\Home\\_HomeLayout.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14557,6 +14567,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Home\\Services.cshtml",
+      "TargetPath": "Views\\Home\\Services.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\StudyGroup\\Groups.cshtml",
       "TargetPath": "Views\\StudyGroup\\Groups.cshtml",
       "FileKind": "mvc"
@@ -14579,11 +14594,6 @@
     {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\StudyGroup\\EditStudySubgroup.cshtml",
       "TargetPath": "Views\\StudyGroup\\EditStudySubgroup.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Admin\\_AdminLayout.cshtml",
-      "TargetPath": "Views\\Admin\\_AdminLayout.cshtml",
       "FileKind": "mvc"
     },
     {
