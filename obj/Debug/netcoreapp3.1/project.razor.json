@@ -14412,6 +14412,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\TypeWork\\EditTypeWorks.cshtml",
+      "TargetPath": "Views\\TypeWork\\EditTypeWorks.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Work\\EditsRequired.cshtml",
       "TargetPath": "Views\\Work\\EditsRequired.cshtml",
       "FileKind": "mvc"
@@ -14489,6 +14494,11 @@
     {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\StudyGroup\\EditStudyGroup.cshtml",
       "TargetPath": "Views\\StudyGroup\\EditStudyGroup.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\TypeWork\\TypesWorks.cshtml",
+      "TargetPath": "Views\\TypeWork\\TypesWorks.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14597,6 +14607,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\TypeWork\\_TypeWorksLayout.cshtml",
+      "TargetPath": "Views\\TypeWork\\_TypeWorksLayout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"
@@ -14624,6 +14639,11 @@
     {
       "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\Specialty\\EditSpecialty.cshtml",
       "TargetPath": "Views\\Specialty\\EditSpecialty.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dotnet\\CollegePortal\\Views\\TypeWork\\AddTypeWorks.cshtml",
+      "TargetPath": "Views\\TypeWork\\AddTypeWorks.cshtml",
       "FileKind": "mvc"
     },
     {

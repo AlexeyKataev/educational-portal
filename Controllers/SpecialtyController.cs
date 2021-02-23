@@ -113,7 +113,7 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateSpecialty(Specialty model)
+		public async Task<IActionResult> CreateSpecialty(SpecialtyViewModel model)
 		{
 			if (ModelState.IsValid)
 			{

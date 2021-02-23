@@ -109,7 +109,7 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateFaculty(Faculty model)
+		public async Task<IActionResult> CreateFaculty(FacultyViewModel model)
 		{
 			if (ModelState.IsValid)
 			{

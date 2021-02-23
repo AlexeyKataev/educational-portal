@@ -66,7 +66,7 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateStudyGroup(StudyGroup model)
+		public async Task<IActionResult> CreateStudyGroup(StudyGroupViewModel model)
 		{
 			if (ModelState.IsValid)
 			{

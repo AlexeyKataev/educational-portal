@@ -147,3 +147,7 @@ D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\Home\Services.cshtml
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\User\EditUser.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\User\Users.cshtml.g.cs
 D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\User\_UserLayout.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\TypeWork\AddTypeWorks.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\TypeWork\TypesWorks.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\TypeWork\_TypeWorksLayout.cshtml.g.cs
+D:\Dotnet\CollegePortal\obj\Debug\netcoreapp3.1\Razor\Views\TypeWork\EditTypeWorks.cshtml.g.cs
