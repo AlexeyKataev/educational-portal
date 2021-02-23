@@ -77,8 +77,6 @@ namespace Dotnet.Controllers
 
 					_context.Entry(userEdt).CurrentValues.SetValues(userUpd);
 					_context.SaveChanges();
-
-					return RedirectToAction("MyProfile", "Profile");
 				}
 				else
 					ModelState.AddModelError("", "Произошла ошибка");

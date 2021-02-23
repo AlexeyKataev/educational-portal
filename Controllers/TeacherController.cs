@@ -116,8 +116,8 @@ namespace Dotnet.Controllers
 					_context.Entry(teacherEdt).CurrentValues.SetValues(teacherUpd);
 					_context.SaveChanges();
 				}
-				
-				return RedirectToAction("Teachers", "Teacher");				
+				else
+				ModelState.AddModelError("", "Некорректные данные");
 			}
 			else
 				ModelState.AddModelError("", "Некорректные данные");

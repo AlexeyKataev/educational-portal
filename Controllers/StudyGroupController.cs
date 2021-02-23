@@ -84,8 +84,6 @@ namespace Dotnet.Controllers
 
 					_context.StudyGroups.Add(studyGroup);
 					await _context.SaveChangesAsync();
-
-					return RedirectToAction("AddStudyGroup", "StudyGroup");
 				}
 				else
 					ModelState.AddModelError("", "Некорретные данные");
