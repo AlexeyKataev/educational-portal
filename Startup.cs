@@ -32,9 +32,6 @@ namespace Dotnet
 
 			/* Установка контекста для развёртывания веб-приложения */
 
-			// Контекст для базы данных по пользоателям
-            services.AddDbContext<UserContext>(options => options.UseSqlServer(connection));
-
 			// Контекст для базы данных по ролям и базовым свойствам пользователей
 			services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
  
