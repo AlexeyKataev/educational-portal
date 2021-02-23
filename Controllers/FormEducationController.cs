@@ -72,7 +72,7 @@ namespace Dotnet.Controllers
 				FormEducation rowCheck = await _context.FormsEducation.FirstOrDefaultAsync(
 					f =>
 					(
-						f.Name == model.Name
+						((f.Name == model.Name) || (f.Code == model.Code)) && (f.Id != model.Id)
 					)
 				);
 
@@ -101,14 +101,18 @@ namespace Dotnet.Controllers
 				FormEducation formEducation = await _context.FormsEducation.FirstOrDefaultAsync(
 					f => 
 					(
-						(f.Name == model.Name)
+						(f.Name == model.Name) || 
+						(f.Code == model.Code)
 					)
 				);
 				if (formEducation == null)
 				{					
-					formEducation.Name	= model.Name;
-					formEducation.Code	= model.Code;
-
+					formEducation = new FormEducation {
+						Name	= model.Name,
+						Code	= model.Code,
+					};			
+					
+					_context.FormsEducation.Add(formEducation);
 					await _context.SaveChangesAsync();
 				}
 				else
