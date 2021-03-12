@@ -33,8 +33,8 @@ namespace Dotnet.Models
 		public Subject Subject { get; set; }
 
 		// Много заданий - один одна группа
-		public int StudyGroupId { get; set; }
-		public StudyGroup StudyGroup { get; set; }
+		//public int StudyGroupId { get; set; }
+		//public StudyGroup StudyGroup { get; set; }
 
 		// Один тип работы - много заданий
 		public int TypeWorksId { get; set; }
