@@ -11,30 +11,42 @@
 	</ul>
 </div>
 <div class="col-sm-8">
-	@for (int i = 0; i < ViewBag.allTypeWorks.Count; i++ )
+	@if (ViewBag.allTypeWorks.Count != 0)
 	{
-		<div class="card mb-2">
-			<div class="card-body overflow-auto">
-				<h6 class="card-title ">@ViewBag.allTypeWorks[i].Name</h6>
-				<table class="table table-hover mb-0">
-					<thead>
-						<tr class="text-align-top">
-							<td scope="col">ID</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>@ViewBag.allTypeWorks[i].Id</td>
-						</tr>
-					</tbody>
-				</table>
-				@if (User.IsInRole("admin"))
-				{
-					<a class="btn btn-light btn-block" asp-action="EditTypeWorks" asp-route-typeWorkId="@ViewBag.allTypeWorks[i].Id">
-						<i class="bi bi-pencil-square mr-2"></i>Редактировать
-					</a>
-				}
+		@for (int i = 0; i < ViewBag.allTypeWorks.Count; i++ )
+		{
+			<div class="card mb-2">
+				<div class="card-body overflow-auto">
+					<h6 class="card-title ">@ViewBag.allTypeWorks[i].Name</h6>
+					<table class="table table-hover mb-0">
+						<thead>
+							<tr class="text-align-top">
+								<td scope="col">ID</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>@ViewBag.allTypeWorks[i].Id</td>
+							</tr>
+						</tbody>
+					</table>
+					@if (User.IsInRole("admin"))
+					{
+						<a class="btn btn-light btn-block" asp-action="EditTypeWorks" asp-route-typeWorkId="@ViewBag.allTypeWorks[i].Id">
+							<i class="bi bi-pencil-square mr-2"></i>Редактировать
+						</a>
+					}
+				</div>
 			</div>
+		}
+	}
+	else 
+	{
+		<div class="mb-3">
+			<div class="mb-2">Виды работ отсутствуют</div>	
+			<a asp-area="" asp-controller="TypeWork" asp-action="AddTypeWorks" class="btn btn-light flex-fill">
+				<i class="bi bi-plus-circle mr-2"></i> Добавить вид работ
+			</a>
 		</div>
 	}
 </div>

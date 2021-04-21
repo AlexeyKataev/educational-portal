@@ -32,8 +32,8 @@
 
 	@foreach (var role in ViewBag.allRoles)
 	{
-		<div class="shadow-sm card p-3 mb-2 bg-white rounded">
-			Пользователи с ролью @role.Name
+		<div class="shadow-sm card p-3 mb-2 bg-white rounded">			
+			<h6>Пользователи с ролью @role.Name</h6>
 		</div>
 		@foreach (var usersInRole in ViewBag.allUsers)
 		{

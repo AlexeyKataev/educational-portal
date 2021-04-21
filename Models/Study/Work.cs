@@ -42,6 +42,9 @@ namespace Dotnet.Models
 
 		// Много заданий - много файлов
 		public List<File> Files { get; set; } = new List<File>();
+
+		// Много подгрупп - много заданий
+		public List<StudySubgroup> StudySubgroups { get; set; } = new List<StudySubgroup>();
 	
 	}
 }

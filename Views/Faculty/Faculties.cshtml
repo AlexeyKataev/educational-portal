@@ -11,47 +11,50 @@
 	</ul>
 </div>
 <div class="col-sm-8">
-	@for (int i = 0; i < ViewBag.allFaculties.Count; i++ )
+	@foreach (var institution in ViewBag.allInstitutions)
 	{
-		<div class="card mb-2">
-			<div class="card-body overflow-auto">
-				<h6 class="card-title ">@ViewBag.allFaculties[i].Name, @ViewBag.allFaculties[i].Code</h6>
-				<table class="table table-hover mb-0">
-					<thead>
-						<tr class="text-align-top">
-							<td scope="col">ID</td>
-							<td scope="col">Учебное заведение</td>
-							<td scope="col">Описание</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>@ViewBag.allFaculties[i].Id</td>
-							@foreach (var institution in ViewBag.allInstitutions)
-							{
-								@if (institution.Id == ViewBag.allFaculties[i].InstitutionId)
-								{
-									<td>@institution.Name</td>
-								}
-							}
-							@if (@ViewBag.allFaculties[i].About == null)
-							{
-								<td>Отсутствует</td>
-							}
-							else
-							{
-								<td>@ViewBag.allFaculties[i].About</td>
-							}
-						</tr>
-					</tbody>
-				</table>
-				@if (User.IsInRole("admin"))
-				{
-					<a class="btn btn-light btn-block" asp-action="EditFaculty" asp-route-facultyId="@ViewBag.allFaculties[i].Id">
-						<i class="bi bi-pencil-square mr-2"></i>Редактировать
-					</a>
-				}
-			</div>
+		<div class="shadow-sm card p-3 mb-2 bg-white rounded">
+			<h6>Факультеты учебного заведения @institution.Name</h6>
 		</div>
+		@foreach (var faculty in ViewBag.allFaculties)
+		{
+			@if (faculty.InstitutionId == institution.Id) 
+			{
+				<div class="card mb-2">
+					<div class="card-body overflow-auto">
+						<h6 class="card-title">@faculty.Name, @faculty.Code</h6>
+						<table class="table table-hover mb-0">
+							<thead>
+								<tr class="text-align-top">
+									<td scope="col">ID</td>
+									<td scope="col">Учебное заведение</td>
+									<td scope="col">Описание</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>@faculty.Id</td>
+									<td>@institution.Name</td>
+									@if (faculty.About == null)
+									{
+										<td>Отсутствует</td>
+									}
+									else
+									{
+										<td>@faculty.About</td>
+									}
+								</tr>
+							</tbody>
+						</table>
+						@if (User.IsInRole("admin"))
+						{
+							<a class="btn btn-light btn-block" asp-action="EditFaculty" asp-route-facultyId="@faculty.Id">
+								<i class="bi bi-pencil-square mr-2"></i>Редактировать
+							</a>
+						}
+					</div>
+				</div>
+			}
+		}
 	}
 </div>

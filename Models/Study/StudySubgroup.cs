@@ -20,7 +20,7 @@ namespace Dotnet.Models
 		public int StudyGroupId { get; set; }
 		public StudyGroup StudyGroup { get; set; }
 
-		// Одна подгруппа - много заданий
+		// Много подгрупп - много заданий
 		public List<Work> Works { get; set; } = new List<Work>();
 	}
 }
