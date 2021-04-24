@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Dotnet.Models.Study;
 
 namespace Dotnet.Models
 {
@@ -18,6 +19,6 @@ namespace Dotnet.Models
 		public List<Work> Works { get; set; } = new List<Work>();
 
 		// Много предметов - много преподавателей
-		public List<Teacher> Teachers { get; set; } = new List<Teacher>();
+		public List<SubjectTeacher> SubjectTeacher { get; set; } = new List<SubjectTeacher>();
 	}
 }

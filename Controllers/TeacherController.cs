@@ -12,6 +12,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Dotnet.ViewModels.Teacher;
+using Dotnet.Models.Study;
 
 namespace Dotnet.Controllers
 {
@@ -83,12 +85,16 @@ namespace Dotnet.Controllers
 					users.RemoveAt(users.IndexOf(user));
 			}
 
+			// Получить список всех учебных предметов
+			List<Subject> subjects = _context.Subjects.ToList();
+
 			ViewData["Id"]				= teacher.Id;
 			ViewData["UserId"]			= teacher.UserId;
 			ViewData["Post"]			= teacher.Post;
 			ViewData["Specialization"]	= teacher.Specialization;
 
 			ViewBag.allUsers = users;
+			ViewBag.allSubjects = subjects;
 
 			return View();
 		}
@@ -123,6 +129,38 @@ namespace Dotnet.Controllers
 				ModelState.AddModelError("", "Некорректные данные");
 			
 			return RedirectToAction("Teachers", "Teacher");
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> ApplyChangesSubjectsForTeacher(SubjectsForTeacherViewModel model) 
+		{
+			if (ModelState.IsValid)
+			{
+				Teacher teacherCheck = await _context.Teachers.FirstOrDefaultAsync(t => (t.Id == model.Id));
+				
+				if (teacherCheck != null)
+				{
+					foreach (var subjectId in model.SubjectsId)
+					{
+						var subjectTeacherCheck = _context.SubjectTeacher.Where(r => (r.TeacherId == model.Id) && (r.SubjectId == subjectId)).ToList();
+						
+						// Если выбранный преподаватель не ведёт данный предмет - добавить
+						if (subjectTeacherCheck.Count == 0)
+						{
+							SubjectTeacher subjectTeacher = new SubjectTeacher {
+								TeacherId	= model.Id,
+								SubjectId	= subjectId,
+							};
+
+							await _context.SubjectTeacher.AddAsync(subjectTeacher);
+							await _context.SaveChangesAsync();
+						}
+					}
+				}
+				else ModelState.AddModelError("", "Некорректные данные");
+			}
+			return RedirectToAction("Teachers", "Teacher");	
 		}
 
 		[HttpPost]

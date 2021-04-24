@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Dotnet.Models.Study;
+using System.ComponentModel.DataAnnotations;
  
 namespace Dotnet.Models
 {
@@ -20,6 +22,7 @@ namespace Dotnet.Models
 		public DbSet<Teacher> Teachers { get; set; }
 		public DbSet<TypeWorks> TypesWorks { get; set; }
 		public DbSet<Work> Works { get; set; }
+		public DbSet<SubjectTeacher> SubjectTeacher { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)

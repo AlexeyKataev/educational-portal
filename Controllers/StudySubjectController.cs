@@ -96,7 +96,7 @@ namespace Dotnet.Controllers
 			else
 				ModelState.AddModelError("", "Некорректные данные");
 
-			return RedirectToAction("StudySubjects", "StudySubject");
+			return RedirectToAction("AddStudySubject", "StudySubject");
 		}
 	}
 }
