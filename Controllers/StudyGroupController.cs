@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Dotnet.ViewModels.StudyGroup;
 
 namespace Dotnet.Controllers
 {
@@ -28,15 +29,12 @@ namespace Dotnet.Controllers
             _logger = logger;
         }
 
-        public IActionResult Groups()
+        public IActionResult StudyGroups()
         {
             return View();
         }
 
-        public IActionResult AddStudyGroup()
-        {
-            return View();
-        }
+        public IActionResult AddStudyGroup() => View();
 
 		[HttpGet]
 		public IActionResult EditStudyGroup(int groupId)
@@ -66,20 +64,22 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateStudyGroup(StudyGroupViewModel model)
+		public async Task<IActionResult> CreateStudyGroup(StudyGroupAndSubgroupViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
-				StudyGroup studyGroup = await _context.StudyGroups.FirstOrDefaultAsync(g => (g.Name == model.Name));
+				StudyGroup studyGroup = await _context.StudyGroups.FirstOrDefaultAsync(g => 
+					(g.Name == model.StudyGroupViewModel.Name) && (g.SpecialtyId == model.StudyGroupViewModel.SpecialtyId)
+				);
 				if (studyGroup == null)
 				{
 					studyGroup = new StudyGroup {
-						Name			= model.Name,
-						Code			= model.Code,
-						DateStart		= Convert.ToDateTime(model.DateStart),
-						DateEnd			= Convert.ToDateTime(model.DateEnd),
-						FormEducationId = model.FormEducationId,
-						SpecialtyId		= model.SpecialtyId,
+						Name			= model.StudyGroupViewModel.Name,
+						Code			= model.StudyGroupViewModel.Code,
+						DateStart		= Convert.ToDateTime(model.StudyGroupViewModel.DateStart),
+						DateEnd			= Convert.ToDateTime(model.StudyGroupViewModel.DateEnd),
+						FormEducationId = model.StudyGroupViewModel.FormEducationId,
+						SpecialtyId		= model.StudyGroupViewModel.SpecialtyId,
 					};
 
 					_context.StudyGroups.Add(studyGroup);
@@ -96,9 +96,30 @@ namespace Dotnet.Controllers
 		
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateStudySubgroup(StudySubgroup model)
+		public async Task<IActionResult> CreateStudySubgroup(StudyGroupAndSubgroupViewModel model)
 		{
-			return null;
+			if (ModelState.IsValid)
+			{
+				StudySubgroup studySubgroup = await _context.StudySubgroups.FirstOrDefaultAsync(s => 
+					(s.StudyGroupId == model.StudySubgroupViewModel.StudyGroupId) && (s.Name == model.StudySubgroupViewModel.Name)
+				);
+				if (studySubgroup == null)
+				{
+					studySubgroup = new StudySubgroup {
+						Name			= model.StudySubgroupViewModel.Name,
+						Code			= model.StudySubgroupViewModel.Code,
+						StudyGroupId	= model.StudySubgroupViewModel.StudyGroupId,
+					};
+
+					await _context.StudySubgroups.AddAsync(studySubgroup);
+					await _context.SaveChangesAsync();
+				}
+				else
+					ModelState.AddModelError("", "Некорретные данные");
+			}
+			else
+				ModelState.AddModelError("", "Некорретные данные");
+			return RedirectToAction("AddStudyGroup", "StudyGroup");
 		}
 	}
 }

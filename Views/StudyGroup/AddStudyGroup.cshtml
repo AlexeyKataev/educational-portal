@@ -3,19 +3,22 @@
     Layout = "~/Views/StudyGroup/_StudyGroupLayout.cshtml";
 }
 
-@model Dotnet.ViewModels.StudyGroup.StudyViewModel
+@model Dotnet.ViewModels.StudyGroup.StudyGroupAndSubgroupViewModel
 
 <div class="col-sm-4">
 	<ul class="list-group mb-4">
 		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
 			<i class="bi bi-back mr-2"></i>Назад
 		</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="StudyGroup" asp-action="StudyGroups">
+			<i class="bi bi-person-lines-fill mr-2"></i>Учебные группы
+		</a>
 	</ul>
 </div>
 <div class="col-sm-8">
-	<div class="shadow-sm card p-3 mb-2 bg-white rounded">
-		Добавление учебной группы
-	</div>
+	<div class="shadow-sm card p-3 mb-2 bg-white rounded">					
+		<h6 class="mb-0">Добавление учебной группы</h6>
+	</div>	
 	<form asp-action="CreateStudyGroup" asp-controller="StudyGroup" asp-anti-forgery="true">
 		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -60,9 +63,10 @@
 			</div>
 		</div>
 	</form>
-	<div class="shadow-sm card p-3 mt-4 mb-2 bg-white rounded">
-		Добавление учебной подгруппы
-	</div>
+	<div class="shadow-sm card p-3 mb-2 bg-white rounded">					
+		<h6>Добавление учебной подгруппы</h6>
+		<p class="mb-0">Подгруппу возможно добавить только к ранее созданной группе</p>
+	</div>	
 	<form asp-action="CreateStudySubgroup" asp-controller="StudyGroup" asp-anti-forgery="true">
 		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">

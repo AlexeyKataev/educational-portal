@@ -20,8 +20,8 @@ namespace Dotnet.Models
 
 
 
-		// Одна группа - одна подгруппа
-		public StudySubgroup StudySubgroup { get; set; }
+		// Одна группа - много подгрупп
+		public List<StudySubgroup> StudySubgroups { get; set; } = new List<StudySubgroup>();
 
 		// Много групп - одна группа обучения
 		public int FormEducationId { get; set; }

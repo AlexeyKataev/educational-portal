@@ -16,7 +16,7 @@ namespace Dotnet.Models
 
 
 
-		// Одна подгруппа - одна группа
+		// Много подгрупп - одна группа
 		public int StudyGroupId { get; set; }
 		public StudyGroup StudyGroup { get; set; }
 
