@@ -152,7 +152,7 @@ namespace Dotnet.Controllers
 			{
 				Teacher teacherCheck = await _context.Teachers.FirstOrDefaultAsync(t => (t.Id == model.Id));
 				
-				if (teacherCheck != null)
+				if (teacherCheck != null && model.SubjectsId != null)
 				{
 					foreach (var subjectId in model.SubjectsId)
 					{
@@ -172,7 +172,26 @@ namespace Dotnet.Controllers
 					}
 
 					// Получить все предметы, которые ведёт данный преподаватель
-					
+					List<SubjectTeacher> allSubjectsForTeacher = _context.SubjectTeacher.Where(s => s.TeacherId == model.Id).ToList();
+
+					foreach (var subject in allSubjectsForTeacher) 
+					{
+						if ((model.SubjectsId).Contains(subject.SubjectId) == false) 
+						{
+							SubjectTeacher deletedRow = await _context.SubjectTeacher.FirstOrDefaultAsync(r => r.TeacherId == model.Id && r.SubjectId == subject.SubjectId);
+							_context.SubjectTeacher.Remove(deletedRow);
+							await _context.SaveChangesAsync();
+						}
+					}					
+				}
+				else if (teacherCheck != null && model.SubjectsId == null)
+				{
+					List<SubjectTeacher> allSubjectsForTeacher = _context.SubjectTeacher.Where(s => s.TeacherId == model.Id).ToList();
+					foreach (var row in allSubjectsForTeacher)
+					{
+						_context.SubjectTeacher.Remove(row);
+						await _context.SaveChangesAsync();
+					}
 				}
 				else ModelState.AddModelError("", "Некорректные данные");
 			}
