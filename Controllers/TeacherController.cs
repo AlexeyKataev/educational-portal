@@ -68,10 +68,10 @@ namespace Dotnet.Controllers
         }
 
 		[HttpGet]
-		public IActionResult EditTeacher(int teacherId)
+		public IActionResult EditTeacher(int userId, int teacherId)
 		{
 			// Получить запрашиваемого на редактирование преподавателя
-			Teacher teacher = _context.Teachers.FirstOrDefault(u => (u.UserId == teacherId));
+			Teacher teacher = _context.Teachers.FirstOrDefault(u => (u.Id == teacherId));
 
 			// Получить список всех зарегистрированных пользователей с ролью "Преподаватель"
 			List<User> users = _context.Users.Where(u => u.RoleId == 6).ToList();
@@ -88,13 +88,26 @@ namespace Dotnet.Controllers
 			// Получить список всех учебных предметов
 			List<Subject> subjects = _context.Subjects.ToList();
 
+			// Получить ID предметов, которые ведёт данный преподаватель
+			List<SubjectTeacher> subjectTeacher = _context.SubjectTeacher.Where(t => t.TeacherId == teacherId).ToList();
+
 			ViewData["Id"]				= teacher.Id;
 			ViewData["UserId"]			= teacher.UserId;
 			ViewData["Post"]			= teacher.Post;
 			ViewData["Specialization"]	= teacher.Specialization;
 
+			List<SubjectForTeacher> subjectsForTeacher = new List<SubjectForTeacher>();
+
+			// Создать объекты для генерации checkbox
+			foreach (var subject in subjects)
+			{
+				if (subjectTeacher.Exists(id => id.SubjectId == (subject.Id))) subjectsForTeacher.Add(new SubjectForTeacher{ Id = subject.Id, Name = subject.Name, IsChecked = true });
+				else subjectsForTeacher.Add(new SubjectForTeacher{ Id = subject.Id, Name = subject.Name, IsChecked = false });
+			}
+
 			ViewBag.allUsers = users;
 			ViewBag.allSubjects = subjects;
+			ViewBag.allSubjectsForTeacher = subjectsForTeacher;
 
 			return View();
 		}
@@ -108,7 +121,7 @@ namespace Dotnet.Controllers
 				Teacher teacherEdt = await _context.Teachers.FirstOrDefaultAsync(u => (u.Id == model.Id));
 
 				// Проверка, есть ли данный пользователь в таблице преподавателей
-				Teacher teacherCheck = await _context.Teachers.FirstOrDefaultAsync(u => (u.UserId == model.UserId));
+				Teacher teacherCheck = await _context.Teachers.FirstOrDefaultAsync(u => (u.Id == model.Id));
 
 				if (teacherCheck == null || teacherCheck.UserId == teacherEdt.UserId)
 				{
@@ -157,6 +170,9 @@ namespace Dotnet.Controllers
 							await _context.SaveChangesAsync();
 						}
 					}
+
+					// Получить все предметы, которые ведёт данный преподаватель
+					
 				}
 				else ModelState.AddModelError("", "Некорректные данные");
 			}

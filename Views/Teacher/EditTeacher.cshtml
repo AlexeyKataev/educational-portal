@@ -77,10 +77,17 @@
 		<div>
 			<input type="hidden" asp-for="Id" class="form-control" value=@ViewData["Id"] />
 			<div class="form-group">
-				@foreach (var subject in ViewBag.allSubjects)
+				@foreach (var subject in ViewBag.allSubjectsForTeacher)
 				{			
 					<div asp-for="" class="custom-control custom-checkbox mr-sm-2">
-						<input class="custom-control-input" type="checkbox" id=@subject.Name name="SubjectsId[]" value=@subject.Id>
+						@if (subject.IsChecked == true)
+						{
+							<input class="custom-control-input" type="checkbox" id=@subject.Name name="SubjectsId[]" value=@subject.Id checked>
+						}
+						else 
+						{
+							<input class="custom-control-input" type="checkbox" id=@subject.Name name="SubjectsId[]" value=@subject.Id>
+						}
 						<label class="custom-control-label" for=@subject.Name>@subject.Name</label>
 					</div>
 				}	
