@@ -14,7 +14,7 @@
 	@foreach (var institution in ViewBag.allInstitutions)
 	{
 		<div class="shadow-sm card p-3 mb-2 bg-white rounded">
-			<h6 class="mb-0">Факультеты учебного заведения @institution.Name</h6>
+			<h6 class="mb-0">Учебное заведение - @institution.Name</h6>
 		</div>
 		@foreach (var faculty in ViewBag.allFaculties)
 		{

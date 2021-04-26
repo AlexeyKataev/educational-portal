@@ -26,8 +26,12 @@
 				{
 					@if (faculty.InstitutionId == institution.Id)
 					{
-						<div class="shadow-sm card p-3 mb-2 bg-white rounded">					
-							<h6 class="mb-0">Учебные группы - специальность @specialty.Name (@specialty.Code), <br>факультет @faculty.Name (@faculty.Code), <br>@institution.Name</h6>
+						<div class="shadow-sm card p-3 mb-2 bg-white rounded">
+							<h6>Специальность - @specialty.Name (@specialty.Code)</h6>
+							<ul class="mb-0">
+								<li>факультет: @faculty.Name (@faculty.Code),</li>
+								<li>@institution.Name</li>
+							</ul>
 						</div>
 						@foreach (var group in ViewBag.StudyGroups)
 						{
@@ -52,15 +56,56 @@
 													<td>@group.Code</td>
 													<td>@group.DateStart.ToString("dd.MM.yyyy")</td>
 													<td>@group.DateEnd.ToString("dd.MM.yyyy")</td>
-													<td></td>
+													@foreach (var formEducation in ViewBag.FormEducations)
+													{
+														@if (group.FormEducationId == formEducation.Id)
+														{
+															<td>@formEducation.Name</td>
+														}
+													}
 												</tr>
 											</tbody>
 										</table>
 										@if (User.IsInRole("admin"))
 										{
-											<a class="btn btn-light btn-block" asp-action="EditSpecialty" asp-route-specialtyId="@specialty.Id">
+											<a class="btn btn-light btn-block" asp-action="EditSpecialty" asp-route-specialtyId="@group.Id">
 												<i class="bi bi-pencil-square mr-2"></i>Редактировать
 											</a>
+										}
+										@foreach (var subGroup in ViewBag.StudySubgroups)
+										{
+											@if (subGroup.StudyGroupId == group.Id)
+											{
+												<table class="table table-hover mt-3 mb-0">											
+													<thead>
+														<tr class="text-align-top">
+															<td scope="col">ID</td>
+															<td scope="col">Название подгруппы</td>
+															<td scope="col">Код подгруппы</td>
+															<td scope="col"></td>
+														</tr>
+													</thead>
+													<tbody>
+												@foreach (var subGroup2 in ViewBag.StudySubgroups)
+												{
+													@if (group.Id == subGroup2.StudyGroupId)
+													{	
+														<tr>
+															<td>@subGroup2.Id</td>
+															<td>@subGroup2.Name</td>
+															<td>@subGroup2.Code</td>
+															<td class="pt-0 pb-0">
+																<a class="btn btn-light btn-block btn-sm" style="margin-top : 9px;" asp-action="EditSpecialty" asp-route-specialtyId="@subGroup2.Id">
+																	<i class="bi bi-pencil-square mr-2"></i>
+																</a>
+															</td>
+														</tr>
+													}
+												}
+													</tbody>
+												</table>
+											}
+											break;
 										}
 									</div>
 								</div>

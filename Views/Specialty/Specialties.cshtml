@@ -21,7 +21,10 @@
 			@if (faculty.InstitutionId == institution.Id)
 			{
 				<div class="shadow-sm card p-3 mb-2 bg-white rounded">					
-					<h6 class="mb-0">Специальности - факультет @faculty.Name, @institution.Name</h6>
+					<h6>Факультет - @faculty.Name</h6>
+					<ul class="mb-0">
+						<li>@institution.Name</li>
+					</ul>
 				</div>	
 			}
 		}
