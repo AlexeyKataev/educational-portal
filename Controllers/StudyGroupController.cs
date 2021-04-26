@@ -31,6 +31,13 @@ namespace Dotnet.Controllers
 
         public IActionResult StudyGroups()
         {
+			ViewBag.StudyGroups = _context.StudyGroups.ToList();
+			ViewBag.StudySubgroups = _context.StudySubgroups.ToList();
+			ViewBag.FormEducations = _context.FormsEducation.ToList();
+			ViewBag.Specialties = _context.Specialties.ToList();
+			ViewBag.Faculties = _context.Faculties.ToList();
+			ViewBag.Institutions = _context.Institutions.ToList();
+
             return View();
         }
 

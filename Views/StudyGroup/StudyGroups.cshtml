@@ -15,3 +15,60 @@
 		</a>
 	</ul>
 </div>
+<div class="col-sm-8">
+	@foreach (var specialty in ViewBag.Specialties)
+	{
+		@foreach (var faculty in ViewBag.Faculties)
+		{
+			@if (specialty.FacultyId == faculty.Id)
+			{
+				@foreach (var institution in ViewBag.Institutions)
+				{
+					@if (faculty.InstitutionId == institution.Id)
+					{
+						<div class="shadow-sm card p-3 mb-2 bg-white rounded">					
+							<h6 class="mb-0">Учебные группы - специальность @specialty.Name (@specialty.Code), <br>факультет @faculty.Name (@faculty.Code), <br>@institution.Name</h6>
+						</div>
+						@foreach (var group in ViewBag.StudyGroups)
+						{
+							@if (group.SpecialtyId == specialty.Id)
+							{
+								<div class="card mb-2">
+									<div class="card-body overflow-auto">
+										<h6 class="card-title">@group.Name</h6>
+										<table class="table table-hover mb-0">
+											<thead>
+												<tr class="text-align-top">
+													<td scope="col">ID</td>
+													<td scope="col">Код группы</td>
+													<td scope="col">Старт обучения</td>
+													<td scope="col">Завершение обучения</td>
+													<td scope="col">Форма обучения</td>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>@group.Id</td>
+													<td>@group.Code</td>
+													<td>@group.DateStart.ToString("dd.MM.yyyy")</td>
+													<td>@group.DateEnd.ToString("dd.MM.yyyy")</td>
+													<td></td>
+												</tr>
+											</tbody>
+										</table>
+										@if (User.IsInRole("admin"))
+										{
+											<a class="btn btn-light btn-block" asp-action="EditSpecialty" asp-route-specialtyId="@specialty.Id">
+												<i class="bi bi-pencil-square mr-2"></i>Редактировать
+											</a>
+										}
+									</div>
+								</div>
+							}
+						}
+					}	
+				}
+			}
+		}
+	}
+</div>
