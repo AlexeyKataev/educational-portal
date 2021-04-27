@@ -1,11 +1,8 @@
 using System.Collections.Generic;
+using Dotnet.Models.Study;
 
 namespace Dotnet.Models
 {
-	/* 
-	Создание объекта "Учебная подгруппа"	
-	*/
-
 	public class StudySubgroup
 	{
 		public int Id { get; set; }
@@ -21,6 +18,6 @@ namespace Dotnet.Models
 		public StudyGroup StudyGroup { get; set; }
 
 		// Много подгрупп - много заданий
-		public List<Work> Works { get; set; } = new List<Work>();
+		public List<StudySubgroupWork> StudySubgroupWork { get; set; } = new List<StudySubgroupWork>();
 	}
 }

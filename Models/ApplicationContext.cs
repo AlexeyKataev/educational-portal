@@ -22,7 +22,11 @@ namespace Dotnet.Models
 		public DbSet<Teacher> Teachers { get; set; }
 		public DbSet<TypeWorks> TypesWorks { get; set; }
 		public DbSet<Work> Works { get; set; }
+
+		/* Many-to-many */
 		public DbSet<SubjectTeacher> SubjectTeacher { get; set; }
+		public DbSet<StudySubgroupWork> StudySubgroupWork { get; set; }
+		public DbSet<FileWork> FileWork { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)

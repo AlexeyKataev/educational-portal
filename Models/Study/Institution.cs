@@ -10,9 +10,9 @@ namespace Dotnet.Models
 	{
 		public int Id { get; set; }
 
-		public int AddressId { get; set; }	// Сменить тип
+		public string AddressId { get; set; }	// Сменить тип
 		
-		public int ContactInformationId { get; set; }	// Сменить тип
+		public string ContactInformationId { get; set; }	// Сменить тип
 		
 		public string Name { get; set; }
 

@@ -25,7 +25,7 @@ namespace Dotnet.Models
 
 
 		// Много файлов - много заданий
-		public List<Work> Works { get; set; } = new List<Work>();
+		public List<FileWork> FileWork { get; set; } = new List<FileWork>();
 
 		// Много файлов - один пользователь
 		public int UserId { get; set; }

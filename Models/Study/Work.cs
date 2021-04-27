@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Dotnet.Models.Study;
 
 namespace Dotnet.Models
 {
-	/* 
-	Создание объекта "Задание"	
-	*/
-
 	public class Work
 	{
 		public int Id { get; set; }
@@ -41,10 +38,10 @@ namespace Dotnet.Models
 		public TypeWorks TypeWorks { get; set; }
 
 		// Много заданий - много файлов
-		public List<File> Files { get; set; } = new List<File>();
+		public List<FileWork> FileWork { get; set; } = new List<FileWork>();
 
 		// Много подгрупп - много заданий
-		public List<StudySubgroup> StudySubgroups { get; set; } = new List<StudySubgroup>();
+		public List<StudySubgroupWork> StudySubgroupWork { get; set; } = new List<StudySubgroupWork>();
 	
 	}
 }
