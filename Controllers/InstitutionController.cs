@@ -54,7 +54,7 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> ApplyChangesInstitution(EditInstitutionViewModel model) // ПЕРЕДАТЬ МОДЕЛЬ
+		public async Task<IActionResult> ApplyChangesInstitution(EditInstitutionViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
