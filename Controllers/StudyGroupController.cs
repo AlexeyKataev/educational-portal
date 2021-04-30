@@ -41,7 +41,15 @@ namespace Dotnet.Controllers
             return View();
         }
 
-        public IActionResult AddStudyGroup() => View();
+        public IActionResult AddStudyGroup() 
+		{
+			ViewBag.studyGroups = _context.StudyGroups.ToList();
+			ViewBag.specialties = _context.Specialties.ToList();
+			ViewBag.faculties = _context.Faculties.ToList();
+			ViewBag.institutions = _context.Institutions.ToList();
+			ViewBag.formsEducation = _context.FormsEducation.ToList();
+			return View();	
+		} 
 
 		[HttpGet]
 		public IActionResult EditStudyGroup(int groupId)

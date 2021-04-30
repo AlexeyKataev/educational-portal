@@ -38,12 +38,48 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="StudyGroupViewModel.SpecialtyId">Специальность <span>*</span></label>
-				<input type="text" asp-for="StudyGroupViewModel.SpecialtyId" class="form-control" />
+				<select asp-for="StudyGroupViewModel.SpecialtyId" class="form-control" required>
+					@if (ViewBag.specialties.Count > 0)
+					{
+						@foreach (var specialty in ViewBag.specialties)
+						{
+							@foreach (var faculty in ViewBag.faculties)
+							{
+								@if (specialty.FacultyId == faculty.Id)
+								{
+									@foreach (var institution in ViewBag.institutions)
+									{
+										@if (faculty.InstitutionId == institution.Id)
+										{
+											<option value=@specialty.Id>@specialty.Name (@specialty.Code) - faculty.Name (@faculty.Code) - @institution.Name</option>
+										}
+									}
+								}
+							}
+						}
+					}
+					else
+					{
+						<option>Нет доступных специальностей</option>
+					}
+				</select>
 				<span asp-validation-for="StudyGroupViewModel.SpecialtyId" />
 			</div>
 			<div class="form-group">
 				<label asp-for="StudyGroupViewModel.FormEducationId">Форма обучения <span>*</span></label>
-				<input type="text" asp-for="StudyGroupViewModel.FormEducationId" class="form-control" />
+				<select asp-for="StudyGroupViewModel.FormEducationId" class="form-control">
+					@if (ViewBag.formsEducation.Count > 0)
+					{
+						@foreach (var formEducation in ViewBag.formsEducation)
+						{
+							<option value=@formEducation.Id>@formEducation.Name</option>
+						}
+					}
+					else
+					{
+						<option>Нет доступных форм обучения</option>
+					}
+				</select>
 				<span asp-validation-for="StudyGroupViewModel.FormEducationId" />
 			</div>
 			<div class="form-group">
@@ -75,13 +111,43 @@
 		</div>
 		<div>
 			<div class="form-group">
-				<label asp-for="StudySubgroupViewModel.StudyGroupId">ID учебной группы <span>*</span></label>
-				<input type="text" asp-for="StudySubgroupViewModel.StudyGroupId" class="form-control" />
+				<label asp-for="StudySubgroupViewModel.StudyGroupId">Учебная группа <span>*</span></label>
+				<select asp-for="StudySubgroupViewModel.StudyGroupId" class="form-control" required>
+					@if (ViewBag.specialties.Count > 0)
+					{
+						@foreach (var studyGroup in ViewBag.studyGroups)
+						{
+							@foreach (var specialty in ViewBag.specialties)
+							{
+								@if (studyGroup.SpecialtyId == specialty.Id)
+								{
+									@foreach (var faculty in ViewBag.faculties)
+									{
+										@if (specialty.FacultyId == faculty.Id)
+										{
+											@foreach (var institution in ViewBag.institutions)
+											{
+												@if (faculty.InstitutionId == institution.Id)
+												{
+													<option value=@specialty.Id>@studyGroup.Name (@studyGroup.Code) - @specialty.Name (@specialty.Code) - faculty.Name (@faculty.Code) - @institution.Name</option>
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					else
+					{
+						<option>Нет доступных учебных групп</option>
+					}
+				</select>
 				<span asp-validation-for="StudySubgroupViewModel.StudyGroupId" />
 			</div>
 			<div class="form-group">
 				<label asp-for="StudySubgroupViewModel.Name">Название <span>*</span></label>
-				<input type="text" asp-for="StudySubgroupViewModel.Name" class="form-control" />
+				<input type="text" asp-for="StudySubgroupViewModel.Name" class="form-control" required />
 				<span asp-validation-for="StudySubgroupViewModel.Name" />
 			</div>
 			<div class="form-group">
