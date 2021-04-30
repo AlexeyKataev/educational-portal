@@ -9,15 +9,15 @@ namespace Dotnet.ViewModels
 		[Required]
 		public int Id { get; set; }
 
-		[Required(ErrorMessage = "Укажите название специальности")]
+		[Required(ErrorMessage = "Укажите название специальности.")]
 		public string Name { get; set; }
 
-		[Required(ErrorMessage = "Укажите код специальности")]
+		[Required(ErrorMessage = "Укажите код специальности.")]
 		public string Code { get; set; }
 		
 
 
-		[Required(ErrorMessage = "Укажите факультет")]
+		[Required(ErrorMessage = "Укажите факультет.")]
 		public int FacultyId { get; set; }
 	}
 }

@@ -2,10 +2,6 @@ using System.Collections.Generic;
 
 namespace Dotnet.Models
 {
-	/* 
-	Создание объекта "Учебное заведение"	
-	*/
-
 	public class Institution
 	{
 		public int Id { get; set; }

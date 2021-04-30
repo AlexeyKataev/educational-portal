@@ -1,9 +1,9 @@
 @{
-	ViewData["Title"] = "Добавить учебное заведение";	
+	ViewData["Title"] = "Редактировать учебное заведение";
     Layout = "~/Views/Institution/_InstitutionLayout.cshtml";
 }
 
-@model Dotnet.ViewModels.InstitutionViewModel
+@model Dotnet.ViewModels.EditInstitutionViewModel
 
 <div class="col-sm-4">
 	<ul class="list-group mb-4">
@@ -16,31 +16,32 @@
 	</ul>
 </div>
 <div class="col-sm-8">
-	<form asp-action="CreateInstitution" asp-controller="Institution" asp-anti-forgery="true">
+	<form asp-action="ApplyChangesInstitution" asp-controller="Institution" asp-anti-forgery="true">
 		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
 		<div>
+			<input type="hidden" asp-for="Id" class="form-control" value=@ViewBag.institution.Id />
 			<div class="form-group">
 				<label asp-for="Name">Название учебного заведения <span>*</span></label>
-				<input type="text" asp-for="Name" class="form-control" />
+				<input type="text" asp-for="Name" class="form-control" value=@ViewBag.institution.Name />
 				<span asp-validation-for="Name" />
 			</div>
 			<div class="form-group">
 				<label asp-for="AddressId">Адрес</label>
-				<input type="text" asp-for="AddressId" class="form-control" />
+				<input type="text" asp-for="AddressId" class="form-control" value=@ViewBag.institution.AddressId />
 				<span asp-validation-for="AddressId" />
 			</div>
 			<div class="form-group">
-				<label asp-for="ContactInformationId">Контактная информация</label>
-				<input type="text" asp-for="ContactInformationId" class="form-control" />
+				<label asp-for="ContactInformationId">Адрес</label>
+				<input type="text" asp-for="ContactInformationId" class="form-control" value=@ViewBag.institution.ContactInformationId />
 				<span asp-validation-for="ContactInformationId" />
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary">
-					<i class="bi bi-plus-circle mr-2"></i>Добавить учебное заведение
+					Сохранить
 				</button>
 			</div>
 		</div>

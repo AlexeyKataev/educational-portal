@@ -1,5 +1,5 @@
 @{
-	ViewData["Title"] = "Список учебных заведений";	
+	ViewData["Title"] = "Учебные заведения";	
     Layout = "~/Views/Institution/_InstitutionLayout.cshtml";
 }
 
@@ -9,6 +9,9 @@
 	<ul class="list-group mb-4">
 		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
 			<i class="bi bi-back mr-2"></i>Назад
+		</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Institution" asp-action="AddInstitution">
+			<i class="bi bi-plus-circle mr-2"></i>Добавить учебное заведение
 		</a>
 	</ul>
 </div>
@@ -36,7 +39,7 @@
 				</table>
 				@if (User.IsInRole("admin"))
 				{
-					<a class="btn btn-light btn-block" asp-action="EditInstitution" asp-route-teacherId="@ViewBag.allInstitutions[i].Id">
+					<a class="btn btn-light btn-block" asp-action="EditInstitution" asp-route-institutionId="@ViewBag.allInstitutions[i].Id">
 						<i class="bi bi-pencil-square mr-2"></i>Редактировать
 					</a>
 				}

@@ -43,16 +43,42 @@ namespace Dotnet.Controllers
         }
 
 		[HttpGet]
-		public IActionResult EditInstitution(int groupId)
+		public IActionResult EditInstitution(int institutionId)
 		{
+			ViewBag.institution = _context.Institutions.FirstOrDefault(
+				i => i.Id == institutionId
+			);
+
 			return View();
 		}	
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> ApplyChangesInstitution() // ПЕРЕДАТЬ МОДЕЛЬ
+		public async Task<IActionResult> ApplyChangesInstitution(EditInstitutionViewModel model) // ПЕРЕДАТЬ МОДЕЛЬ
 		{
-			return null;
+			if (ModelState.IsValid)
+			{
+				Institution institution = await _context.Institutions.FirstOrDefaultAsync(
+					i => i.Id == model.Id
+				);
+
+				Institution institutionCheck = await _context.Institutions.FirstOrDefaultAsync(
+					i => (i.Name == model.Name && i.Id != model.Id)
+				);
+
+				if ((institution.Name == model.Name && institution.Id == model.Id) || institutionCheck == null)
+				{
+					institution.Name 					= model.Name;
+					institution.AddressId	 			= model.AddressId;
+					institution.ContactInformationId 	= model.ContactInformationId;
+
+					await _context.SaveChangesAsync();
+				}
+
+			}
+			else ModelState.AddModelError("", "Некорретные данные");
+
+			return RedirectToAction("Institutions", "Institution");
 		}
 
 		[HttpPost]
