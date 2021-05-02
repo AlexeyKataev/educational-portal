@@ -126,4 +126,84 @@ body {
 		margin-right: 0;
 		margin: 0 auto;
 	}
+	.service-nav-panel {
+		margin-top: 0;
+	}
 }
+
+.service-nav-panel {
+	display: inline-flex;
+	position: relative;
+	flex-wrap: wrap;
+	margin-left: -2rem;
+	padding-top: 2rem;
+	margin-top: -2rem;
+	width: calc(100% + 4rem);
+	justify-content: center;
+}
+
+.service-nav-panel > .service-buttom {
+	margin-left: 2rem;
+	margin-top: 2rem;
+}
+
+.service-buttom {
+	position: relative;
+	outline: none;
+	display: block;
+	width: 250px;
+	height: 150px;
+	border-radius: 25px;
+	background-color: #ffffff;
+	box-shadow: 10px 10px 21px #dadada, 
+				-10px -10px 21px #fff;
+	overflow: hidden;
+}
+
+.service-buttom {
+	margin-right: 2rem;
+}
+
+/*.service-buttom:not(:last-child) {
+	margin-right: 2rem;
+}*/
+
+.service-buttom:hover {
+	color: black;
+	background-color: #ebebeb;
+	transition: 0.25s;
+}
+
+.service-buttom:active {
+	background-color: #ebebeb;
+	transition: 0.25s;
+	transform: scale(0.95);
+	box-shadow: 7px 7px 14px #dadada, 
+				-7px -7px 14px #fff;
+}
+
+.service-buttom, .service-buttom:active, .service-buttom:hover, .service-buttom:focus {
+	outline: none;	
+}
+
+.service-buttom-name {
+	position: absolute;
+	font-weight: 600;
+	color: #636363;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	bottom: 25px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.service-buttom-icon i {
+	position: absolute;
+	top: 25%;
+	left: 50%;
+	transform: translateX(-50%);
+	color: #636363;
+	font-size: 36px;
+}
+
+

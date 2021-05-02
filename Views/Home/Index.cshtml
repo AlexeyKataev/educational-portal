@@ -4,14 +4,14 @@
 }
 
 <div>
-	<div class="mt-4 mb-5 pt-5 pb-5">
-		<div>
-			<div class="me-round">
-				@{string meChars = $"{ViewBag.me.SecondName[0]}{ViewBag.me.FirstName[0]}";}
-				<p class="me-round-chars">@meChars</p>
+	<div class="container">
+		<div class="mt-5">
+			<div class="mt-0">
+				<div class="me-round">
+					@{string meChars = $"{ViewBag.me.SecondName[0]}{ViewBag.me.FirstName[0]}";}
+					<p class="me-round-chars">@meChars</p>
+				</div>
 			</div>
-		</div>
-		<div>
 			<div class="me-index">
 				<p class="me-index-name">@ViewBag.me.SecondName @ViewBag.me.FirstName</p>
 				<p class="me-index-aboutme">@ViewBag.aboutMe</p>
@@ -19,14 +19,49 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="row">
-			@if (User.IsInRole("user"))
-			{
+		@if (User.IsInRole("user"))
+		{
+			<div>
 				<div class="alert alert-info w-100" role="alert">
 					<p class="mb-0">Ваша учётная запись в данный момент неактивна.</p>
 				</div>
-			}
-		</div>
+			</div>
+		}
+		@if (User.IsInRole("teacher"))
+		{
+			<div class="service-nav-panel">
+				<a class="service-buttom">
+					<div class="service-buttom-icon">
+						<i class="bi bi-plus-square-fill"></i>
+					</div>
+					<div class="service-buttom-name">Создать задание</div>
+				</a>
+				<a class="service-buttom">
+					<div class="service-buttom-icon">
+						<i class="bi bi-list-task"></i>
+					</div>
+					<div class="service-buttom-name">Задания</div>
+				</a>
+				<a class="service-buttom">
+					<div class="service-buttom-icon">
+						<i class="bi bi-file-earmark-fill"></i>
+					</div>
+					<div class="service-buttom-name">Файлы</div>
+				</a>
+				<a class="service-buttom">
+					<div class="service-buttom-icon">
+						<i class="bi bi-people-fill"></i>
+					</div>
+					<div class="service-buttom-name">Студенты</div>
+				</a>
+				<a class="service-buttom">
+					<div class="service-buttom-icon">
+						<i class="bi bi-graph-up"></i>
+					</div>
+					<div class="service-buttom-name">Сводка</div>
+				</a>
+			</div>
+		}
 	</div>
 </div>
 
