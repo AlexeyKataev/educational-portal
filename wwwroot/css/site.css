@@ -69,3 +69,61 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/* Other styles
+-------------------------------------------------- */
+.me-index {
+	position: relative;
+	float: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.me-index-name {
+	position: relative;
+	white-space: nowrap;
+	font-size: 36px;
+	font-weight: 400;
+	text-align: left;
+}
+
+.me-index-aboutme {
+	text-align: left;
+}
+
+.me-round {
+	display: flex;
+	position: relative;
+	margin-right: 2rem;
+	float: left;
+	overflow: hidden;
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	background-color: #707070;
+}
+
+.me-round-chars {
+	margin: auto;
+	color: white;
+	font-size: 42px;
+	font-weight: 400;
+	text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+	.me-index {
+		float: none;
+	}
+	.me-index-name {
+		text-align: center;
+	}
+	.me-index-aboutme {
+		text-align: center;
+	}
+	.me-round {
+		float: none;
+		margin-right: 0;
+		margin: 0 auto;
+	}
+}

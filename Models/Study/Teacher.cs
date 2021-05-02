@@ -3,10 +3,6 @@ using Dotnet.Models.Study;
 
 namespace Dotnet.Models
 {
-	/* 
-	Создание объекта "Преподаватель"	
-	*/
-
 	public class Teacher
 	{
 		public int Id { get; set; }

@@ -1,11 +1,33 @@
 ﻿@{
     ViewData["Title"] = "Домашняя страница";
-	Layout = "~/Views/Home/_HomeLayout.cshtml";
+	Layout = "_Layout";
 }
 
-@if (User.IsInRole("user"))
-{
-	<div class="alert alert-info w-100" role="alert">
-		<p class="mb-0">Ваша учётная запись в данный момент неактивна.</p>
+<div>
+	<div class="mt-4 mb-5 pt-5 pb-5">
+		<div>
+			<div class="me-round">
+				@{string meChars = $"{ViewBag.me.SecondName[0]}{ViewBag.me.FirstName[0]}";}
+				<p class="me-round-chars">@meChars</p>
+			</div>
+		</div>
+		<div>
+			<div class="me-index">
+				<p class="me-index-name">@ViewBag.me.SecondName @ViewBag.me.FirstName</p>
+				<p class="me-index-aboutme">@ViewBag.aboutMe</p>
+			</div>
+		</div>
 	</div>
-}
+	<div class="container">
+		<div class="row">
+			@if (User.IsInRole("user"))
+			{
+				<div class="alert alert-info w-100" role="alert">
+					<p class="mb-0">Ваша учётная запись в данный момент неактивна.</p>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+
+

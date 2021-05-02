@@ -24,6 +24,16 @@ namespace Dotnet.Controllers
 		[Authorize]
         public IActionResult Index()
         {
+			User me = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
+			ViewBag.me = me;
+
+			if (me.RoleId == 6)	
+			{
+				Teacher aboutMe = _context.Teachers.FirstOrDefault(x => (x.UserId == me.Id));
+				ViewBag.aboutMe = $"{aboutMe.Specialization} • {aboutMe.Post}";
+			}
+			else ViewBag.aboutMe = $"none";
+			
             return View();
         }
 

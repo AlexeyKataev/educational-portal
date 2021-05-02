@@ -19,5 +19,8 @@ namespace Dotnet.Models
 
 		// Много подгрупп - много заданий
 		public List<StudySubgroupWork> StudySubgroupWork { get; set; } = new List<StudySubgroupWork>();
+
+		// Одна подгруппа - много студентов
+		public List<Student> Students { get; set; } = new List<Student>();
 	}
 }

@@ -51,7 +51,7 @@
 									{
 										@if (faculty.InstitutionId == institution.Id)
 										{
-											<option value=@specialty.Id>@specialty.Name (@specialty.Code) - faculty.Name (@faculty.Code) - @institution.Name</option>
+											<option value=@specialty.Id>@specialty.Name (@specialty.Code) - @faculty.Name (@faculty.Code) - @institution.Name</option>
 										}
 									}
 								}
@@ -129,7 +129,7 @@
 											{
 												@if (faculty.InstitutionId == institution.Id)
 												{
-													<option value=@specialty.Id>@studyGroup.Name (@studyGroup.Code) - @specialty.Name (@specialty.Code) - faculty.Name (@faculty.Code) - @institution.Name</option>
+													<option value=@studyGroup.Id>@studyGroup.Name (@studyGroup.Code) - @specialty.Name (@specialty.Code) - @faculty.Name (@faculty.Code) - @institution.Name</option>
 												}
 											}
 										}
