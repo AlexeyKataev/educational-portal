@@ -153,9 +153,9 @@ body {
 	display: block;
 	width: 250px;
 	height: 150px;
-	border-radius: 25px;
+	border-radius: .25rem;
 	background-color: #ffffff;
-	box-shadow: 10px 10px 21px #dadada, 
+	box-shadow: 10px 10px 21px #ebebeb, 
 				-10px -10px 21px #fff;
 	overflow: hidden;
 }
@@ -183,7 +183,8 @@ body {
 }
 
 .service-buttom, .service-buttom:active, .service-buttom:hover, .service-buttom:focus {
-	outline: none;	
+	content: "";
+	/*outline: none;*/
 }
 
 .service-buttom-name {
