@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dotnet.Models;
+using Dotnet.Models.Study;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Dotnet.Controllers
@@ -24,6 +25,22 @@ namespace Dotnet.Controllers
 
         public IActionResult AddTask()
         {
+			User user = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
+			Teacher teacher = _context.Teachers.FirstOrDefault(t => (t.UserId == user.Id));
+
+			List<SubjectTeacher> subjectTeacher = _context.SubjectTeacher.Where(x => x.TeacherId == teacher.Id).ToList();
+			
+			List<Subject> subjects = new List<Subject>();
+
+			foreach (var row in subjectTeacher)
+			{
+				Subject subject = _context.Subjects.FirstOrDefault(x => x.Id == row.SubjectId);
+				if (subject != null) subjects.Add(subject);
+			}
+
+			ViewBag.typesWorks = _context.TypesWorks.ToList();
+			ViewBag.subjects = subjects;
+
             return View();
         }
 	}

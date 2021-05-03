@@ -26,6 +26,12 @@ namespace Dotnet.ViewModels.Work
 			}
 		}
 
+		[Required(ErrorMessage = "Укажите учебный предмет.")]
+		public int SubjectId { get; set; }
+
+		[Required(ErrorMessage = "Укажите тип работы.")]
+		public int TypeWorksId { get; set; }
+
 		[Required]
 		public int[] StudySubgroupsId { get; set; }
     }

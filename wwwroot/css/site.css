@@ -191,7 +191,6 @@ body {
 
 .service-buttom-name {
 	position: absolute;
-	font-weight: 600;
 	color: black;
 	white-space: nowrap;
 	text-overflow: ellipsis;

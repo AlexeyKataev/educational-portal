@@ -3,7 +3,7 @@
     Layout = "~/Views/Work/_WorkLayout.cshtml";
 }
 
-@model Dotnet.ViewModels.TeacherModel
+@model Dotnet.ViewModels.Work.WorkViewModel
 
 <div class="col-sm-4">
 	<ul class="list-group mb-4">
@@ -16,5 +16,75 @@
 	</ul>
 </div>
 <div class="col-sm-8">
-
+	<form asp-action="CreateTask" asp-controller="Task" asp-anti-forgery="true">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div>
+			<div class="form-group">
+				<label asp-for="Description">Описание <span>*</span></label>
+				<textarea asp-for="Description" class="form-control" required></textarea>
+				<span asp-validation-for="Description" />
+			</div>
+			<div class="form-group">
+				<label for="IsObligation">Обязательность</label>
+				<div asp-for="" class="custom-control custom-checkbox mr-sm-2">
+					<input class="custom-control-input" type="checkbox" id="IsObligation" asp-for="IsObligation" checked />
+					<label class="custom-control-label" for="IsObligation">Обязательное к выполнению задание</label>
+				</div>
+				<span asp-validation-for="IsObligation" />
+			</div>
+			<div class="form-group">
+				<label asp-for="DateDeparture">Дата сдачи (значение по умолчанию сделает задание бессрочным)</label>
+				<input type="datetime-local" asp-for="DateDeparture" class="form-control" value="0001-01-01T01:01:01" required />
+				<span asp-validation-for="DateDeparture" />
+			</div>
+			<div class="form-group">
+				<label asp-for="CountAttempts">Количество попыток</label>
+				<input asp-for="CountAttempts" class="form-control" min="1" max="255" value="1" required />
+				<span asp-validation-for="CountAttempts" />
+			</div>
+			<div class="form-group">
+				<label asp-for="SubjectId">Учебный предмет</label>
+				<select class="custom-select" asp-for="SubjectId">
+					@if (ViewBag.subjects.Count > 0)
+					{
+						@foreach (var subject in ViewBag.subjects)
+						{
+							<option value=@subject.Id>@subject.Name</option>
+						}
+					}
+					else
+					{
+						<option>Нет доступных учебных предметов.</option>
+					}
+				</select>
+				<span asp-validation-for="SubjectId" />
+			</div>
+			<div class="form-group">
+				<label asp-for="TypeWorksId">Учебный предмет</label>
+				<select class="custom-select" asp-for="TypeWorksId">
+					@if (ViewBag.typesWorks.Count > 0)
+					{
+						@foreach (var typeWorks in ViewBag.typesWorks)
+						{
+							<option value=@typeWorks.Id>@typeWorks.Name</option>
+						}
+					}
+					else
+					{
+						<option>Нет доступных видов работ.</option>
+					}
+				</select>
+				<span asp-validation-for="TypeWorksId" />
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">
+					<i class="bi bi-plus-circle mr-2"></i>Добавить задание
+				</button>
+			</div>
+		</div>
+	</form>
 </div>
