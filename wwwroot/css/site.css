@@ -88,6 +88,8 @@ body {
 }
 
 .me-index-aboutme {
+	font-size: 18px;
+	font-weight: 500;
 	text-align: left;
 }
 
@@ -98,8 +100,8 @@ body {
 	float: left;
 	overflow: hidden;
 	border-radius: 50%;
-	width: 100px;
-	height: 100px;
+	width: 110px;
+	height: 110px;
 	background-color: #707070;
 }
 
@@ -190,7 +192,7 @@ body {
 .service-buttom-name {
 	position: absolute;
 	font-weight: 600;
-	color: #636363;
+	color: black;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	bottom: 25px;
@@ -203,7 +205,7 @@ body {
 	top: 25%;
 	left: 50%;
 	transform: translateX(-50%);
-	color: #636363;
+	color: #707070;
 	font-size: 36px;
 }
 

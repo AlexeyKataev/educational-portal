@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Dotnet.Controllers
 {
+	[Authorize(Roles="teacher")]
     public class WorkController : Controller
     {
 		private ApplicationContext _context;
@@ -21,38 +22,7 @@ namespace Dotnet.Controllers
             _logger = logger;
         }
 
-		[Authorize]
-        public IActionResult MyWorks()
-        {
-            return View();
-        }
-		
-		[Authorize]
-        public IActionResult InProgress()
-        {
-            return View();
-        }
-				
-		[Authorize]
-        public IActionResult CompletedWork()
-        {
-            return View();
-        }
-				
-		[Authorize]
-        public IActionResult EditsRequired()
-        {
-            return View();
-        }
-
-		[Authorize(Roles="teacher")]
-        public IActionResult AddWork()
-        {
-            return View();
-        }
-
-		[Authorize]
-        public IActionResult Notices()
+        public IActionResult AddTask()
         {
             return View();
         }
