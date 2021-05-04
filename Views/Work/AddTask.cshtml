@@ -81,6 +81,48 @@
 				<span asp-validation-for="TypeWorksId" />
 			</div>
 			<div class="form-group">
+				<label>Получатели</label>
+				@if (ViewBag.studySubgroups.Count > 0)
+				{
+					@foreach (var institution in ViewBag.institutions)
+					{
+						@foreach (var faculty in ViewBag.faculties)
+						{
+							@if (faculty.InstitutionId == institution.Id)
+							{
+								@foreach (var specialty in ViewBag.specialties)
+								{
+									@if (specialty.FacultyId == faculty.Id)
+									{
+										@foreach (var group in ViewBag.studyGroups)
+										{
+											@if (group.SpecialtyId == specialty.Id)
+											{
+												@foreach (var subgroup in ViewBag.studySubgroups)
+												{
+													@if (subgroup.StudyGroupId == group.Id)
+													{
+														<div asp-for="" class="custom-control custom-checkbox mr-sm-2">
+															<input class="custom-control-input" type="checkbox" id=@subgroup.Id name="StudySubgroupsId[]" value=@subgroup.Id>
+															<label class="custom-control-label" for=@subgroup.Id>@group.Name (@group.Code) - подгруппа @subgroup.Name (@subgroup.Code) - @faculty.Name (@faculty.Code) - @institution.Name</label>
+														</div>
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				else 
+				{
+					<p>Нет доступных учебных подгрупп.</p>
+				}
+				<span asp-validation-for="CountAttempts" />
+			</div>
+			<div class="form-group">
 				<button type="submit" class="btn btn-primary">
 					<i class="bi bi-plus-circle mr-2"></i>Добавить задание
 				</button>
