@@ -32,7 +32,15 @@ namespace Dotnet.ViewModels.Work
 		[Required(ErrorMessage = "Укажите тип работы.")]
 		public int TypeWorksId { get; set; }
 
+		private int[] studySubgroupId;
 		[Required]
-		public int[] StudySubgroupsId { get; set; }
+		public int[] StudySubgroupsId 
+		{
+			get => studySubgroupId;
+			set 
+			{
+				if (value.Length > 0) studySubgroupId = value;
+			}
+		}	
     }
 }

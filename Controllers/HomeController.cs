@@ -30,7 +30,9 @@ namespace Dotnet.Controllers
 			if (me.RoleId == 6)	
 			{
 				Teacher aboutMe = _context.Teachers.FirstOrDefault(x => (x.UserId == me.Id));
-				ViewBag.aboutMe = $"{aboutMe.Specialization} • {aboutMe.Post}";
+				
+				if (aboutMe != null) ViewBag.aboutMe = $"{aboutMe.Specialization} • {aboutMe.Post}";
+				else ViewBag.aboutMe = "Вы не входите в штат сотрудников";
 			}
 			else ViewBag.aboutMe = $"none";
 			

@@ -9,14 +9,24 @@ namespace Dotnet.Models
 
 		public int UserId { get; set;}	
 
-		public string Specialization { get; set; }
+		private string specialization;
+		public string Specialization 
+		{  
+			get => specialization ?? "Специальность не указана";
+			set { specialization = value; }
+		}
 
-		public string Post { get; set; }
+		private string post;
+		public string Post
+		{
+			get => post ?? "Должность не указана";
+			set { post = value; }
+		}
 
 
 
-		// Один преподавателей - одно задание
-		public Work Work { get; set; }
+		// Один преподавателей - много заданий
+		public List<Work> Works { get; set; } = new List<Work>();
 
 		// Много преподавателей - много предметов
 		public List<SubjectTeacher> SubjectTeacher { get; set; } = new List<SubjectTeacher>();

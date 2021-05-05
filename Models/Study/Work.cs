@@ -21,7 +21,7 @@ namespace Dotnet.Models
 
 		
 
-		// Одно задание - один преподаватель
+		// Много заданий - один преподаватель
 		public int TeacherId { get; set; }
 		public Teacher Teacher { get; set; }
 

@@ -101,7 +101,7 @@ namespace Dotnet.Controllers
 				FormEducation formEducation = await _context.FormsEducation.FirstOrDefaultAsync(
 					f => 
 					(
-						(f.Name == model.Name) || 
+						(f.Name == model.Name) && 
 						(f.Code == model.Code)
 					)
 				);
