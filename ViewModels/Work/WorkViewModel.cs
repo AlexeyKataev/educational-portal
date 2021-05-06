@@ -10,7 +10,7 @@ namespace Dotnet.ViewModels.Work
 		[Required]
 		public bool IsObligation { get; set; } = false;
 
-		public System.DateTime DateAdded { get; set; } = System.DateTime.Today;
+		public System.DateTime DateAdded { get; set; } = System.DateTime.Now;
 
 		public System.DateTime DateDeparture { get; set; } = new System.DateTime(0001, 01, 01, 01, 01, 01);
 

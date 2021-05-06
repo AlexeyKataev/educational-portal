@@ -53,6 +53,20 @@ namespace Dotnet.Controllers
             return View();
         }
 
+		public IActionResult Tasks()
+		{
+			User user = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
+			Teacher teacher = _context.Teachers.FirstOrDefault(t => (t.UserId == user.Id));
+
+			if (teacher == null) return RedirectToAction("Index", "Home");
+
+			ViewBag.works = _context.Works.Where(x => x.TeacherId == teacher.Id).OrderByDescending(x => x.Id).ToList();
+			ViewBag.subjects = _context.Subjects.ToList();
+			ViewBag.typesWorks = _context.TypesWorks.ToList();
+
+			return View();
+		}
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> CreateTask(WorkViewModel viewModel)

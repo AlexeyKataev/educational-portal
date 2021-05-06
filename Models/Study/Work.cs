@@ -8,7 +8,7 @@ namespace Dotnet.Models
 	{
 		public int Id { get; set; }
 
-		[Column(TypeName = "text")]
+		[Column(TypeName = "ntext")]
 		public string Description { get; set; }
 
 		public bool IsObligation { get; set; }

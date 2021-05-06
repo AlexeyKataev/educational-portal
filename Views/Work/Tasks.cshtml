@@ -1,0 +1,75 @@
+@{
+	ViewData["Title"] = "Задания";	
+    Layout = "~/Views/Work/_WorkLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.Work.WorkViewModel
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
+			<i class="bi bi-back mr-2"></i>Назад
+		</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Work" asp-action="AddTask">
+			<i class="bi bi-plus-circle mr-2"></i>Добавить задание
+		</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	@foreach (var work in ViewBag.works)
+	{
+		<div class="card mb-2">
+			<div class="card-body overflow-auto">
+				<h6 class="card-title">
+					@foreach (var subject in ViewBag.subjects)
+					{
+						@if (subject.Id == work.SubjectId)
+						{
+							<span class="badge badge-primary mr-2">@subject.Name</span>
+						}
+					}
+					@work.Description
+				</h6>
+				<table class="table table-hover mb-0">
+					<thead>
+						<tr class="text-align-top">
+							<td scope="col">ID</td>
+							<td scope="col">Дата добавления</td>
+							<td scope="col">Дата сдачи</td>
+							<td scope="col">Количество попыток</td>
+							<td scope="col">Вид работы</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>@work.Id</td>
+							<td>@work.DateAdded</td>
+								@if (work.DateDeparture == new DateTime(0001, 01, 01, 01, 01, 01))
+								{
+									<td>Бессрочно</td>
+								}
+								else 
+								{
+									<td>@work.DateDeparture</td>
+								}
+							<td>@work.CountAttempts</td>
+								@foreach (var typeWorks in ViewBag.typesWorks)
+								{
+									@if (typeWorks.Id == work.TypeWorksId)
+									{
+										<td>@typeWorks.Name</td>
+									}
+								}
+						</tr>
+					</tbody>
+				</table>
+				@if (User.IsInRole("teacher"))
+				{
+					<a class="btn btn-light btn-block" asp-action="EditTeacher" asp-route-workId=@work.Id>
+						<i class="bi bi-pencil-square mr-2"></i>Редактировать
+					</a>
+				}
+			</div>
+		</div>
+	}
+</div>
