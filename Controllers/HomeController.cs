@@ -27,7 +27,11 @@ namespace Dotnet.Controllers
 			User me = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
 			ViewBag.me = me;
 
-			if (me.RoleId == 6)	
+			if (me.RoleId == 1)
+			{
+				ViewBag.aboutMe = "Главный администратор";
+			}
+			else if (me.RoleId == 6)	
 			{
 				Teacher aboutMe = _context.Teachers.FirstOrDefault(x => (x.UserId == me.Id));
 				

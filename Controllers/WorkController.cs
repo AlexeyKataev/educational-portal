@@ -64,6 +64,13 @@ namespace Dotnet.Controllers
 			ViewBag.subjects = _context.Subjects.ToList();
 			ViewBag.typesWorks = _context.TypesWorks.ToList();
 
+			ViewBag.studySubgroupWork = _context.StudySubgroupWork.ToList();
+			ViewBag.studySubgroups = _context.StudySubgroups.ToList();
+			ViewBag.studyGroups = _context.StudyGroups.ToList();
+			ViewBag.specialties = _context.Specialties.ToList();
+			ViewBag.faculties = _context.Faculties.ToList();
+			ViewBag.institutions = _context.Institutions.ToList();
+
 			return View();
 		}
 

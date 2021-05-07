@@ -5,8 +5,8 @@
 
 @model Dotnet.ViewModels.Work.WorkViewModel
 
-<div class="col-sm-4">
-	<ul class="list-group mb-4">
+<div class="flex-grow-1">
+	<ul class="list-group list-group-horizontal mb-4">
 		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
 			<i class="bi bi-back mr-2"></i>Назад
 		</a>
@@ -15,12 +15,12 @@
 		</a>
 	</ul>
 </div>
-<div class="col-sm-8">
+<div>
 	@foreach (var work in ViewBag.works)
 	{
 		<div class="card mb-2">
 			<div class="card-body overflow-auto">
-				<h6 class="card-title">
+				<h6 class="card-title float-left">
 					@foreach (var subject in ViewBag.subjects)
 					{
 						@if (subject.Id == work.SubjectId)
@@ -30,13 +30,18 @@
 					}
 					@work.Description
 				</h6>
+				<div class="float-right" style="margin-top: -7px;">
+					<a class="btn btn-light btn-block btn-sm">
+						<i class="bi bi-trash mr-2"></i>Удалить задание
+					</a>
+				</div>
 				<table class="table table-hover mb-0">
 					<thead>
 						<tr class="text-align-top">
 							<td scope="col">ID</td>
 							<td scope="col">Дата добавления</td>
 							<td scope="col">Дата сдачи</td>
-							<td scope="col">Количество попыток</td>
+							<td scope="col">Попытки</td>
 							<td scope="col">Вид работы</td>
 						</tr>
 					</thead>
@@ -69,6 +74,64 @@
 						<i class="bi bi-pencil-square mr-2"></i>Редактировать
 					</a>
 				}
+				<table class="table table-hover mt-3 mb-0">											
+					<thead>
+						<tr class="text-align-top">
+							<td scope="col">ID</td>
+							<td scope="col">Подгруппа</td>
+							<td scope="col">Дополнительно</td>
+							<td scope="col pr-0"></td>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var row in ViewBag.studySubgroupWork)
+						{
+							@if (row.WorkId == work.Id)
+							{
+								@foreach (var subgroup in ViewBag.studySubgroups)
+								{
+									@if (subgroup.Id == row.StudySubgroupId)
+									{
+										@foreach (var group in ViewBag.studyGroups)
+										{
+											@if (group.Id == subgroup.StudyGroupId)
+											{
+												@foreach (var specialty in ViewBag.specialties)
+												{
+													@if (specialty.Id == group.SpecialtyId)
+													{
+														@foreach (var faclty in ViewBag.faculties)
+														{
+															@if (faclty.Id == specialty.FacultyId)
+															{
+																@foreach (var institution in ViewBag.institutions)
+																{
+																	@if (institution.Id == faclty.InstitutionId)
+																	{
+																		<tr>
+																			<td>@subgroup.Id</td>
+																			<td>@group.Name (@group.Code) - @subgroup.Name (@subgroup.Code)</td>
+																			<td>@specialty.Name - @faclty.Name - @institution.Name</td>
+																			<td class="pt-0 pb-0">
+																				<a class="btn btn-light btn-block btn-sm" style="margin-top : 9px;">
+																					<i class="bi bi-trash"></i>
+																				</a>
+																			</td>
+																		</tr>
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					</tbody>
+				</table>
 			</div>
 		</div>
 	}

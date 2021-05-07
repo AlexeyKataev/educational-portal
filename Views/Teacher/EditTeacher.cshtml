@@ -81,7 +81,7 @@
 				{
 					@foreach (var subject in ViewBag.allSubjectsForTeacher)
 					{			
-						<div asp-for="" class="custom-control custom-checkbox mr-sm-2">
+						<div asp-for="" class="custom-control custom-checkbox mr-sm-2 mb-2">
 							@if (subject.IsChecked == true)
 							{
 								<input class="custom-control-input" type="checkbox" id=@subject.Name name="SubjectsId[]" value=@subject.Id checked>

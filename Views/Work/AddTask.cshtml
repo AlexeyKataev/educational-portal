@@ -97,6 +97,13 @@
 								{
 									@if (specialty.FacultyId == faculty.Id)
 									{
+										<div class="shadow-sm card p-3 mb-2 bg-white rounded">
+											<h6>Специальность - @specialty.Name (@specialty.Code)</h6>
+											<ul class="mb-0">
+												<li>факультет: @faculty.Name (@faculty.Code),</li>
+												<li>@institution.Name</li>
+											</ul>
+										</div>
 										@foreach (var group in ViewBag.studyGroups)
 										{
 											@if (group.SpecialtyId == specialty.Id)
@@ -105,9 +112,9 @@
 												{
 													@if (subgroup.StudyGroupId == group.Id)
 													{
-														<div asp-for="" class="custom-control custom-checkbox mr-sm-2">
+														<div asp-for="" class="custom-control custom-checkbox mr-sm-2 mb-2">
 															<input class="custom-control-input" type="checkbox" id=@subgroup.Id name="StudySubgroupsId[]" value=@subgroup.Id>
-															<label class="custom-control-label" for=@subgroup.Id>@group.Name (@group.Code) - подгруппа @subgroup.Name (@subgroup.Code) - @faculty.Name (@faculty.Code) - @institution.Name</label>
+															<label class="custom-control-label" for=@subgroup.Id>@group.Name (@group.Code) - подгруппа @subgroup.Name (@subgroup.Code)</label>
 														</div>
 													}
 												}
