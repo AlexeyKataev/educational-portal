@@ -20,7 +20,7 @@
 	{
 		<div class="card mb-2">
 			<div class="card-body overflow-auto">
-				<h6 class="card-title float-left">
+				<h6 class="card-title">
 					@foreach (var subject in ViewBag.subjects)
 					{
 						@if (subject.Id == work.SubjectId)
@@ -30,11 +30,6 @@
 					}
 					@work.Description
 				</h6>
-				<div class="float-right" style="margin-top: -7px;">
-					<a class="btn btn-light btn-block btn-sm">
-						<i class="bi bi-trash mr-2"></i>Удалить задание
-					</a>
-				</div>
 				<table class="table table-hover mb-0">
 					<thead>
 						<tr class="text-align-top">
@@ -70,9 +65,14 @@
 				</table>
 				@if (User.IsInRole("teacher"))
 				{
-					<a class="btn btn-light btn-block" asp-action="EditTeacher" asp-route-workId=@work.Id>
-						<i class="bi bi-pencil-square mr-2"></i>Редактировать
-					</a>
+					<div class="d-flex flex-row">
+						<a class="btn btn-light flex-grow-1 mr-2" asp-action="EditTeacher" asp-route-workId=@work.Id>
+							<i class="bi bi-pencil-square mr-2"></i>Редактировать
+						</a>		
+						<a class="btn btn-light" asp-action="EditTeacher" asp-route-workId=@work.Id>
+							<i class="bi bi-trash mr-2"></i>Удалить задание
+						</a>	
+					</div>	
 				}
 				<table class="table table-hover mt-3 mb-0">											
 					<thead>
@@ -80,7 +80,7 @@
 							<td scope="col">ID</td>
 							<td scope="col">Подгруппа</td>
 							<td scope="col">Дополнительно</td>
-							<td scope="col pr-0"></td>
+							<td scope="col"></td>
 						</tr>
 					</thead>
 					<tbody>
