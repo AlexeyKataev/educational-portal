@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
  
 namespace Dotnet.ViewModels.Work
 {
@@ -42,5 +43,7 @@ namespace Dotnet.ViewModels.Work
 				if (value.Length > 0) studySubgroupId = value;
 			}
 		}	
+
+		public IFormFile File { get; set; }
     }
 }

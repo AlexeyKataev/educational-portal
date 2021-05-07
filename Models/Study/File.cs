@@ -2,10 +2,6 @@ using System.Collections.Generic;
 
 namespace Dotnet.Models
 {
-	/* 
-	Создание объекта "Файл"	
-	*/
-
 	public class File
 	{
 		public int Id { get; set; }
@@ -20,7 +16,7 @@ namespace Dotnet.Models
 
 		public System.DateTime NeedToDelete { get; set; }
 
-		public System.DateTime dateAdded { get; set; }
+		public System.DateTime DateAdded { get; set; }
 
 
 
