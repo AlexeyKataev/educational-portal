@@ -1,0 +1,93 @@
+@{
+	ViewData["Title"] = "Добавить студента";	
+    Layout = "~/Views/Student/_StudentLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.Student.StudentViewModel
+
+<div class="col-sm-4">
+	<ul class="list-group mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
+			<i class="bi bi-back mr-2"></i>Назад
+		</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Student" asp-action="Students">
+			<i class="bi bi-people mr-2"></i>Студенты
+		</a>
+	</ul>
+</div>
+<div class="col-sm-8">
+	<form asp-action="CreateStudent" asp-controller="Student" asp-anti-forgery="true">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div>
+			<div class="form-group">
+				<label asp-for="UserId">Пользователь <span>*</span></label>
+				<select asp-for="UserId" class="form-control" required>
+					@if (ViewBag.allUsers.Count > 0)
+					{
+						@foreach (var user in ViewBag.allUsers)
+						{
+							<option value=@user.Id>@user.Login - @user.FirstName @user.SecondName - @user.Email</option>
+						}
+					}
+					else
+					{
+						<option>Нет доступных пользователей</option>	
+					}
+				</select>
+				<span asp-validation-for="UserId" />
+			</div>
+			<div class="form-group">
+				<label asp-for="StudySubgroupId">Учебная подгруппа *</label>
+				<select asp-for="StudySubgroupId" class="form-control" required>
+					@if (ViewBag.studySubgroups.Count > 0)
+					{
+						@foreach (var institution in ViewBag.institutions)
+						{
+							@foreach (var faculty in ViewBag.faculties)
+							{
+								@if (faculty.InstitutionId == institution.Id)
+								{
+									@foreach (var specialty in ViewBag.specialties)
+									{
+										@if (specialty.FacultyId == faculty.Id)
+										{
+											@foreach (var group in ViewBag.studyGroups)
+											{
+												@if (group.SpecialtyId == specialty.Id)
+												{
+													@foreach (var subgroup in ViewBag.studySubgroups)
+													{
+														@if (subgroup.StudyGroupId == group.Id)
+														{
+															<option value=@subgroup.Id>@group.Name (@group.Code) - @subgroup.Name (@subgroup.Code) - @specialty.Name (@specialty.Code) - @faculty.Name (@faculty.Code) - @institution.Name</option>
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				</select>
+				<span asp-validation-for="StudySubgroupId" />
+			</div>
+			<div class="form-group">
+				<label asp-for="IsLearns">Статус</label>
+				<div asp-for="" class="custom-control custom-checkbox mr-sm-2">
+					<input class="custom-control-input" type="checkbox" id="IsLearns" asp-for="IsLearns" checked />
+					<label class="custom-control-label" for="IsLearns">Обучающийся</label>
+				</div>
+				<span asp-validation-for="IsLearns" />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Добавить" class="btn btn-primary" />
+			</div>
+		</div>
+	</form>
+</div>

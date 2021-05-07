@@ -204,8 +204,10 @@ namespace Dotnet.Controllers
 		{
             if (ModelState.IsValid)
             {
+				User user = await _context.Users.FirstOrDefaultAsync(u => (u.Id == model.UserId));
                 Teacher teacher = await _context.Teachers.FirstOrDefaultAsync(t => (t.UserId == model.UserId));
-                if (teacher == null)
+
+                if (user.RoleId == 6 && teacher == null)
                 {
                     // Добавление записи об учётной записи в базу данных
                     teacher = new Teacher { 
