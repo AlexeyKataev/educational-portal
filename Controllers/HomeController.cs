@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dotnet.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Dotnet.Models.Study;
 
 namespace Dotnet.Controllers
 {
@@ -37,6 +39,23 @@ namespace Dotnet.Controllers
 				
 				if (aboutMe != null) ViewBag.aboutMe = $"{aboutMe.Specialization} • {aboutMe.Post}";
 				else ViewBag.aboutMe = "Вы не входите в штат сотрудников";
+			}
+			else if (me.RoleId == 9)
+			{
+				Student aboutMe = _context.Students.FirstOrDefault(s => (s.UserId == me.Id));
+				StudySubgroup studySubgroup = _context.StudySubgroups.FirstOrDefault(s => (s.Id == aboutMe.StudySubgroupId));
+				StudyGroup studyGroup = _context.StudyGroups.FirstOrDefault(s => (s.Id == studySubgroup.StudyGroupId));
+				Specialty specialty = _context.Specialties.FirstOrDefault(s => (s.Id == studyGroup.SpecialtyId));
+
+				List<StudySubgroupWork> studySubgroupWork = _context.StudySubgroupWork.Where(r => (r.StudySubgroupId == studySubgroup.Id)).ToList();
+				List<Work> works = _context.Works.OrderByDescending(d => d.DateAdded).ToList();
+
+				foreach (var work in works.ToList())
+					if (studySubgroupWork.Find(x => x.WorkId == work.Id) == null) works.RemoveAt(works.IndexOf(work));
+
+				if (aboutMe != null) ViewBag.aboutMe = $"{specialty.Code} {specialty.Name} • {studyGroup.Name}, подгруппа {studySubgroup.Name}";
+
+				ViewBag.myWorks = works;
 			}
 			else ViewBag.aboutMe = $"none";
 			

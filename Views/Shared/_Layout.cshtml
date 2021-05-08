@@ -21,20 +21,6 @@
 				{
 					<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 						<div class="flex-grow-1">
-							<ul class="navbar-nav flex-grow-1 float-left">
-								@if (User.IsInRole("student"))
-								{
-									<li class="nav-item">
-										<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Расписание</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link text-dark" asp-area="" asp-controller="Work" asp-action="MyWorks">Работы и оценки</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Преподаватели</a>
-									</li>
-								}		
-							</ul>
 							<ul class="navbar-nav float-right">
 								@if (User.IsInRole("admin"))
 								{

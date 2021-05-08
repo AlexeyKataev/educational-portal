@@ -61,6 +61,38 @@
 				</a>
 			</div>
 		}
+		else if (User.IsInRole("student"))
+		{
+			<div class="service-nav-panel">
+				<a asp-area="" asp-controller="Work" asp-action="Tasks" class="service-buttom">
+					<div class="service-buttom-icon">
+						<i class="bi bi-list-task"></i>
+					</div>
+					<div class="service-buttom-name">Задания</div>
+				</a>
+				<a asp-area="" asp-controller="Student" asp-action="Students" class="service-buttom">
+					<div class="service-buttom-icon">
+						<i class="bi bi-people-fill"></i>
+					</div>
+					<div class="service-buttom-name">Моя группа</div>
+				</a>
+				<a asp-area="" asp-controller="Work" asp-action="Attachments" class="service-buttom">
+					<div class="service-buttom-icon">
+						<i class="bi bi-file-earmark-fill"></i>
+					</div>
+					<div class="service-buttom-name">Файлы</div>
+				</a>
+				<a class="service-buttom">
+					<div class="service-buttom-icon">
+						<i class="bi bi-graph-up"></i>
+					</div>
+					<div class="service-buttom-name">Статистика</div>
+				</a>
+			</div>
+			<div>
+				
+			</div>
+		}
 	</div>
 </div>
 
