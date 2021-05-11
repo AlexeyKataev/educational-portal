@@ -15,7 +15,7 @@ using System.IO;
 
 namespace Dotnet.Controllers
 {
-	[Authorize(Roles="teacher")]
+	[Authorize(Roles="student, teacher")]
     public class WorkController : Controller
     {
 		private ApplicationContext _context;
@@ -27,6 +27,7 @@ namespace Dotnet.Controllers
             _logger = logger;
         }
 
+		[Authorize(Roles="teacher")]
         public IActionResult AddTask()
         {
 			User user = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
@@ -56,6 +57,7 @@ namespace Dotnet.Controllers
             return View();
         }
 
+		[Authorize(Roles="teacher")]
 		public IActionResult Tasks()
 		{
 			User user = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
@@ -80,7 +82,35 @@ namespace Dotnet.Controllers
 			return View();
 		}
 
+		[Authorize(Roles="student")]
+		public IActionResult MyTasks()
+		{
+			User me = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
+			Student aboutMe = _context.Students.FirstOrDefault(s => (s.UserId == me.Id));
+			StudySubgroup studySubgroup = _context.StudySubgroups.FirstOrDefault(s => (s.Id == aboutMe.StudySubgroupId));
+			StudyGroup studyGroup = _context.StudyGroups.FirstOrDefault(s => (s.Id == studySubgroup.StudyGroupId));
+			Specialty specialty = _context.Specialties.FirstOrDefault(s => (s.Id == studyGroup.SpecialtyId));
+
+			List<StudySubgroupWork> studySubgroupWork = _context.StudySubgroupWork.Where(r => (r.StudySubgroupId == studySubgroup.Id)).ToList();
+			List<Work> works = _context.Works.OrderByDescending(d => d.DateAdded).ToList();
+
+			foreach (var work in works.ToList())
+				if (studySubgroupWork.Find(x => x.WorkId == work.Id) == null) works.RemoveAt(works.IndexOf(work));
+
+			if (aboutMe != null) ViewBag.aboutMe = $"{specialty.Code} {specialty.Name} • {studyGroup.Name}, подгруппа {studySubgroup.Name}";
+
+			ViewBag.subjects = _context.Subjects.ToList();
+			ViewBag.typesWorks = _context.TypesWorks.ToList();
+			ViewBag.fileWork = _context.FileWork.ToList();
+			ViewBag.files = _context.Files.ToList();
+
+			ViewBag.myWorks = works;
+
+			return View();
+		}
+
 		[HttpPost]
+		[Authorize(Roles="teacher")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> CreateTask(WorkViewModel viewModel)
 		{

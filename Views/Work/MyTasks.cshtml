@@ -1,0 +1,104 @@
+@{
+	ViewData["Title"] = "Мои задания";	
+    Layout = "~/Views/Work/_WorkLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.Work.WorkViewModel
+
+<div class="flex-grow-1">
+	<ul class="list-group list-group-horizontal mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Index">
+			<i class="bi bi-back mr-2"></i>Назад
+		</a>
+	</ul>
+</div>
+<div>
+	@if (ViewBag.myWorks.Count > 0)
+	{
+		@foreach (var work in ViewBag.myWorks)
+		{
+			<div class="card mb-2">
+				<div class="card-body overflow-auto">
+					<h6 class="card-title">									
+						@if (work.IsObligation == true)
+						{
+							<span class="badge badge-dark">Обязательное</span>
+						}
+						@if (work.DateAdded.ToString("yyyy-MM-dd") == DateTime.Today.ToString("yyyy-MM-dd"))
+						{
+							<span class="badge badge-success mr-2">Сегодня, @work.DateAdded.ToString("HH:mm")</span>
+						}
+						else 
+						{
+							<span class="badge badge-light mr-2" style="text-transform: capitalize;">@work.DateAdded.ToString(@"dddd, dd MMMM \'yy HH:mm")</span>
+						}
+						@foreach (var subject in ViewBag.subjects)
+						{
+							@if (subject.Id == work.SubjectId)
+							{
+								<span class="badge badge-light mr-2">@subject.Name</span>
+							}
+						}
+						<p class="mt-4 pb-2">
+							@work.Description	
+						</p>
+					</h6>
+					<table class="table table-sm table-hover mb-0">
+						<thead>
+							<tr class="text-align-top">
+								<td scope="col">Дата сдачи</td>
+								<td scope="col">Попытки</td>
+								<td scope="col">Вид работы</td>
+								<td scope="col">Вложения</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								@if (work.DateDeparture == new DateTime(0001, 01, 01, 01, 01, 01))
+								{
+									<td>Бессрочно</td>
+								}
+								else 
+								{
+									<td>@work.DateDeparture</td>
+								}
+								<td>@work.CountAttempts</td>
+								@foreach (var typeWorks in ViewBag.typesWorks)
+								{
+									@if (typeWorks.Id == work.TypeWorksId)
+									{
+										<td>@typeWorks.Name</td>
+									}
+								}
+								<td>
+									@foreach (var fileWork in ViewBag.fileWork)
+									{
+										@if (fileWork.WorkId == work.Id)
+										{
+											@foreach (var file in ViewBag.files)
+											{
+												@if (file.Id == fileWork.FileId)
+												{
+													@foreach (var file2 in ViewBag.files)
+													{
+														<nav class="nav flex-column">
+															@if (file2.Id == fileWork.FileId)
+															{
+																<a href="Home/DownloadFile/?fileName=@file2.Name" class="nav-link p-0">@file.Pseudonym</a>
+															}
+														</nav>
+													}
+													break;
+												}
+											}
+										}
+									}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		}
+	}
+</div>

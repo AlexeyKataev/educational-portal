@@ -58,7 +58,7 @@
 		else if (User.IsInRole("student"))
 		{
 			<div class="service-nav-panel">
-				<a asp-area="" asp-controller="Work" asp-action="Tasks" class="service-buttom">
+				<a asp-area="" asp-controller="Work" asp-action="MyTasks" class="service-buttom">
 					<div class="service-buttom-icon">
 						<i class="bi bi-list-task"></i>
 					</div>
@@ -78,87 +78,93 @@
 					@foreach (var work in ViewBag.myWorks)
 					{
 						<div class="card mb-2">
-						<div class="card-body overflow-auto">
-							<h6 class="card-title">									
-								@if (work.IsObligation == true)
-								{
-									<span class="badge badge-dark">Обязательное</span>
-								}
-								@if (work.DateAdded.ToString("yyyy-MM-dd") == DateTime.Today.ToString("yyyy-MM-dd"))
-								{
-									<span class="badge badge-success mr-2">Сегодня, @work.DateAdded.ToString("HH:mm")</span>
-								}
-								else 
-								{
-									<span class="badge badge-light mr-2" style="text-transform: capitalize;">@work.DateAdded.ToString(@"dddd, dd MMMM \'yy HH:mm")</span>
-								}
-								@foreach (var subject in ViewBag.subjects)
-								{
-									@if (subject.Id == work.SubjectId)
+							<div class="card-body overflow-auto">
+								<h6 class="card-title">									
+									@if (work.IsObligation == true)
 									{
-										<span class="badge badge-light mr-2">@subject.Name</span>
+										<span class="badge badge-dark">Обязательное</span>
 									}
-								}
-								<p class="mt-4 pb-2">
-									@work.Description	
-								</p>
-							</h6>
-							<table class="table table-sm table-hover mb-0">
-								<thead>
-									<tr class="text-align-top">
-										<td scope="col">Дата сдачи</td>
-										<td scope="col">Попытки</td>
-										<td scope="col">Вид работы</td>
-										<td scope="col">Вложения</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										@if (work.DateDeparture == new DateTime(0001, 01, 01, 01, 01, 01))
+									@if (work.DateAdded.ToString("yyyy-MM-dd") == DateTime.Today.ToString("yyyy-MM-dd"))
+									{
+										<span class="badge badge-success mr-2">Сегодня, @work.DateAdded.ToString("HH:mm")</span>
+									}
+									else 
+									{
+										<span class="badge badge-light mr-2" style="text-transform: capitalize;">@work.DateAdded.ToString(@"dddd, dd MMMM \'yy HH:mm")</span>
+									}
+									@foreach (var subject in ViewBag.subjects)
+									{
+										@if (subject.Id == work.SubjectId)
 										{
-											<td>Бессрочно</td>
+											<span class="badge badge-light mr-2">@subject.Name</span>
 										}
-										else 
-										{
-											<td>@work.DateDeparture</td>
-										}
-										<td>@work.CountAttempts</td>
-										@foreach (var typeWorks in ViewBag.typesWorks)
-										{
-											@if (typeWorks.Id == work.TypeWorksId)
+									}
+									<p class="mt-4 pb-2">
+										@work.Description	
+									</p>
+								</h6>
+								<table class="table table-sm table-hover mb-0">
+									<thead>
+										<tr class="text-align-top">
+											<td scope="col">Дата сдачи</td>
+											<td scope="col">Попытки</td>
+											<td scope="col">Вид работы</td>
+											<td scope="col">Вложения</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											@if (work.DateDeparture == new DateTime(0001, 01, 01, 01, 01, 01))
 											{
-												<td>@typeWorks.Name</td>
+												<td>Бессрочно</td>
 											}
-										}
-										<td>
-											@foreach (var fileWork in ViewBag.fileWork)
+											else 
 											{
-												@if (fileWork.WorkId == work.Id)
+												<td>@work.DateDeparture</td>
+											}
+											<td>@work.CountAttempts</td>
+											@foreach (var typeWorks in ViewBag.typesWorks)
+											{
+												@if (typeWorks.Id == work.TypeWorksId)
 												{
-													@foreach (var file in ViewBag.files)
+													<td>@typeWorks.Name</td>
+												}
+											}
+											<td>
+												@foreach (var fileWork in ViewBag.fileWork)
+												{
+													@if (fileWork.WorkId == work.Id)
 													{
-														@if (file.Id == fileWork.FileId)
+														@foreach (var file in ViewBag.files)
 														{
-															@foreach (var file2 in ViewBag.files)
+															@if (file.Id == fileWork.FileId)
 															{
-																<nav class="nav flex-column">
-																	@if (file2.Id == fileWork.FileId)
-																	{
-																		<a href="Home/DownloadFile/?fileName=@file2.Name" class="nav-link p-0">@file.Pseudonym</a>
-																	}
-																</nav>
+																@foreach (var file2 in ViewBag.files)
+																{
+																	<nav class="nav flex-column">
+																		@if (file2.Id == fileWork.FileId)
+																		{
+																			<a href="Home/DownloadFile/?fileName=@file2.Name" class="nav-link p-0">@file.Pseudonym</a>
+																		}
+																	</nav>
+																}
+																break;
 															}
-															break;
 														}
 													}
 												}
-											}
-										</td>
-									</tr>
-								</tbody>
-							</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
-					</div>
+					}
+					@if (ViewBag.myWorks.Count > 5)
+					{
+						<a class="btn btn-light btn-block" asp-action="MyTasks" asp-controller="Work">
+							<i class="bi bi-list-task mr-2"></i>Показать все задания
+						</a>
 					}
 				}
 				else
