@@ -5,9 +5,9 @@
 
 @model Dotnet.ViewModels.InstitutionViewModel
 
-<div class="col-sm-4">
+<div class="flex-grow-1">
 	<ul class="list-group mb-4">
-		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
+		<a class="list-group-item list-group-horizontal list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
 			<i class="bi bi-back mr-2"></i>Назад
 		</a>
 		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Institution" asp-action="AddInstitution">
@@ -15,7 +15,7 @@
 		</a>
 	</ul>
 </div>
-<div class="col-sm-8">
+<div>
 	@for (int i = 0; i < ViewBag.allInstitutions.Count; i++ )
 	{
 		<div class="card mb-2">

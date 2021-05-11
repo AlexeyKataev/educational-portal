@@ -1,0 +1,41 @@
+@{
+	ViewData["Title"] = "Моя группа";
+    Layout = "~/Views/StudyGroup/_StudyGroupLayout.cshtml";
+}
+
+<div class="flex-grow-1">
+	<ul class="list-group list-group-horizontal mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Index">
+			<i class="bi bi-back mr-2"></i>Назад
+		</a>
+	</ul>
+</div>
+<div>
+	@for (int i = 0; i < ViewBag.myClassmates_Users.Count; i++)
+	{
+		<div class="card mb-2">
+			<div class="card-body overflow-auto">
+				<h6 class="card-title">Подгруппа @ViewBag.myClassmates_Users[i]["Name"]</h6>
+				<table class="table table-sm table-hover mb-0">
+					<thead>
+						<tr class="text-align-top">
+							<td scope="col">Дата сдачи</td>
+							<td scope="col">Попытки</td>
+							<td scope="col">Вид работы</td>
+							<td scope="col">Вложения</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	}
+</div>

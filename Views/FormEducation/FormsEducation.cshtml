@@ -3,8 +3,8 @@
     Layout = "~/Views/FormEducation/_FormEducationLayout.cshtml";
 }
 
-<div class="col-sm-4">
-	<ul class="list-group mb-4">
+<div class="flex-grow-1">
+	<ul class="list-group list-group-horizontal mb-4">
 		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
 			<i class="bi bi-back mr-2"></i>Назад
 		</a>
@@ -13,7 +13,7 @@
 		</a>
 	</ul>
 </div>
-<div class="col-sm-8">
+<div>
 	@foreach (var fE in ViewBag.allFormsEducation)
 	{
 		<div class="card mb-2">

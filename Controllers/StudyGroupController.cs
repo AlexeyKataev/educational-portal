@@ -16,8 +16,7 @@ using Dotnet.ViewModels.StudyGroup;
 
 namespace Dotnet.Controllers
 {
-	[Authorize]
-	[Authorize(Roles="admin, systemAdmin, humanResources")]
+	[Authorize(Roles="admin, systemAdmin, humanResources, student")]
     public class StudyGroupController : Controller
     {
 		private ApplicationContext _context;
@@ -29,6 +28,7 @@ namespace Dotnet.Controllers
             _logger = logger;
         }
 
+		[Authorize(Roles="admin, systemAdmin, humanResources")]
         public IActionResult StudyGroups()
         {
 			ViewBag.StudyGroups = _context.StudyGroups.ToList();
@@ -41,6 +41,7 @@ namespace Dotnet.Controllers
             return View();
         }
 
+		[Authorize(Roles="admin, systemAdmin, humanResources")]
         public IActionResult AddStudyGroup() 
 		{
 			ViewBag.studyGroups = _context.StudyGroups.ToList();
@@ -52,12 +53,14 @@ namespace Dotnet.Controllers
 		} 
 
 		[HttpGet]
+		[Authorize(Roles="admin, systemAdmin, humanResources")]
 		public IActionResult EditStudyGroup(int groupId)
 		{
 			return View();
 		}
 
 		[HttpGet]
+		[Authorize(Roles="admin, systemAdmin, humanResources")]
 		public IActionResult EditStudySubgroup(int subGroupId)
 		{
 			return View();
@@ -65,6 +68,7 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Roles="admin, systemAdmin, humanResources")]
 		public async Task<IActionResult> ApplyChangesStudyGroup() // ПЕРЕДАТЬ МОДЕЛЬ
 		{
 			return null;
@@ -72,6 +76,7 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Roles="admin, systemAdmin, humanResources")]
 		public async Task<IActionResult> ApplyChangesStudySubgroup() // ПЕРЕДАТЬ МОДЕЛЬ
 		{
 			return null;
@@ -79,6 +84,7 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Roles="admin, systemAdmin, humanResources")]
 		public async Task<IActionResult> CreateStudyGroup(StudyGroupAndSubgroupViewModel model)
 		{
 			if (ModelState.IsValid)
@@ -111,6 +117,7 @@ namespace Dotnet.Controllers
 		
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Roles="admin, systemAdmin, humanResources")]
 		public async Task<IActionResult> CreateStudySubgroup(StudyGroupAndSubgroupViewModel model)
 		{
 			if (ModelState.IsValid)
@@ -135,6 +142,36 @@ namespace Dotnet.Controllers
 			else
 				ModelState.AddModelError("", "Некорретные данные");
 			return RedirectToAction("AddStudyGroup", "StudyGroup");
+		}
+
+		[Authorize(Roles="student")]
+		public IActionResult MyStudyGroup()
+		{
+			User me = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
+			Student aboutMe = _context.Students.AsNoTracking().FirstOrDefault(s => (s.UserId == me.Id));
+			
+			StudySubgroup mySubgroup = _context.StudySubgroups.AsNoTracking().FirstOrDefault(x => x.Id == aboutMe.StudySubgroupId);
+			StudyGroup myGroup = _context.StudyGroups.AsNoTracking().FirstOrDefault(x => x.Id == mySubgroup.StudyGroupId);
+
+			List<StudySubgroup> mySubgroups = _context.StudySubgroups.AsNoTracking().Where(x => x.StudyGroupId == myGroup.Id).ToList();
+
+			List<Student> myClassmates_Students = new List<Student>();
+			List<User> myClassmates_Users = new List<User>();
+
+			foreach (var subgroup in mySubgroups)
+			{
+				List<Student> temp = _context.Students.Where(x => x.StudySubgroupId == subgroup.Id).ToList();
+				myClassmates_Students.Concat(temp.ToList()).GetEnumerator();
+			}
+
+			foreach (var classmate in myClassmates_Students)
+				myClassmates_Users.Add(_context.Users.FirstOrDefault(x => x.Id == classmate.UserId));
+
+			ViewBag.mySubgroups = mySubgroups;
+			ViewBag.myClassmates_Users = myClassmates_Users.OrderBy(x => x.SecondName);
+			ViewBag.myClassmates_Students = myClassmates_Students.ToList();
+		
+			return View();
 		}
 	}
 }

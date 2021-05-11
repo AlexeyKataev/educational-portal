@@ -6,14 +6,14 @@
 @* @model Dotnet.ViewModels.ProfileModel *@
 @model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
 
-<div class="col-sm-4">
-	<ul class="list-group mb-4">
+<div class="flex-grow-1">
+	<ul class="list-group list-group-horizontal mb-4">
 		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
 			<i class="bi bi-back mr-2"></i>Назад
 		</a>
 	</ul>
 </div>
-<div class="col-sm-8">
+<div>
 	<div class="shadow-sm card p-3 mb-2 bg-white rounded">
 		<h6 class="mt-0">Досупные для учётных записей роли</h6>
 		<ul class="mb-0">

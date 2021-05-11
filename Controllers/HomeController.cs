@@ -55,6 +55,10 @@ namespace Dotnet.Controllers
 
 				if (aboutMe != null) ViewBag.aboutMe = $"{specialty.Code} {specialty.Name} • {studyGroup.Name}, подгруппа {studySubgroup.Name}";
 
+				ViewBag.subjects = _context.Subjects.ToList();
+				ViewBag.typesWorks = _context.TypesWorks.ToList();
+				ViewBag.fileWork = _context.FileWork.ToList();
+				ViewBag.files = _context.Files.ToList();
 				ViewBag.myWorks = works;
 			}
 			else ViewBag.aboutMe = $"none";
@@ -62,7 +66,7 @@ namespace Dotnet.Controllers
             return View();
         }
 
-		[Authorize]
+		[Authorize(Roles="admin")]
 		public IActionResult Services()
 		{
 			return View();
