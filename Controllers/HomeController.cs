@@ -9,6 +9,9 @@ using Dotnet.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Dotnet.Models.Study;
+using System.Net.Http.Headers;
+using System.IO;
+using System.Net.Mime;
 
 namespace Dotnet.Controllers
 {
@@ -65,6 +68,16 @@ namespace Dotnet.Controllers
 			
             return View();
         }
+
+		[HttpGet]
+		[Authorize(Roles="student")]
+		public IActionResult DownloadFile(string fileName)
+		{
+			var path = Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles", fileName);
+			byte[] bytes = System.IO.File.ReadAllBytes(path);
+	
+			return File(bytes, "application/octet-stream", fileName);
+		}
 
 		[Authorize(Roles="admin")]
 		public IActionResult Services()

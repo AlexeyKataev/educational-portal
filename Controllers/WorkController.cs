@@ -158,5 +158,15 @@ namespace Dotnet.Controllers
 
 			return RedirectToAction("AddTask", "Work");
 		}
+				
+		[HttpGet]
+		[Authorize(Roles="teacher, admin")]
+		public IActionResult DownloadFile(string fileName)
+		{
+			var path = Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles", fileName);
+			byte[] bytes = System.IO.File.ReadAllBytes(path);
+	
+			return File(bytes, "application/octet-stream", fileName);
+		}
 	}
 }
