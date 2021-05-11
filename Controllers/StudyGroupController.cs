@@ -159,16 +159,13 @@ namespace Dotnet.Controllers
 			List<User> myClassmates_Users = new List<User>();
 
 			foreach (var subgroup in mySubgroups)
-			{
-				List<Student> temp = _context.Students.Where(x => x.StudySubgroupId == subgroup.Id).ToList();
-				myClassmates_Students.Concat(temp.ToList()).GetEnumerator();
-			}
+				myClassmates_Students.AddRange(_context.Students.AsNoTracking().Where(x => x.StudySubgroupId == subgroup.Id).ToList());
 
 			foreach (var classmate in myClassmates_Students)
-				myClassmates_Users.Add(_context.Users.FirstOrDefault(x => x.Id == classmate.UserId));
+				myClassmates_Users.Add(_context.Users.AsNoTracking().FirstOrDefault(x => x.Id == classmate.UserId));
 
 			ViewBag.mySubgroups = mySubgroups;
-			ViewBag.myClassmates_Users = myClassmates_Users.OrderBy(x => x.SecondName);
+			ViewBag.myClassmates_Users = myClassmates_Users.OrderBy(x => x.SecondName).ToList();
 			ViewBag.myClassmates_Students = myClassmates_Students.ToList();
 		
 			return View();

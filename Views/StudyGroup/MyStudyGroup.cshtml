@@ -11,28 +11,39 @@
 	</ul>
 </div>
 <div>
-	@for (int i = 0; i < ViewBag.myClassmates_Users.Count; i++)
+	@foreach (var subgroup in ViewBag.mySubgroups)
 	{
 		<div class="card mb-2">
 			<div class="card-body overflow-auto">
-				<h6 class="card-title">Подгруппа @ViewBag.myClassmates_Users[i]["Name"]</h6>
+				<h6 class="card-title">Подгруппа @subgroup.Name</h6>
 				<table class="table table-sm table-hover mb-0">
 					<thead>
 						<tr class="text-align-top">
-							<td scope="col">Дата сдачи</td>
-							<td scope="col">Попытки</td>
-							<td scope="col">Вид работы</td>
-							<td scope="col">Вложения</td>
+							<td scope="col">Ф.И.О.</td>
+							<td scope="col">Дата рождения</td>
+							<td scope="col">E-Mail</td>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
+						@foreach (var student in ViewBag.myClassmates_Students)
+						{
+							{
+								@if (subgroup.Id == student.StudySubgroupId)
+								{
+									@foreach (var user in ViewBag.myClassmates_Users)
+									{
+										@if (user.Id == student.UserId)
+										{
+											<tr>
+												<td>@user.SecondName @user.FirstName @user.MiddleName</td>
+												<td>@user.DateOfBirth.ToString("dd.MM.yyyy")</td>
+												<td>@user.Email</td>
+											</tr>
+										}
+									}
+								}
+							}
+						}
 					</tbody>
 				</table>
 			</div>
