@@ -79,7 +79,11 @@
 					{
 						<div class="card mb-2">
 						<div class="card-body overflow-auto">
-							<h6 class="card-title">
+							<h6 class="card-title">									
+								@if (work.IsObligation == true)
+								{
+									<span class="badge badge-dark">Обязательное</span>
+								}
 								@if (work.DateAdded.ToString("yyyy-MM-dd") == DateTime.Today.ToString("yyyy-MM-dd"))
 								{
 									<span class="badge badge-success mr-2">Сегодня, @work.DateAdded.ToString("HH:mm")</span>
@@ -95,7 +99,9 @@
 										<span class="badge badge-light mr-2">@subject.Name</span>
 									}
 								}
-								<p class="mt-4 pb-2">@work.Description</p>
+								<p class="mt-4 pb-2">
+									@work.Description	
+								</p>
 							</h6>
 							<table class="table table-sm table-hover mb-0">
 								<thead>

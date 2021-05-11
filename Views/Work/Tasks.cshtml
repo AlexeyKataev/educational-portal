@@ -21,6 +21,10 @@
 		<div class="card mb-2">
 			<div class="card-body overflow-auto">
 				<h6 class="card-title">
+					@if (work.IsObligation == true)
+					{
+						<span class="badge badge-dark">Обязательное</span>
+					}
 					@foreach (var subject in ViewBag.subjects)
 					{
 						@if (subject.Id == work.SubjectId)
