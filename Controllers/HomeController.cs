@@ -63,8 +63,16 @@ namespace Dotnet.Controllers
 				ViewBag.fileWork = _context.FileWork.ToList();
 				ViewBag.files = _context.Files.ToList();
 
-				if (works.Count > 5) ViewBag.myWorks = works.GetRange(0, 5);
-				else ViewBag.myWorks = works;
+				if (works.Count > 5) 
+				{
+					ViewBag.isMuchWorks = true;
+					ViewBag.myWorks = works.GetRange(0, 5);
+				}
+				else 
+				{
+					ViewBag.isMuchWorks = false;
+					ViewBag.myWorks = works;
+				}
 			}
 			else ViewBag.aboutMe = $"none";
 			
