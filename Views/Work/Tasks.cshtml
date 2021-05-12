@@ -95,10 +95,10 @@
 				@if (User.IsInRole("teacher"))
 				{
 					<div class="d-flex flex-row">
-						<a class="btn btn-light flex-grow-1 mr-2" asp-action="EditTeacher" asp-route-workId=@work.Id>
+						<a class="btn btn-light flex-grow-1 mr-2" asp-action="EditTask" asp-route-taskId=@work.Id>
 							<i class="bi bi-pencil-square mr-2"></i>Редактировать
 						</a>		
-						<a class="btn btn-light" asp-action="EditTeacher" asp-route-workId=@work.Id>
+						<a class="btn btn-light" asp-action="DeleteTask" asp-route-taskId=@work.Id>
 							<span style="color: red;"><i class="bi bi-trash mr-2"></i>Удалить задание</span>
 						</a>	
 					</div>	
@@ -109,7 +109,6 @@
 							<td scope="col">ID</td>
 							<td scope="col">Подгруппа</td>
 							<td scope="col">Дополнительно</td>
-							<td scope="col"></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -141,11 +140,6 @@
 																			<td>@subgroup.Id</td>
 																			<td>@group.Name (@group.Code) - @subgroup.Name (@subgroup.Code)</td>
 																			<td>@specialty.Name - @faclty.Name - @institution.Name</td>
-																			<td class="pt-0 pb-0">
-																				<a class="btn btn-light btn-block btn-sm" style="margin-top : 9px;">
-																					<i class="bi bi-trash"></i>
-																				</a>
-																			</td>
 																		</tr>
 																	}
 																}

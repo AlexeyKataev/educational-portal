@@ -1,9 +1,9 @@
 @{
-	ViewData["Title"] = "Добавить задание";	
+	ViewData["Title"] = "Редактировать задание";	
     Layout = "~/Views/Work/_WorkLayout.cshtml";
 }
 
-@model Dotnet.ViewModels.Work.WorkViewModel
+@model Dotnet.ViewModels.Work.EditWorkViewModel
 
 <div class="flex-grow-1">
 	<ul class="list-group list-group-horizontal mb-4">
@@ -16,34 +16,51 @@
 	</ul>
 </div>
 <div>
-	<form asp-action="CreateTask" asp-controller="Work" asp-anti-forgery="true" enctype="multipart/form-data">
+	<form asp-action="ApplyChangesTask" asp-controller="Work" asp-anti-forgery="true" enctype="multipart/form-data">
 		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
 		<div>
+			<input type="hidden" asp-for="Id" class="form-control" value=@ViewBag.work.Id />
 			<div class="form-group">
 				<label asp-for="Description">Описание <span>*</span></label>
-				<textarea asp-for="Description" class="form-control" required></textarea>
+				<input id="textarea__description" asp-for="Description" class="form-control" value=@ViewBag.work.Description required />
+				<!--<textarea id="textarea__description" asp-for="Description" class="form-control" required>
+				</textarea>
+				@{
+					byte[] bytes = System.Text.Encoding.ASCII.GetBytes(ViewBag.Work.Description);
+					string newString = System.Text.Encoding.UTF8.GetString(bytes);
+				}
+				<script type="text/javascript">
+					document.getElementById("textarea__description").value = "@newString";
+				</script>-->
 				<span asp-validation-for="Description" />
 			</div>
 			<div class="form-group">
 				<label for="IsObligation">Обязательность</label>
 				<div asp-for="" class="custom-control custom-checkbox mr-sm-2">
-					<input class="custom-control-input" type="checkbox" id="IsObligation" asp-for="IsObligation" checked />
+					@if (ViewBag.work.IsObligation == true)
+					{
+						<input class="custom-control-input" type="checkbox" id="IsObligation" asp-for="IsObligation" checked />
+					}
+					else
+					{
+						<input class="custom-control-input" type="checkbox" id="IsObligation" asp-for="IsObligation" />
+					}
 					<label class="custom-control-label" for="IsObligation">Обязательное к выполнению задание</label>
 				</div>
 				<span asp-validation-for="IsObligation" />
 			</div>
 			<div class="form-group">
 				<label asp-for="DateDeparture">Дата сдачи (значение по умолчанию сделает задание бессрочным)</label>
-				<input type="datetime-local" asp-for="DateDeparture" class="form-control" value="0001-01-01T01:01:01" required />
+				<input type="datetime-local" asp-for="DateDeparture" class="form-control" value=@ViewBag.work.DateDeparture.ToString("yyyy-MM-ddTHH:mm:ss") required />
 				<span asp-validation-for="DateDeparture" />
 			</div>
 			<div class="form-group">
 				<label asp-for="CountAttempts">Количество попыток</label>
-				<input asp-for="CountAttempts" class="form-control" min="1" max="255" value="1" required />
+				<input asp-for="CountAttempts" class="form-control" min="1" max="255" value=@ViewBag.work.CountAttempts required />
 				<span asp-validation-for="CountAttempts" />
 			</div>
 			<div class="form-group">
@@ -53,7 +70,14 @@
 					{
 						@foreach (var subject in ViewBag.subjects)
 						{
-							<option value=@subject.Id>@subject.Name</option>
+							@if (subject.Id == ViewBag.work.SubjectId)
+							{
+								<option value=@subject.Id selected>@subject.Name</option>
+							}
+							else 
+							{
+								<option value=@subject.Id>@subject.Name</option>
+							}
 						}
 					}
 					else
@@ -70,7 +94,14 @@
 					{
 						@foreach (var typeWorks in ViewBag.typesWorks)
 						{
-							<option value=@typeWorks.Id>@typeWorks.Name</option>
+							@if (typeWorks.Id == ViewBag.work.TypeWorksId)
+							{
+								<option value=@typeWorks.Id selected>@typeWorks.Name</option>
+							}
+							else
+							{
+								<option value=@typeWorks.Id>@typeWorks.Name</option>
+							}
 						}
 					}
 					else
@@ -118,7 +149,14 @@
 													@if (subgroup.StudyGroupId == group.Id)
 													{
 														<div asp-for="" class="custom-control custom-checkbox mr-sm-2 mb-2">
-															<input class="custom-control-input" type="checkbox" id=@subgroup.Id name="StudySubgroupsId[]" value=@subgroup.Id>
+															@if (ViewBag.studySubgroupChecked.Contains(subgroup.Id))
+															{
+																<input class="custom-control-input" type="checkbox" id=@subgroup.Id name="StudySubgroupsId[]" value=@subgroup.Id checked>
+															}
+															else
+															{
+																<input class="custom-control-input" type="checkbox" id=@subgroup.Id name="StudySubgroupsId[]" value=@subgroup.Id>
+															}
 															<label class="custom-control-label" for=@subgroup.Id>@group.Name (@group.Code) - подгруппа @subgroup.Name (@subgroup.Code)</label>
 														</div>
 													}
@@ -139,9 +177,9 @@
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary">
-					<i class="bi bi-plus-circle mr-2"></i>Добавить задание
+					Сохранить
 				</button>
 			</div>
 		</div>
-	</form>
+	</form>	
 </div>

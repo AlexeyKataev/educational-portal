@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dotnet.Controllers
 {
@@ -57,6 +58,46 @@ namespace Dotnet.Controllers
             return View();
         }
 
+		[HttpGet]
+		[Authorize(Roles="teacher")]
+		public IActionResult EditTask(int taskId)
+		{
+			User user = _context.Users.AsNoTracking().FirstOrDefault(u => (u.Login == User.Identity.Name));
+			Teacher teacher = _context.Teachers.AsNoTracking().FirstOrDefault(t => (t.UserId == user.Id));
+			Work work = _context.Works.AsNoTracking().FirstOrDefault(x => x.Id == taskId);
+
+			if (teacher == null || work.TeacherId != teacher.Id) return RedirectToAction("Index", "Home");
+
+			List<SubjectTeacher> subjectTeacher = _context.SubjectTeacher.Where(x => x.TeacherId == teacher.Id).ToList();
+			List<StudySubgroupWork> studySubgroupWork = _context.StudySubgroupWork.AsNoTracking().Where(x => x.WorkId == taskId).ToList();
+			List<int> studySubgroupChecked = new List<int>();
+			List<Subject> subjects = new List<Subject>();
+
+			foreach (var row in subjectTeacher)
+			{
+				Subject subject = _context.Subjects.FirstOrDefault(x => x.Id == row.SubjectId);
+				if (subject != null) subjects.Add(subject);
+			}
+
+			foreach (var row in studySubgroupWork) studySubgroupChecked.Add(row.StudySubgroupId);
+
+			ViewBag.typesWorks = _context.TypesWorks.AsNoTracking().ToList();
+			ViewBag.subjects = subjects;
+
+			ViewBag.studySubgroups = _context.StudySubgroups.AsNoTracking().ToList();
+			ViewBag.studyGroups = _context.StudyGroups.AsNoTracking().ToList();
+			ViewBag.specialties = _context.Specialties.AsNoTracking().ToList();
+			ViewBag.faculties = _context.Faculties.AsNoTracking().ToList();
+			ViewBag.institutions = _context.Institutions.AsNoTracking().ToList();
+
+			ViewBag.studySubgroupWork = _context.StudySubgroupWork.AsNoTracking().ToList();
+
+			ViewBag.studySubgroupChecked = studySubgroupChecked;
+			ViewBag.work = work;
+
+			return View();
+		}
+
 		[Authorize(Roles="teacher")]
 		public IActionResult Tasks()
 		{
@@ -99,8 +140,8 @@ namespace Dotnet.Controllers
 
 			if (aboutMe != null) ViewBag.aboutMe = $"{specialty.Code} {specialty.Name} • {studyGroup.Name}, подгруппа {studySubgroup.Name}";
 
-			ViewBag.subjects = _context.Subjects.ToList();
-			ViewBag.typesWorks = _context.TypesWorks.ToList();
+			ViewBag.subjects = _context.Subjects.AsNoTracking().ToList();
+			ViewBag.typesWorks = _context.TypesWorks.AsNoTracking().ToList();
 			ViewBag.fileWork = _context.FileWork.ToList();
 			ViewBag.files = _context.Files.ToList();
 
@@ -116,8 +157,8 @@ namespace Dotnet.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				User user = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
-				Teacher teacher = _context.Teachers.FirstOrDefault(t => (t.UserId == user.Id));
+				User user = await _context.Users.FirstOrDefaultAsync(u => (u.Login == User.Identity.Name));
+				Teacher teacher = await _context.Teachers.FirstOrDefaultAsync(t => (t.UserId == user.Id));
 
 				if (teacher == null) 
 				{
@@ -187,6 +228,60 @@ namespace Dotnet.Controllers
 			else ModelState.AddModelError("", "Некорретные данные.");
 
 			return RedirectToAction("AddTask", "Work");
+		}
+
+		[HttpPost]
+		[Authorize(Roles="teacher")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> ApplyChangesTask(EditWorkViewModel viewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				User user = await _context.Users.FirstOrDefaultAsync(u => u.Login == User.Identity.Name);
+				Teacher teacher = await _context.Teachers.FirstOrDefaultAsync(t => t.UserId == user.Id);
+				Work work = await _context.Works.FirstOrDefaultAsync(w => w.Id == viewModel.Id);
+				List<StudySubgroupWork> studySubgroupWork = _context.StudySubgroupWork.Where(x => x.WorkId == viewModel.Id).ToList();
+
+				if (work == null || teacher.Id != work.TeacherId) 
+				{
+					ModelState.AddModelError("", "Некорректные данные.");
+					return RedirectToAction("Tasks", "Work");
+				}
+
+				work.Description		= viewModel.Description;
+				work.IsObligation 		= viewModel.IsObligation;
+				work.DateDeparture 		= viewModel.DateDeparture;
+				work.CountAttempts 		= viewModel.CountAttempts;
+				work.SubjectId 			= viewModel.SubjectId;
+				work.TypeWorksId 		= viewModel.TypeWorksId;
+				work.TeacherId			= teacher.Id;
+
+				await _context.SaveChangesAsync();
+
+				foreach (var x in studySubgroupWork)
+					if (viewModel.StudySubgroupsId.Contains(x.StudySubgroupId) == false) _context.StudySubgroupWork.Remove(x);
+
+				foreach (var x in viewModel.StudySubgroupsId)
+				{
+					if (await _context.StudySubgroupWork.FirstOrDefaultAsync(r => r.StudySubgroupId == x && r.WorkId == viewModel.Id) == null)
+						await _context.StudySubgroupWork.AddAsync(new StudySubgroupWork { Id = 0, WorkId = viewModel.Id, StudySubgroupId = x});
+				}
+
+				await _context.SaveChangesAsync();
+			}
+			else ModelState.AddModelError("", "Некорретные данные.");
+
+			return RedirectToAction("Tasks", "Work");
+		}
+
+		[HttpGet]
+		[Authorize(Roles="teacher")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteTask(int taskId)
+		{	
+			
+			
+			return RedirectToAction("Tasks", "Work");
 		}
 				
 		[HttpGet]

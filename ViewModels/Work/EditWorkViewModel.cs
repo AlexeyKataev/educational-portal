@@ -3,15 +3,18 @@ using Microsoft.AspNetCore.Http;
  
 namespace Dotnet.ViewModels.Work
 {
-    public class WorkViewModel
+    public class EditWorkViewModel
     {
+		[Required]
+		public int Id { get; set; } = 0;
+
         [Required(ErrorMessage = "Укажите описание для задания.")]
 		public string Description { get; set; }
 
 		[Required]
 		public bool IsObligation { get; set; } = false;
 
-		public System.DateTime DateAdded { get; set; } = System.DateTime.Now;
+		public System.DateTime DateAdded { get; }
 
 		public System.DateTime DateDeparture { get; set; } = new System.DateTime(0001, 01, 01, 01, 01, 01);
 
