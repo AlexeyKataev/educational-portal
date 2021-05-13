@@ -64,12 +64,17 @@ namespace Dotnet.Controllers
 		{
 			User user = _context.Users.AsNoTracking().FirstOrDefault(u => (u.Login == User.Identity.Name));
 			Teacher teacher = _context.Teachers.AsNoTracking().FirstOrDefault(t => (t.UserId == user.Id));
+
 			Work work = _context.Works.AsNoTracking().FirstOrDefault(x => x.Id == taskId);
+			
+			FileWork fileWork = _context.FileWork.AsNoTracking().FirstOrDefault(x => x.WorkId == taskId);
+			Dotnet.Models.File file = fileWork == null ? null : _context.Files.AsNoTracking().FirstOrDefault(f => f.Id == fileWork.FileId);
 
 			if (teacher == null || work.TeacherId != teacher.Id) return RedirectToAction("Index", "Home");
 
 			List<SubjectTeacher> subjectTeacher = _context.SubjectTeacher.Where(x => x.TeacherId == teacher.Id).ToList();
 			List<StudySubgroupWork> studySubgroupWork = _context.StudySubgroupWork.AsNoTracking().Where(x => x.WorkId == taskId).ToList();
+
 			List<int> studySubgroupChecked = new List<int>();
 			List<Subject> subjects = new List<Subject>();
 
@@ -94,6 +99,7 @@ namespace Dotnet.Controllers
 
 			ViewBag.studySubgroupChecked = studySubgroupChecked;
 			ViewBag.work = work;
+			ViewBag.pickFile = file == null ? null : file;
 
 			return View();
 		}
@@ -292,6 +298,28 @@ namespace Dotnet.Controllers
 			byte[] bytes = System.IO.File.ReadAllBytes(path);
 	
 			return File(bytes, "application/octet-stream", fileName);
+		}
+
+		[HttpGet]
+		[Authorize(Roles="teacher")]
+		public IActionResult DeleteFile(int fileId)
+		{
+			User user = _context.Users.AsNoTracking().FirstOrDefault(u => (u.Login == User.Identity.Name));
+			Teacher teacher = _context.Teachers.AsNoTracking().FirstOrDefault(t => (t.UserId == user.Id));
+
+			FileWork fileWork = _context.FileWork.FirstOrDefault(x => x.FileId == fileId);
+			Work work = _context.Works.AsNoTracking().FirstOrDefault(x => x.Id == fileWork.WorkId);
+			
+			if (work.TeacherId == teacher.Id)
+			{
+				Dotnet.Models.File file = _context.Files.FirstOrDefault(f => f.Id == fileWork.FileId);
+				_context.Files.Remove(file);
+				_context.FileWork.Remove(fileWork);
+
+				_context.SaveChanges();
+			}
+
+			return Redirect(Request.Headers["Referer"].ToString());
 		}
 	}
 }
