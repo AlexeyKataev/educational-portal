@@ -72,11 +72,47 @@ namespace Dotnet.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult EditStudent(int studentId)
+		public IActionResult EditStudent(int studentId, int userId)
 		{
+			List<User> users = new List<User>();
+			List<Student> students = _context.Students.ToList();
 
+			foreach (var student in students)
+				users.Add(_context.Users.FirstOrDefault(u => u.Id == student.UserId));
+
+			ViewBag.studentId = studentId;
+			ViewBag.userId = userId;
+			ViewBag.users = users;
+			ViewBag.students = students;
+			ViewBag.student = _context.Students.FirstOrDefault(x => x.Id == studentId);
+			ViewBag.studySubgroups = _context.StudySubgroups.ToList();
+			ViewBag.studyGroups = _context.StudyGroups.ToList();
+			ViewBag.specialties = _context.Specialties.ToList();
+			ViewBag.faculties = _context.Faculties.ToList();
+			ViewBag.institutions = _context.Institutions.ToList();
 
 			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> ApplyChangesStudent(EditStudentViewModel viewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				Student student = await _context.Students.FirstOrDefaultAsync(x => x.Id == viewModel.Id);
+
+				if (student != null)
+				{
+					student.IsLearns		= viewModel.IsLearns;
+					student.StudySubgroupId = viewModel.StudySubgroupId;
+
+					await _context.SaveChangesAsync();
+				}
+			}
+			else ModelState.AddModelError("", "Некорректные данные");
+
+			return RedirectToAction("Students", "Student");
 		}
 
 		[HttpPost]

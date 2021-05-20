@@ -8,7 +8,7 @@ namespace Dotnet.ViewModels.Student
 		public int Id { get; set; }
 
 		[Required(ErrorMessage = "Укажите пользователя.")]
-		public int UserId { get; set;}	
+		public int UserId { get; set; }	
 		
 		[Required(ErrorMessage = "Укажите статус.")]
 		public bool IsLearns { get; set; }
