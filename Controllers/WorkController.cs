@@ -282,11 +282,23 @@ namespace Dotnet.Controllers
 
 		[HttpGet]
 		[Authorize(Roles="teacher")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteTask(int taskId)
+		public IActionResult DeleteTask(int taskId)
 		{	
-			
-			
+			User user = _context.Users.AsNoTracking().FirstOrDefault(u => (u.Login == User.Identity.Name));
+			Teacher teacher = _context.Teachers.AsNoTracking().FirstOrDefault(t => (t.UserId == user.Id));
+
+			List<StudySubgroupWork> studySubgroupWork = _context.StudySubgroupWork.Where(x => x.WorkId == taskId).ToList();
+			Work work = _context.Works.FirstOrDefault(x => x.Id == taskId);
+
+			if (studySubgroupWork.Count > 0)
+				foreach (var row in studySubgroupWork)
+					_context.Remove(row);
+
+			if (work.TeacherId == teacher.Id)
+				_context.Remove(work);
+
+			_context.SaveChangesAsync();
+
 			return RedirectToAction("Tasks", "Work");
 		}
 				

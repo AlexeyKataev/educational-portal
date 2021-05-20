@@ -27,18 +27,12 @@ namespace Dotnet.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-			if (User.Identity.IsAuthenticated)
-			{
-				return RedirectToAction("Index", "Home");
-			}
+			if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Home");			
 			return View();
         }
 
 		[HttpGet]
-        public IActionResult Recovery()
-        {
-			return View();
-        }
+        public IActionResult Recovery() => View();
 
 		[HttpGet]
 		[Authorize]
@@ -55,9 +49,9 @@ namespace Dotnet.Controllers
             if (ModelState.IsValid)
             {
                 User user = await _context.Users.FirstOrDefaultAsync(u => (u.Email == model.Email || u.Login == model.Login));
+
                 if (user == null)
                 {
-                    // Добавление записи об учётной записи в базу данных
                     user = new User { 
 						FirstName	= model.FirstName,
 						SecondName	= model.SecondName,
@@ -68,7 +62,9 @@ namespace Dotnet.Controllers
 						Login		= model.Login,
 						Password	= model.Password,
 					};
+
                     Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
+
                     if (userRole != null)
                         user.Role = userRole;
  
@@ -79,8 +75,7 @@ namespace Dotnet.Controllers
 					
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                    ModelState.AddModelError("", "Некорректные логин и (или) пароль");
+                else ModelState.AddModelError("", "Некорректные логин и (или) пароль");
             }
             return View(model);
         }
@@ -88,10 +83,7 @@ namespace Dotnet.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-			if (User.Identity.IsAuthenticated)
-			{
-				return RedirectToAction("Index", "Home");
-			}
+			if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Home");
 			return View();
         }
 
@@ -101,13 +93,11 @@ namespace Dotnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await _context.Users
-                    .Include(u => u.Role)
-                    .FirstOrDefaultAsync(u => (u.Email == model.Email || u.Login == model.Email) && u.Password == model.Password);
+                User user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => (u.Email == model.Email || u.Login == model.Email) && u.Password == model.Password);
+
                 if (user != null)
                 {
                     await Authenticate(user); 
- 
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Некорректные логин и (или) пароль");
@@ -119,7 +109,6 @@ namespace Dotnet.Controllers
         {
 			var claims = new List<Claim> {};
 
-			// Если в объекте пользователя есть Login, проводим аутентификацию по логину
 			if (user.Login != null)
 			{
 				claims = new List<Claim>
@@ -128,8 +117,6 @@ namespace Dotnet.Controllers
 					new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
 				};
 			}
-
-			// Если в объекте пользователя есть Email, проводит аутентификацию по адресу электронной почты
 			else if (user.Email != null)
 			{
 				claims = new List<Claim>
@@ -139,8 +126,7 @@ namespace Dotnet.Controllers
 				};
 			}
 
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType);
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 				
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }

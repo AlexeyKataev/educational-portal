@@ -35,7 +35,7 @@
 					<tbody>
 						<tr>
 							@{ DateTime dtBth = Convert.ToDateTime(@ViewBag.allUsers[i][0].DateOfBirth); }
-							<td>@ViewBag.allUsers[i][0].Id</td>
+							<td>@ViewBag.allTeachers[i].Id</td>
 							<td>@ViewBag.allTeachers[i].Post</td>
 							<td>@ViewBag.allTeachers[i].Specialization</td>
 							<td>@dtBth.ToString("dd.MM.yyyy")</td>

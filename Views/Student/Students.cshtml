@@ -1,0 +1,115 @@
+@{
+	ViewData["Title"] = "Студенты";	
+    Layout = "~/Views/Student/_StudentLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.Student.StudentViewModel
+
+<div class="flex-grow-1">
+	<ul class="list-group list-group-horizontal mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
+			<i class="bi bi-back mr-2"></i>Назад
+		</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Student" asp-action="AddStudent">
+			<i class="bi bi-plus-circle mr-2"></i>Добавить студента
+		</a>
+	</ul>
+</div>
+<div>
+	@foreach (var institution in ViewBag.institutions)
+	{
+		@foreach (var faculty in ViewBag.faculties)
+		{
+			@if (faculty.InstitutionId == institution.Id)
+			{
+				@foreach (var specialty in ViewBag.specialties)
+				{
+					@if (specialty.FacultyId == faculty.Id)
+					{
+						@foreach (var studyGroup in ViewBag.studyGroups)
+						{							
+							<div class="shadow-sm card p-3 mb-2 bg-white rounded">
+								<h6>Учебная группа - @studyGroup.Name (@studyGroup.Code)</h6>
+								<ul class="mb-0">
+									<li>специальность: @specialty.Name (@specialty.Code),</li>
+									<li>факультет: @faculty.Name (@faculty.Code),</li>
+									<li>@institution.Name</li>
+								</ul>
+							</div>
+							@if (studyGroup.SpecialtyId == specialty.Id)
+							{
+								@foreach (var studySubgroup in ViewBag.studySubgroups)
+								{
+									@if (studySubgroup.StudyGroupId == studyGroup.Id)
+									{
+										@foreach (var student in ViewBag.students)
+										{
+											@if (student.StudySubgroupId == studySubgroup.Id)
+											{
+												@foreach (var user in ViewBag.users)
+												{
+													@if (user.Id == student.UserId)
+													{
+														<div class="card mb-2">
+															<div class="card-body overflow-auto">
+																<h6 class="card-title">(@user.Login) @user.FirstName @user.MiddleName @user.SecondName</h6>
+																<table class="table table-sm table-hover mb-0">
+																	<thead>
+																		<tr class="text-align-top">
+																			<td scope="col">ID</td>
+																			<td scope="col">Подгруппа</td>
+																			<td scope="col">Обучающийся</td>
+																			<td scope="col">Специальность</td>
+																			<td scope="col">Дата рождения</td>
+																			<td scope="col">Момент регистрации</td>
+																			<td scope="col">E-Mail</td>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr>
+																			<td>@student.Id</td>
+																			<td>@studySubgroup.Name (@studySubgroup.Code)</td>
+																			@if (student.IsLearns == true)
+																			{
+																				<td>Да</td>
+																			}
+																			else
+																			{
+																				<td>Нет</td>
+																			}
+																			<td>@specialty.Name (@specialty.Code)</td>
+																			@if (user.DateOfBirth == new DateTime(0001, 01, 01, 01, 01, 01))
+																			{
+																				<td>Не указано</td>
+																			}
+																			else 
+																			{
+																				<td>@user.DateOfBirth.ToString("dd.MM.yyyy")</td>
+																			}
+																			<td>@user.DateAdded</td>
+																			<td>@user.Email</td>
+																		</tr>
+																	</tbody>
+																</table>
+																@if (User.IsInRole("admin"))
+																{
+																	<a class="btn btn-light btn-block" asp-action="EditStudent" asp-route-studentId=@student.Id asp-route-userId=@user.Id>
+																		<i class="bi bi-pencil-square mr-2"></i>Редактировать
+																	</a>
+																}
+															</div>
+														</div>
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+</div>

@@ -54,8 +54,19 @@ namespace Dotnet.Controllers
 
 		public IActionResult Students()
 		{
+			List<User> users = new List<User>();
+			List<Student> students = _context.Students.ToList();
 
+			foreach (var student in students)
+				users.Add(_context.Users.FirstOrDefault(u => u.Id == student.UserId));
 
+			ViewBag.users = users;
+			ViewBag.students = students;
+			ViewBag.studySubgroups = _context.StudySubgroups.ToList();
+			ViewBag.studyGroups = _context.StudyGroups.ToList();
+			ViewBag.specialties = _context.Specialties.ToList();
+			ViewBag.faculties = _context.Faculties.ToList();
+			ViewBag.institutions = _context.Institutions.ToList();
 
 			return View();
 		}
