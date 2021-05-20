@@ -273,6 +273,39 @@ namespace Dotnet.Controllers
 						await _context.StudySubgroupWork.AddAsync(new StudySubgroupWork { Id = 0, WorkId = viewModel.Id, StudySubgroupId = x});
 				}
 
+				if (viewModel.File != null)
+				{
+					var filename = ContentDispositionHeaderValue.Parse(viewModel.File.ContentDisposition).FileName.Trim('"');
+					var path = Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles", viewModel.File.FileName);
+					using (System.IO.Stream stream = new FileStream(path, FileMode.Create))
+					{
+						await viewModel.File.CopyToAsync(stream);
+					}
+
+					Models.File uploadedFile = new Models.File {
+						Id				= 0,
+						Name			= filename,
+						Pseudonym		= filename,
+						PathFile		= $"UploadedFiles/{viewModel.File.FileName}",
+						Vanish			= false,
+						NeedToDelete	= new DateTime(0001, 01, 01, 01, 01, 01),
+						DateAdded		= DateTime.Now,
+						UserId			= user.Id,
+					};
+
+					await _context.Files.AddAsync(uploadedFile);
+					await _context.SaveChangesAsync();
+
+					FileWork fileWork = new FileWork {
+						Id 		= 0,
+						FileId 	= uploadedFile.Id,
+						WorkId 	= work.Id, 
+					};
+
+					await _context.FileWork.AddAsync(fileWork);
+					await _context.SaveChangesAsync();
+				}	
+
 				await _context.SaveChangesAsync();
 			}
 			else ModelState.AddModelError("", "Некорретные данные.");
