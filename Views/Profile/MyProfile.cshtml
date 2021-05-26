@@ -3,7 +3,7 @@
     Layout = "~/Views/Profile/_ProfileLayout.cshtml";
 }
 
-@model Dotnet.ViewModels.ProfileViewModel
+@model Dotnet.ViewModels.Profile.ProfilePageViewModel
 
 <div class="flex-grow-1">
 	<ul class="list-group list-group-horizontal mb-4">
@@ -24,32 +24,54 @@
 		</div>
 		<div>
 			<div class="form-group">
-				<label asp-for="FirstName">Имя <span>*</span></label>
-				<input type="text" asp-for="FirstName" class="form-control" value=@ViewData["FirstName"] required />
-				<span asp-validation-for="FirstName" />
+				<label asp-for="ProfileViewModel.FirstName">Имя <span>*</span></label>
+				<input type="text" asp-for="ProfileViewModel.FirstName" class="form-control" value=@ViewData["FirstName"] required />
+				<span asp-validation-for="ProfileViewModel.FirstName" />
 			</div>
 			<div class="form-group">
-				<label asp-for="SecondName">Фамилия <span>*</span></label>
-				<input type="text" asp-for="SecondName" class="form-control" value=@ViewData["SecondName"] required />
-				<span asp-validation-for="SecondName" />
+				<label asp-for="ProfileViewModel.SecondName">Фамилия <span>*</span></label>
+				<input type="text" asp-for="ProfileViewModel.SecondName" class="form-control" value=@ViewData["SecondName"] required />
+				<span asp-validation-for="ProfileViewModel.SecondName" />
 			</div>
 			<div class="form-group">
-				<label asp-for="MiddleName">Отчество</label>
-				<input type="text" asp-for="MiddleName" class="form-control" value=@ViewData["MiddleName"] />
-				<span asp-validation-for="MiddleName" />
+				<label asp-for="ProfileViewModel.MiddleName">Отчество</label>
+				<input type="text" asp-for="ProfileViewModel.MiddleName" class="form-control" value=@ViewData["MiddleName"] />
+				<span asp-validation-for="ProfileViewModel.MiddleName" />
 			</div>
 			<div class="form-group">
-				<label asp-for="Email">E-Mail</label>
-				<input type="text" asp-for="Email" class="form-control" value=@ViewData["Email"] />
-				<span asp-validation-for="Email" />
+				<label asp-for="ProfileViewModel.Email">E-Mail</label>
+				<input type="text" asp-for="ProfileViewModel.Email" class="form-control" value=@ViewData["Email"] />
+				<span asp-validation-for="ProfileViewModel.Email" />
 			</div>
 			<div class="form-group">
-				<label asp-for="DateOfBirth">Дата рождения <span>*</span></label>
-				<input type="date" asp-for="DateOfBirth" class="form-control" value=@ViewData["DateOfBirth"] required />
-				<span asp-validation-for="DateOfBirth" />
+				<label asp-for="ProfileViewModel.DateOfBirth">Дата рождения <span>*</span></label>
+				<input type="date" asp-for="ProfileViewModel.DateOfBirth" class="form-control" value=@ViewData["DateOfBirth"] required />
+				<span asp-validation-for="ProfileViewModel.DateOfBirth" />
 			</div>
 			<div class="form-group">
 				<input type="submit" value="Сохранить" class="btn btn-primary" />
+			</div>
+		</div>
+	</form>	
+	<form asp-action="ChangeMyPassword" asp-controller="Profile" asp-anti-forgery="true">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div>
+			<div class="form-group">
+				<label asp-for="EditPasswordViewModel.Password">Новый пароль <span>*</span></label>
+				<input type="password" asp-for="EditPasswordViewModel.Password" class="form-control" required />
+				<span asp-validation-for="EditPasswordViewModel.Password" />
+			</div>
+			<div class="form-group">
+				<label asp-for="EditPasswordViewModel.Password2">Повтор пароля <span>*</span></label>
+				<input type="password" asp-for="EditPasswordViewModel.Password2" class="form-control" required />
+				<span asp-validation-for="EditPasswordViewModel.Password2" />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Изменить пароль" class="btn btn-primary" />
 			</div>
 		</div>
 	</form>

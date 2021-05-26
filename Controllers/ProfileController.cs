@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Dotnet.ViewModels.Profile;
 
 namespace Dotnet.Controllers
 {
@@ -46,14 +47,16 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> MyProfile(ProfileViewModel model)
+		public async Task<IActionResult> MyProfile(ProfilePageViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
+				ProfileViewModel profileViewModel = viewModel.ProfileViewModel;
+
 				User userEdt = await _context.Users.FirstOrDefaultAsync(u => (u.Login == User.Identity.Name));
 
-				User userEmailCheck = await _context.Users.FirstOrDefaultAsync(u => (u.Email == model.Email));
-				string email = model.Email;
+				User userEmailCheck = await _context.Users.FirstOrDefaultAsync(u => (u.Email == profileViewModel.Email));
+				string email = profileViewModel.Email;
 
 				// Проверка на занятость запрашиваемого адреса электронной почты
 				if (userEmailCheck != null && userEdt.Email != email)
@@ -64,10 +67,10 @@ namespace Dotnet.Controllers
 					// Изменение записи об учётной записи в базе данных
 					User userUpd = new User { 						
 						Id 			= userEdt.Id,
-						FirstName	= model.FirstName,
-						SecondName	= model.SecondName,
-						MiddleName	= model.MiddleName,
-						DateOfBirth = Convert.ToDateTime(model.DateOfBirth),
+						FirstName	= profileViewModel.FirstName,
+						SecondName	= profileViewModel.SecondName,
+						MiddleName	= profileViewModel.MiddleName,
+						DateOfBirth = Convert.ToDateTime(profileViewModel.DateOfBirth),
 						DateAdded	= userEdt.DateAdded,
 						Email 		= email, 
 						Login		= userEdt.Login,
@@ -83,6 +86,29 @@ namespace Dotnet.Controllers
 			}
 			else
 				ModelState.AddModelError("", "Некорректные данные");
+
+			return RedirectToAction("MyProfile", "Profile");
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> ChangeMyPassword(ProfilePageViewModel viewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				EditPasswordViewModel editPasswordViewModel = viewModel.EditPasswordViewModel;
+
+				User userEdt = await _context.Users.FirstOrDefaultAsync(u => (u.Login == User.Identity.Name));
+
+				if (editPasswordViewModel.Password == editPasswordViewModel.Password2)
+				{
+					userEdt.Password = editPasswordViewModel.Password;
+					await _context.SaveChangesAsync();
+				}
+				else ModelState.AddModelError("", "Некорректные данные");
+
+			}
+			else ModelState.AddModelError("", "Некорректные данные");
 
 			return RedirectToAction("MyProfile", "Profile");
 		}
