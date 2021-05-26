@@ -120,7 +120,7 @@
 											}
 											else 
 											{
-												<td>@work.DateDeparture</td>
+												<td>@work.DateDeparture.ToString("dd.MM.yyyy HH:mm")</td>
 											}
 											<td>@work.CountAttempts</td>
 											@foreach (var typeWorks in ViewBag.typesWorks)
