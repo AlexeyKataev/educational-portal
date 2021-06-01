@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 
-/* Объект "специальность" */
-
 namespace Dotnet.ViewModels
 {
 	public class SpecialtyViewModel
@@ -12,8 +10,6 @@ namespace Dotnet.ViewModels
 		[Required(ErrorMessage = "Укажите код специальности")]
 		public string Code { get; set; }
 		
-
-
 		[Required(ErrorMessage = "Укажите факультет")]
 		public int FacultyId { get; set; }
 	}

@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Dotnet.Controllers
 {
-	[Authorize]
 	[Authorize(Roles="admin, systemAdmin")]
 	public class SpecialtyController : Controller
 	{
@@ -28,36 +27,28 @@ namespace Dotnet.Controllers
 			_logger = logger;
 		}
 
+		private void SpecialtyToView(bool isUnCreate = false)
+		{
+			if (isUnCreate == true) ViewBag.allSpecialties = _context.Specialties.ToList();
+			ViewBag.allFaculties = _context.Faculties.ToList();
+			ViewBag.allInstitutions = _context.Institutions.ToList();
+		}
+
 		public IActionResult AddSpecialty()
 		{
-			List<Faculty> faculties = _context.Faculties.ToList();
-			List<Institution> institutions = _context.Institutions.ToList();
-
-			ViewBag.allFaculties = faculties;
-			ViewBag.allInstitutions = institutions;
-
+			SpecialtyToView();
 			return View();
 		}
 
 		public IActionResult Specialties()
 		{
-			List<Specialty> specialties = _context.Specialties.ToList();
-			List<Faculty> faculties = _context.Faculties.ToList();
-			List<Institution> institutions = _context.Institutions.ToList();
-
-			ViewBag.allSpecialties = specialties;
-			ViewBag.allFaculties = faculties;
-			ViewBag.allInstitutions = institutions;
-
+			SpecialtyToView(true);
 			return View();
 		}
 
-		[HttpGet]
-		public IActionResult EditSpecialty(int specialtyId)
+		private void EditableSpecialtyToView(int specialtyId)
 		{
-			Specialty specialty = _context.Specialties.FirstOrDefault(
-				s => (s.Id == specialtyId)
-			);
+			Specialty specialty = _context.Specialties.FirstOrDefault(s => s.Id == specialtyId);
 
 			List<Faculty> faculties = _context.Faculties.ToList();
 			List<Institution> institutions = _context.Institutions.ToList();
@@ -69,74 +60,78 @@ namespace Dotnet.Controllers
 
 			ViewBag.allFaculties = faculties;
 			ViewBag.allInstitutions = institutions;
+		}
 
+		[HttpGet]
+		public IActionResult EditSpecialty(int specialtyId)
+		{
+			EditableSpecialtyToView(specialtyId);
 			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> ApplyChangesSpecialty(EditSpecialtyViewModel model)
+		public async Task<IActionResult> ApplyChangesSpecialty(EditSpecialtyViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
-				Specialty specialtyEdt = await _context.Specialties.FirstOrDefaultAsync(
-					s => (s.Id == model.Id)
-				);
-
-				// Проверка наличия специальности с такими же данными
-				Specialty rowsCheck = await _context.Specialties.FirstOrDefaultAsync(
+				Specialty specialtyEdit = await _context.Specialties.FirstOrDefaultAsync(s => s.Id == viewModel.Id);
+				Specialty rowCheck = await _context.Specialties.FirstOrDefaultAsync(
 					s => 
 					(
-						(s.Name == model.Name || s.Code == model.Code) &&
-						(s.FacultyId == model.FacultyId) &&
-						(s.Id != model.Id)
-					)
-				);
+						(s.Name == viewModel.Name) || 
+						(s.Code == viewModel.Code)
+					));
 
-
-				if (rowsCheck == null)
+				if (rowCheck == null || rowCheck.FacultyId != viewModel.FacultyId)
 				{
-					specialtyEdt.Name		= model.Name;
-					specialtyEdt.Code		= model.Code;
-					specialtyEdt.FacultyId	= model.FacultyId;
+					specialtyEdit.Name		= viewModel.Name;
+					specialtyEdit.Code		= viewModel.Code;
+					specialtyEdit.FacultyId	= viewModel.FacultyId;
 
 					await _context.SaveChangesAsync();
-				}
-				else
-					ModelState.AddModelError("", "В указанном факультете уже есть специальнось с таким названием и (или) кодом");
-			}
-			else
-				ModelState.AddModelError("", "Некорретные данные");
 
-			return RedirectToAction("Specialties", "Specialty");
+					return RedirectToAction("Specialties", "Specialty");
+				}
+				else ModelState.AddModelError("", "В данном факультете уже есть специальнось с таким названием и (или) кодом");
+			}
+			else ModelState.AddModelError("", "Некорретные данные");
+
+			EditableSpecialtyToView(viewModel.Id);
+
+			return View("EditSpecialty", viewModel);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateSpecialty(SpecialtyViewModel model)
+		public async Task<IActionResult> CreateSpecialty(SpecialtyViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
 				Specialty specialty = await _context.Specialties.FirstOrDefaultAsync(s => 
-					(s.Name == model.Name || s.Code == model.Name) &&
-					(s.FacultyId == model.FacultyId)
+					(s.Name == viewModel.Name) || 
+					(s.Code == viewModel.Name)
 				);
-				if (specialty == null)
+
+				if (specialty == null || specialty.FacultyId != viewModel.FacultyId)
 				{
 					specialty = new Specialty {
-						Name		= model.Name,
-						Code		= model.Code,
-						FacultyId 	= model.FacultyId,
+						Name		= viewModel.Name,
+						Code		= viewModel.Code,
+						FacultyId 	= viewModel.FacultyId,
 					};
 
-					_context.Specialties.Add(specialty);
+					await _context.Specialties.AddAsync(specialty);
 					await _context.SaveChangesAsync();
+			
+					return RedirectToAction("Specialties", "Specialty");
 				}
 			}
-			else
-				ModelState.AddModelError("", "Некорректные данные");
+			else ModelState.AddModelError("", "Некорректные данные");
 
-			return RedirectToAction("Specialties", "Specialty");
+			SpecialtyToView();
+
+			return View("AddSpecialty", viewModel);
 		}
 	}
 }

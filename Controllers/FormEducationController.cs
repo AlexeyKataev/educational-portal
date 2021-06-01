@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Dotnet.Controllers
 {
-	[Authorize]
 	[Authorize(Roles="admin, systemAdmin, humanResources")]
     public class FormEducationController : Controller
     {
@@ -28,100 +27,93 @@ namespace Dotnet.Controllers
             _logger = logger;
         }
 
+		private void FormEducationToView()
+		{
+			ViewBag.allFormsEducation = _context.FormsEducation;
+		}
+
         public IActionResult FormsEducation()
         {
-			List<FormEducation> formsEducation = _context.FormsEducation.ToList();
-
-			ViewBag.allFormsEducation = formsEducation;
-
+			FormEducationToView();
             return View();
         }
 
-        public IActionResult AddFormEducation()
-        {
-            return View();
-        }
+        public IActionResult AddFormEducation() => View();
 
-		[HttpGet]
-		public IActionResult EditFormEducation(int formEducationId)
+		private void EditableFormEducation(int formEducationId)
 		{
-			FormEducation formEducation = _context.FormsEducation.FirstOrDefault(
-				f => (f.Id == formEducationId)
-			);
+			FormEducation formEducation = _context.FormsEducation.FirstOrDefault(f => (f.Id == formEducationId));
 
 			ViewData["Id"]		= formEducation.Id;
 			ViewData["Name"]	= formEducation.Name;
 			ViewData["Code"]	= formEducation.Code;
+		}
 
+		[HttpGet]
+		public IActionResult EditFormEducation(int formEducationId)
+		{
+			EditableFormEducation(formEducationId);
 			return View();
 		}	
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> ApplyChangesFormEducation(EditFormEducationViewModel model)
+		public async Task<IActionResult> ApplyChangesFormEducation(EditFormEducationViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
-				FormEducation formEducationEdt = await _context.FormsEducation.FirstOrDefaultAsync(
-					f =>
-					(
-						f.Id == model.Id
-					)
-				);
-
-				FormEducation rowCheck = await _context.FormsEducation.FirstOrDefaultAsync(
-					f =>
-					(
-						((f.Name == model.Name) || (f.Code == model.Code)) && (f.Id != model.Id)
-					)
-				);
+				FormEducation formEducationEdit = await _context.FormsEducation.FirstOrDefaultAsync(f => f.Id == viewModel.Id);
+				FormEducation rowCheck = await _context.FormsEducation.FirstOrDefaultAsync(f => (f.Name == viewModel.Name) && (f.Id != viewModel.Id));
 
 				if (rowCheck == null)
 				{
-					formEducationEdt.Name	= model.Name;
-					formEducationEdt.Code	= model.Code;
+					formEducationEdit.Name = viewModel.Name;
+					formEducationEdit.Code = viewModel.Code;
 
 					await _context.SaveChangesAsync();
-				}
-				else
-					ModelState.AddModelError("", "Данная форма обучения уже существует");
-			}
-			else
-				ModelState.AddModelError("", "Некорректные данные");
 
-			return RedirectToAction("FormsEducation", "FormEducation");
+					return RedirectToAction("FormsEducation", "FormEducation");
+				}
+				else ModelState.AddModelError("", "Форма обучения с данным названием уже существует");
+			}
+			else ModelState.AddModelError("", "Некорректные данные");
+
+			EditableFormEducation(viewModel.Id);
+
+			return View("EditFormEducation", viewModel);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateFormEducation(FormEducationViewModel model)
+		public async Task<IActionResult> CreateFormEducation(FormEducationViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
 				FormEducation formEducation = await _context.FormsEducation.FirstOrDefaultAsync(
-					f => 
-					(
-						(f.Name == model.Name) && 
-						(f.Code == model.Code)
-					)
-				);
+					f => (
+						(f.Name == viewModel.Name) && 
+						(f.Code == viewModel.Code)
+					));
+
 				if (formEducation == null)
 				{					
 					formEducation = new FormEducation {
-						Name	= model.Name,
-						Code	= model.Code,
+						Name	= viewModel.Name,
+						Code	= viewModel.Code,
 					};			
 					
-					_context.FormsEducation.Add(formEducation);
+					await _context.FormsEducation.AddAsync(formEducation);
 					await _context.SaveChangesAsync();
-				}
-				else
-					ModelState.AddModelError("", "Некорретные данные");
-			}
-			else
-				ModelState.AddModelError("", "Некорректные данные");
 
-			return RedirectToAction("AddFormEducation", "FormEducation");
+					return RedirectToAction("AddFormEducation", "FormEducation");
+				}
+				else ModelState.AddModelError("", "Вид формы обучения с данным названием уже существует");
+			}
+			else ModelState.AddModelError("", "Некорректные данные");
+
+			FormEducationToView();
+
+			return View("AddFormEducation", viewModel);
 		}
 	}
 }

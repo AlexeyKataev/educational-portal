@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Dotnet.Controllers
 {
-	[Authorize]
 	[Authorize(Roles="admin, systemAdmin, humanResources")]
     public class StudySubjectController : Controller
     {
@@ -28,75 +27,79 @@ namespace Dotnet.Controllers
 			_logger = logger;
 		}
 
+		private void StudySubjectToView()
+		{
+			ViewBag.allStudySubjects = _context.Subjects.ToList();
+		}
+
 		public IActionResult StudySubjects()
 		{
-			List<Subject> subjects = _context.Subjects.ToList();
-
-			ViewBag.allStudySubjects = subjects;
-
+			StudySubjectToView();
 			return View();
 		}
 
 		public IActionResult AddStudySubject() => View();
 
+		private void EditableStudySubject(int studySubjectId)
+		{
+			ViewBag.EditRow = _context.Subjects.FirstOrDefault(s => s.Id == studySubjectId);
+		}
+
 		[HttpGet]
 		public IActionResult EditStudySubject(int studySubjectId)
 		{
-			Subject subject = _context.Subjects.FirstOrDefault(s => (s.Id == studySubjectId));
-
-			ViewBag.EditRow = subject;
-
+			EditableStudySubject(studySubjectId);
 			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> ApplyChangesStudySubject(EditStudySubjectViewModel model)
+		public async Task<IActionResult> ApplyChangesStudySubject(EditStudySubjectViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
-				Subject subjectEdt = await _context.Subjects.FirstOrDefaultAsync(s => (s.Id == model.Id));
-
-				Subject rowCheck = await _context.Subjects.FirstOrDefaultAsync(s => (s.Name == model.Name));
+				Subject subject = await _context.Subjects.FirstOrDefaultAsync(s => s.Id == viewModel.Id);
+				Subject rowCheck = await _context.Subjects.FirstOrDefaultAsync(s => s.Name == viewModel.Name);
 
 				if (rowCheck == null)
 				{
-					subjectEdt.Name	= model.Name;
+					subject.Name = viewModel.Name;
 
 					await _context.SaveChangesAsync();
-				}
-				else
-					ModelState.AddModelError("", "Данный учебный предмет уже существует");
-			}
-			else 
-				ModelState.AddModelError("", "Некорректные данные");
 
-			return RedirectToAction("StudySubjects", "StudySubject");
+					return RedirectToAction("StudySubjects", "StudySubject");
+				}
+				else ModelState.AddModelError("", "Учебный предмет с данным названием уже существует");
+			}
+			else ModelState.AddModelError("", "Некорректные данные");
+
+			EditableStudySubject(viewModel.Id);
+
+			return View("EditStudySubject", viewModel);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateStudySubject(StudySubjectViewModel model)
+		public async Task<IActionResult> CreateStudySubject(StudySubjectViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
-				Subject subject = _context.Subjects.FirstOrDefault(s => (s.Name == model.Name));
+				Subject subject = _context.Subjects.FirstOrDefault(s => (s.Name == viewModel.Name));
+				
 				if (subject == null)
 				{
-					subject = new Subject {
-						Name	= model.Name,
-					};
+					subject = new Subject { Name = viewModel.Name };
 
 					_context.Subjects.Add(subject);
 					await _context.SaveChangesAsync();
-				}
-				else
-					ModelState.AddModelError("", "Некорректные данные");
-			}
-			else
-				ModelState.AddModelError("", "Некорректные данные");
 
-			return RedirectToAction("AddStudySubject", "StudySubject");
+					return RedirectToAction("AddStudySubject", "StudySubject");
+				}
+				else ModelState.AddModelError("", "Учебный предмет с данным названием уже существует");
+			}
+			else ModelState.AddModelError("", "Некорректные данные");
+
+			return View("AddStudySubject", viewModel);
 		}
 	}
 }

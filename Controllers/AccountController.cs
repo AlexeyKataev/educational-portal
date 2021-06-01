@@ -65,8 +65,7 @@ namespace Dotnet.Controllers
 
                     Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
 
-                    if (userRole != null)
-                        user.Role = userRole;
+                    if (userRole != null) user.Role = userRole;
  
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();

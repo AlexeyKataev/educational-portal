@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Dotnet.Controllers
 {
-	[Authorize]
 	[Authorize(Roles="admin, systemAdmin, humanResources")]
     public class FacultyController : Controller
     {
@@ -30,32 +29,22 @@ namespace Dotnet.Controllers
 
         public IActionResult Faculties()
         {			
-			List<Institution> institutions = _context.Institutions.ToList();
-			List<Faculty> faculties = _context.Faculties.ToList();
-
-			ViewBag.allInstitutions = institutions;
-			ViewBag.allFaculties = faculties;
+			ViewBag.allInstitutions = _context.Institutions.ToList();
+			ViewBag.allFaculties = _context.Faculties.ToList();
 
             return View();
         }
 
-        public IActionResult AddFaculty()
+		public IActionResult AddFaculty(FacultyViewModel viewModel = null)
         {
-			List<Institution> institutions = _context.Institutions.ToList();
+			ViewBag.allInstitutions = _context.Institutions.ToList();
 
-			ViewBag.allInstitutions = institutions;
-
-            return View();
+            return View(viewModel);
         }
 
-		[HttpGet]
-		public IActionResult EditFaculty(int facultyId)
+		private void EditableFacultyToView(int facultyId)
 		{
-			Faculty faculty = _context.Faculties.FirstOrDefault(
-				f => (f.Id == facultyId)
-			);
-
-			List<Institution> institutions = _context.Institutions.ToList();
+			Faculty faculty = _context.Faculties.FirstOrDefault(f => f.Id == facultyId);
 
 			ViewData["Id"] 				= faculty.Id;
 			ViewData["Name"] 			= faculty.Name;
@@ -63,83 +52,86 @@ namespace Dotnet.Controllers
 			ViewData["About"] 			= faculty.About;
 			ViewData["InstitutionId"] 	= faculty.InstitutionId;
 
-			ViewBag.allInstitutions = institutions;
+			ViewBag.allInstitutions = _context.Institutions.ToList();
+		}
 
+		[HttpGet]
+		public IActionResult EditFaculty(int facultyId)
+		{
+			EditableFacultyToView(facultyId);
 			return View();
 		}	
 
 		[HttpPost]
 		[Authorize(Roles="admin")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> ApplyChangesFaculty(EditFacultyViewModel model)
+		public async Task<IActionResult> ApplyChangesFaculty(EditFacultyViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
-				Faculty facultyEdt = await _context.Faculties.FirstOrDefaultAsync(
-					f => (f.Id == model.Id)
-				);
-
-				// Проверка наличия факультета с данными названием и кодом в указанном учебном заведении
-				Faculty rowsCheck = await _context.Faculties.FirstOrDefaultAsync(
+				Faculty facultyEdit = await _context.Faculties.FirstOrDefaultAsync(f => (f.Id == viewModel.Id));
+				Faculty rowCheck = await _context.Faculties.FirstOrDefaultAsync(
 					f => 
 					(
-						(f.Name == model.Name || f.Code == model.Code) && 
-						(f.InstitutionId == model.InstitutionId) && 
-						(f.Id != model.Id)
-					)
-				);
+						(f.Name == viewModel.Name) || 
+						(f.Code == viewModel.Code) && 
+						(f.InstitutionId == viewModel.InstitutionId) && 
+						(f.Id != viewModel.Id)
+					));
 
-				if (rowsCheck == null)
+				if (rowCheck == null)
 				{
-					facultyEdt.Name 			= model.Name;
-					facultyEdt.Code 			= model.Code;
-					facultyEdt.InstitutionId 	= model.InstitutionId;
-					facultyEdt.About		 	= model.About;
+					facultyEdit.Name 			= viewModel.Name;
+					facultyEdit.Code 			= viewModel.Code;
+					facultyEdit.InstitutionId 	= viewModel.InstitutionId;
+					facultyEdit.About		 	= viewModel.About;
 
 					await _context.SaveChangesAsync();
-				}
-				else
-					ModelState.AddModelError("", "В указанном учебном заведении уже есть факультет с таким названием и (или) кодом");
-			}
-			else 
-				ModelState.AddModelError("", "Некорректные данные");
 
-			return RedirectToAction("Faculties", "Faculty");
+					return RedirectToAction("Faculties", "Faculty");
+				}
+				else ModelState.AddModelError("", "В данном учебном заведении уже есть факультет с таким названием и (или) кодом");
+			}
+			else ModelState.AddModelError("", "Некорректные данные");
+
+			EditableFacultyToView(viewModel.Id);
+
+			return View("EditFaculty", viewModel);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateFaculty(FacultyViewModel model)
+		public async Task<IActionResult> CreateFaculty(FacultyViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
 				Faculty faculty = await _context.Faculties.FirstOrDefaultAsync(
 					f => ( 
-						((f.Name == model.Name) || (f.Code == model.Code)) && 
-						(f.InstitutionId == model.InstitutionId)
-					)
-				);
+						((f.Name == viewModel.Name) || (f.Code == viewModel.Code)) && 
+						(f.InstitutionId == viewModel.InstitutionId)
+					));
+
 				if (faculty == null)
 				{
 					faculty = new Faculty {
-						Name			= model.Name,
-						Code			= model.Code,
-						About			= model.About,
-						InstitutionId	= model.InstitutionId,
+						Name			= viewModel.Name,
+						Code			= viewModel.Code,
+						About			= viewModel.About,
+						InstitutionId	= viewModel.InstitutionId,
 					};
 
-					_context.Faculties.Add(faculty);
+					await _context.Faculties.AddAsync(faculty);
 					await _context.SaveChangesAsync();
 
 					return RedirectToAction("AddFaculty", "Faculty");
 				}
-				else
-					ModelState.AddModelError("", "Некорректные данные");
+				else ModelState.AddModelError("", "Факультет с данными названием и (или) кодом уже существует");
 			}
-			else
-				ModelState.AddModelError("", "Некорректные данные");
+			else ModelState.AddModelError("", "Некорректные данные");
 
-			return RedirectToAction("AddFormEducation", "FormEducation");
+			ViewBag.allInstitutions = _context.Institutions.ToList();
+
+			return View("AddFaculty", viewModel);
 		}
 	}
 }

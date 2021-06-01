@@ -25,17 +25,17 @@
 		<div>
 			<div class="form-group">
 				<label asp-for="Name">Название <span>*</span></label>
-				<input type="text" asp-for="Name" class="form-control" />
+				<input type="text" asp-for="Name" class="form-control" required />
 				<span asp-validation-for="Name" />
 			</div>
 			<div class="form-group">
 				<label asp-for="Code">Код факультета <span>*</span></label>
-				<input type="text" asp-for="Code" class="form-control" />
+				<input type="text" asp-for="Code" class="form-control" required />
 				<span asp-validation-for="Code" />
 			</div>
 			<div class="form-group">
 				<label asp-for="InstitutionId">Учебное заведение <span>*</span></label>
-				<select class="custom-select" asp-for="InstitutionId">
+				<select class="custom-select" asp-for="InstitutionId" required>
 					@if (ViewBag.allInstitutions.Count > 0)
 					{
 						@foreach (var institution in ViewBag.allInstitutions)

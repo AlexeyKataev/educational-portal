@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Dotnet.Controllers
 {
-	[Authorize]
 	[Authorize(Roles="admin, systemAdmin, humanResources")]
     public class TypeWorkController : Controller
     {
@@ -37,15 +36,12 @@ namespace Dotnet.Controllers
             return View();
         }
 
-        public IActionResult AddTypeWorks()
-        {
-            return View();
-        }
+        public IActionResult AddTypeWorks() => View();
 
 		[HttpGet]
 		public IActionResult EditTypeWorks(int typeWorkId)
 		{
-			TypeWorks typeWorks = _context.TypesWorks.FirstOrDefault(t => (t.Id == typeWorkId));
+			TypeWorks typeWorks = _context.TypesWorks.FirstOrDefault(t => t.Id == typeWorkId);
 
 			ViewBag.EditRow = typeWorks;
 
@@ -54,56 +50,49 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> ApplyChangesTypeWorks(EditTypeWorkViewModel model)
+		public async Task<IActionResult> ApplyChangesTypeWorks(EditTypeWorkViewModel viewModel)
 		{
 			if (ModelState.IsValid) 
 			{
-				TypeWorks typeWorksEdt = await _context.TypesWorks.FirstOrDefaultAsync(
-					t => (t.Id == model.Id)
-				);
-
-				TypeWorks rowCheck = await _context.TypesWorks.FirstOrDefaultAsync(
-					t => (t.Name == model.Name)
-				);
+				TypeWorks typeWorksEdit = await _context.TypesWorks.FirstOrDefaultAsync(t => t.Id == viewModel.Id);
+				TypeWorks rowCheck = await _context.TypesWorks.FirstOrDefaultAsync(t => t.Name == viewModel.Name);
 
 				if (rowCheck == null)
 				{
-					typeWorksEdt.Name = model.Name;
+					typeWorksEdit.Name = viewModel.Name;
 
 					await _context.SaveChangesAsync();
-				}
-				else
-					ModelState.AddModelError("", "Некорректные данные");
-			}
-			else
-				ModelState.AddModelError("", "Некорректные данные");
 
-			return RedirectToAction("TypesWorks", "TypeWork");
+					return RedirectToAction("TypesWorks", "TypeWork");
+				}
+			}
+			else ModelState.AddModelError("", "Некорректные данные");
+
+			return Redirect(Request.Headers["Referer"].ToString());
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateTypeWorks(TypeWorkViewModel model)
+		public async Task<IActionResult> CreateTypeWorks(TypeWorkViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
-				TypeWorks typeWorks = await _context.TypesWorks.FirstOrDefaultAsync(t => (t.Name == model.Name));
+				TypeWorks typeWorks = await _context.TypesWorks.FirstOrDefaultAsync(t => (t.Name == viewModel.Name));
+
 				if (typeWorks == null)
 				{
-					typeWorks = new TypeWorks {
-						Name = model.Name,
-					};
+					typeWorks = new TypeWorks { Name = viewModel.Name };
 
-					_context.TypesWorks.Add(typeWorks);
+					await _context.TypesWorks.AddAsync(typeWorks);
 					await _context.SaveChangesAsync();
-				}
-				else
-					ModelState.AddModelError("", "Некорретные данные");
-			}
-			else
-				ModelState.AddModelError("", "Некорретные данные");
 
-			return RedirectToAction("AddTypeWorks", "TypeWork");
+					return RedirectToAction("AddTypeWorks", "TypeWork");
+				}
+				else ModelState.AddModelError("", "Вид работы с данным названием уже существует");
+			}
+			else ModelState.AddModelError("", "Некорретные данные");
+
+			return View("AddTypeWorks", viewModel);
 		}
 	}
 }

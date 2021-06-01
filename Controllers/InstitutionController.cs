@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Dotnet.Controllers
 {
-	[Authorize]
 	[Authorize(Roles="admin, systemAdmin, humanResources")]
     public class InstitutionController : Controller
     {
@@ -37,17 +36,12 @@ namespace Dotnet.Controllers
             return View();
         }
 
-        public IActionResult AddInstitution()
-        {
-            return View();
-        }
+        public IActionResult AddInstitution() => View();
 
 		[HttpGet]
 		public IActionResult EditInstitution(int institutionId)
 		{
-			ViewBag.institution = _context.Institutions.FirstOrDefault(
-				i => i.Id == institutionId
-			);
+			ViewBag.institution = _context.Institutions.FirstOrDefault(i => i.Id == institutionId);
 
 			return View();
 		}	
@@ -58,54 +52,51 @@ namespace Dotnet.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				Institution institution = await _context.Institutions.FirstOrDefaultAsync(
-					i => i.Id == model.Id
-				);
+				Institution institution = await _context.Institutions.FirstOrDefaultAsync(i => i.Id == model.Id);
+				Institution rowCheck = await _context.Institutions.FirstOrDefaultAsync(i => (i.Name == model.Name && i.Id != model.Id));
 
-				Institution institutionCheck = await _context.Institutions.FirstOrDefaultAsync(
-					i => (i.Name == model.Name && i.Id != model.Id)
-				);
-
-				if ((institution.Name == model.Name && institution.Id == model.Id) || institutionCheck == null)
+				if ((institution.Name == model.Name && institution.Id == model.Id) || rowCheck == null)
 				{
 					institution.Name 					= model.Name;
 					institution.AddressId	 			= model.AddressId;
 					institution.ContactInformationId 	= model.ContactInformationId;
 
 					await _context.SaveChangesAsync();
+			
+					return RedirectToAction("Institutions", "Institution");
 				}
-
+				else ModelState.AddModelError("", "Данное учебное заведение уже существует");
 			}
 			else ModelState.AddModelError("", "Некорретные данные");
 
-			return RedirectToAction("Institutions", "Institution");
+			return Redirect(Request.Headers["Referer"].ToString());
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateInstitution(InstitutionViewModel model)
+		public async Task<IActionResult> CreateInstitution(InstitutionViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
-				Institution institution = await _context.Institutions.FirstOrDefaultAsync(i => (i.Name == model.Name));
+				Institution institution = await _context.Institutions.FirstOrDefaultAsync(i => (i.Name == viewModel.Name));
 				if (institution == null)
 				{
 					institution = new Institution {
-						Name					= model.Name,
-						AddressId				= model.AddressId,
-						ContactInformationId 	= model.ContactInformationId,
+						Name					= viewModel.Name,
+						AddressId				= viewModel.AddressId,
+						ContactInformationId 	= viewModel.ContactInformationId,
 					};
 
-					_context.Institutions.Add(institution);
+					await _context.Institutions.AddAsync(institution);
 					await _context.SaveChangesAsync();
+					
+					return RedirectToAction("AddInstitution", "Institution");
 				}
-				else
-					ModelState.AddModelError("", "Некорретные данные");
+				else ModelState.AddModelError("", "Учебное заведение с данным названием уже существует");
 			}
-			else 
-				ModelState.AddModelError("", "Некорректные данные");
+			else ModelState.AddModelError("", "Некорректные данные");
 
-			return RedirectToAction("AddInstitution", "Institution");
+			return View("AddInstitution", viewModel);
 		}
 	}
 }
