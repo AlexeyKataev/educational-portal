@@ -16,13 +16,13 @@
 	</ul>
 </div>
 <div>
-	@foreach (var specialty in ViewBag.Specialties)
+	@foreach (var specialty in ViewBag.specialties)
 	{
-		@foreach (var faculty in ViewBag.Faculties)
+		@foreach (var faculty in ViewBag.faculties)
 		{
 			@if (specialty.FacultyId == faculty.Id)
 			{
-				@foreach (var institution in ViewBag.Institutions)
+				@foreach (var institution in ViewBag.institutions)
 				{
 					@if (faculty.InstitutionId == institution.Id)
 					{
@@ -33,7 +33,7 @@
 								<li>@institution.Name</li>
 							</ul>
 						</div>
-						@foreach (var group in ViewBag.StudyGroups)
+						@foreach (var group in ViewBag.studyGroups)
 						{
 							@if (group.SpecialtyId == specialty.Id)
 							{
@@ -56,7 +56,7 @@
 													<td>@group.Code</td>
 													<td>@group.DateStart.ToString("dd.MM.yyyy")</td>
 													<td>@group.DateEnd.ToString("dd.MM.yyyy")</td>
-													@foreach (var formEducation in ViewBag.FormEducations)
+													@foreach (var formEducation in ViewBag.formEducations)
 													{
 														@if (group.FormEducationId == formEducation.Id)
 														{
@@ -68,11 +68,11 @@
 										</table>
 										@if (User.IsInRole("admin"))
 										{
-											<a class="btn btn-light btn-block" asp-action="EditSpecialty" asp-route-specialtyId="@group.Id">
+											<a class="btn btn-light btn-block" asp-action="EditStudyGroup" asp-route-studyGroupId="@group.Id">
 												<i class="bi bi-pencil-square mr-2"></i>Редактировать
 											</a>
 										}
-										@foreach (var subGroup in ViewBag.StudySubgroups)
+										@foreach (var subGroup in ViewBag.studySubgroups)
 										{
 											@if (subGroup.StudyGroupId == group.Id)
 											{
@@ -86,7 +86,7 @@
 														</tr>
 													</thead>
 													<tbody>
-												@foreach (var subGroup2 in ViewBag.StudySubgroups)
+												@foreach (var subGroup2 in ViewBag.studySubgroups)
 												{
 													@if (group.Id == subGroup2.StudyGroupId)
 													{	

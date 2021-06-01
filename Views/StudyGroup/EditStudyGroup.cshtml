@@ -1,0 +1,39 @@
+@{
+	ViewData["Title"] = "Редактировать учебную группу";	
+    Layout = "~/Views/StudyGroup/_StudyGroupLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.StudyGroup.EditStudyGroupViewModel
+
+<div class="flex-grow-1">	
+	<ul class="list-group list-group-horizontal mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
+			<i class="bi bi-back mr-2"></i>Назад
+		</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="StudyGroup" asp-action="StudyGroups">
+			<i class="bi bi-people-fill mr-2"></i>Учебные группы
+		</a>
+	</ul>
+</div>
+<div>
+	<form asp-action="ApplyChangesStudySubject" asp-controller="StudySubject" asp-anti-forgery="true">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div>
+			<input type="hidden" asp-for="Id" class="form-control" value=@ViewBag.EditRow.Id />
+			<div class="form-group">
+				<label asp-for="Name">Название <span>*</span></label>
+				<input type="text" asp-for="Name" class="form-control" value=@ViewBag.EditRow.Name />
+				<span asp-validation-for="Name" />
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">
+					<i class="bi bi-plus-circle mr-2"></i>Добавить вид работ
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

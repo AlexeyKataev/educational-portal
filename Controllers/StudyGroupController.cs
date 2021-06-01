@@ -28,27 +28,27 @@ namespace Dotnet.Controllers
             _logger = logger;
         }
 
+		private void StudyGroupsToView(bool isUnCreate = false)
+		{
+			ViewBag.formEducations = _context.FormsEducation.ToList();
+			ViewBag.studySubgroups = _context.StudySubgroups.ToList();
+			ViewBag.studyGroups = _context.StudyGroups.ToList();
+			ViewBag.specialties = _context.Specialties.ToList();
+			ViewBag.faculties = _context.Faculties.ToList();
+			ViewBag.institutions = _context.Institutions.ToList();
+		}
+
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
         public IActionResult StudyGroups()
         {
-			ViewBag.StudyGroups = _context.StudyGroups.ToList();
-			ViewBag.StudySubgroups = _context.StudySubgroups.ToList();
-			ViewBag.FormEducations = _context.FormsEducation.ToList();
-			ViewBag.Specialties = _context.Specialties.ToList();
-			ViewBag.Faculties = _context.Faculties.ToList();
-			ViewBag.Institutions = _context.Institutions.ToList();
-
+			StudyGroupsToView();
             return View();
         }
 
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
         public IActionResult AddStudyGroup() 
 		{
-			ViewBag.studyGroups = _context.StudyGroups.ToList();
-			ViewBag.specialties = _context.Specialties.ToList();
-			ViewBag.faculties = _context.Faculties.ToList();
-			ViewBag.institutions = _context.Institutions.ToList();
-			ViewBag.formsEducation = _context.FormsEducation.ToList();
+			StudyGroupsToView();
 			return View();	
 		} 
 
@@ -56,6 +56,7 @@ namespace Dotnet.Controllers
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
 		public IActionResult EditStudyGroup(int groupId)
 		{
+			StudyGroupsToView();
 			return View();
 		}
 
@@ -63,13 +64,14 @@ namespace Dotnet.Controllers
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
 		public IActionResult EditStudySubgroup(int subGroupId)
 		{
+			StudyGroupsToView();
 			return View();
 		}		
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
-		public async Task<IActionResult> ApplyChangesStudyGroup() // ПЕРЕДАТЬ МОДЕЛЬ
+		public async Task<IActionResult> ApplyChangesStudyGroup(EditStudyGroupViewModel viewModel)
 		{
 			return null;
 		}
@@ -77,7 +79,7 @@ namespace Dotnet.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
-		public async Task<IActionResult> ApplyChangesStudySubgroup() // ПЕРЕДАТЬ МОДЕЛЬ
+		public async Task<IActionResult> ApplyChangesStudySubgroup(EditStudySubgroupViewModel viewModel)
 		{
 			return null;
 		}

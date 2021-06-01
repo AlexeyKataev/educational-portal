@@ -144,12 +144,12 @@ body {
 	justify-content: center;
 }
 
-.service-nav-panel > .service-buttom {
+.service-nav-panel > .service-button {
 	margin-left: 2rem;
 	margin-top: 2rem;
 }
 
-.service-buttom {
+.service-button {
 	position: relative;
 	outline: none;
 	display: block;
@@ -160,22 +160,22 @@ body {
 	overflow: hidden;
 }
 
-.service-buttom {
+.service-button {
 	margin-right: 2rem;
 }
 
-/*.service-buttom:not(:last-child) {
+/*.service-button:not(:last-child) {
 	margin-right: 2rem;
 }*/
 
-.service-buttom:hover {
+.service-button:hover {
 	color: black;
 	background-color: #ebeef1;
 	transform: scale(1.05);
 	transition: 0.25s;
 }
 
-.service-buttom:active {
+.service-button:active {
 	background-color: #ebebeb;
 	transition: 0.25s;
 	transform: scale(0.95);
@@ -183,12 +183,12 @@ body {
 				-7px -7px 14px #fff;
 }
 
-.service-buttom, .service-buttom:active, .service-buttom:hover, .service-buttom:focus {
+.service-button, .service-button:active, .service-button:hover, .service-button:focus {
 	content: "";
 	/*outline: none;*/
 }
 
-.service-buttom-name {
+.service-button-name {
 	position: absolute;
 	color: black;
 	font-weight: 500;
@@ -199,7 +199,7 @@ body {
 	transform: translateX(-50%);
 }
 
-.service-buttom-icon i {
+.service-button-icon i {
 	position: absolute;
 	top: 25%;
 	left: 50%;

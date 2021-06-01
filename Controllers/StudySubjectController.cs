@@ -84,13 +84,13 @@ namespace Dotnet.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				Subject subject = _context.Subjects.FirstOrDefault(s => (s.Name == viewModel.Name));
+				Subject subject = _context.Subjects.FirstOrDefault(s => s.Name == viewModel.Name);
 				
 				if (subject == null)
 				{
 					subject = new Subject { Name = viewModel.Name };
 
-					_context.Subjects.Add(subject);
+					await _context.Subjects.AddAsync(subject);
 					await _context.SaveChangesAsync();
 
 					return RedirectToAction("AddStudySubject", "StudySubject");

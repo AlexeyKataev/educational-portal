@@ -27,24 +27,28 @@ namespace Dotnet.Controllers
             _logger = logger;
         }
 
+		private void TypesWorksToView()
+		{
+			ViewData["allTypeWorks"] = _context.TypesWorks.ToList();
+		}
+
         public IActionResult TypesWorks()
         {
-			List<TypeWorks> typeWorks = _context.TypesWorks.ToList();
-
-			ViewData["allTypeWorks"] = typeWorks;
-
+			TypesWorksToView();
             return View();
         }
 
         public IActionResult AddTypeWorks() => View();
 
+		private void EditableTypeWorks(int typeWorkId)
+		{
+			ViewBag.EditRow = _context.TypesWorks.FirstOrDefault(t => t.Id == typeWorkId);;
+		}
+
 		[HttpGet]
 		public IActionResult EditTypeWorks(int typeWorkId)
 		{
-			TypeWorks typeWorks = _context.TypesWorks.FirstOrDefault(t => t.Id == typeWorkId);
-
-			ViewBag.EditRow = typeWorks;
-
+			EditableTypeWorks(typeWorkId);
 			return View();
 		}
 
@@ -57,7 +61,7 @@ namespace Dotnet.Controllers
 				TypeWorks typeWorksEdit = await _context.TypesWorks.FirstOrDefaultAsync(t => t.Id == viewModel.Id);
 				TypeWorks rowCheck = await _context.TypesWorks.FirstOrDefaultAsync(t => t.Name == viewModel.Name);
 
-				if (rowCheck == null)
+				if (rowCheck == null || rowCheck.Id == viewModel.Id)
 				{
 					typeWorksEdit.Name = viewModel.Name;
 
@@ -65,10 +69,13 @@ namespace Dotnet.Controllers
 
 					return RedirectToAction("TypesWorks", "TypeWork");
 				}
+				else ModelState.AddModelError("", "Вид работы с данным названием уже существует");
 			}
 			else ModelState.AddModelError("", "Некорректные данные");
 
-			return Redirect(Request.Headers["Referer"].ToString());
+			EditableTypeWorks(viewModel.Id);
+
+			return View("EditTypeWorks", viewModel);
 		}
 
 		[HttpPost]
@@ -91,6 +98,8 @@ namespace Dotnet.Controllers
 				else ModelState.AddModelError("", "Вид работы с данным названием уже существует");
 			}
 			else ModelState.AddModelError("", "Некорретные данные");
+
+			TypesWorksToView();
 
 			return View("AddTypeWorks", viewModel);
 		}
