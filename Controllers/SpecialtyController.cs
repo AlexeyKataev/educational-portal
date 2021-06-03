@@ -126,6 +126,7 @@ namespace Dotnet.Controllers
 			
 					return RedirectToAction("Specialties", "Specialty");
 				}
+				else ModelState.AddModelError("", "Специальность с данными названием, кодом и (или) факультетом уже существует");
 			}
 			else ModelState.AddModelError("", "Некорректные данные");
 

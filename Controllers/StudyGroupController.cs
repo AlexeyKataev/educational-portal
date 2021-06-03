@@ -30,9 +30,13 @@ namespace Dotnet.Controllers
 
 		private void StudyGroupsToView(bool isUnCreate = false)
 		{
-			ViewBag.formEducations = _context.FormsEducation.ToList();
-			ViewBag.studySubgroups = _context.StudySubgroups.ToList();
-			ViewBag.studyGroups = _context.StudyGroups.ToList();
+			if (isUnCreate == true)
+			{
+				ViewBag.studySubgroups = _context.StudySubgroups.ToList();
+				ViewBag.studyGroups = _context.StudyGroups.ToList();
+			}
+
+			ViewBag.formsEducation = _context.FormsEducation.ToList();
 			ViewBag.specialties = _context.Specialties.ToList();
 			ViewBag.faculties = _context.Faculties.ToList();
 			ViewBag.institutions = _context.Institutions.ToList();
@@ -41,30 +45,45 @@ namespace Dotnet.Controllers
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
         public IActionResult StudyGroups()
         {
-			StudyGroupsToView();
+			StudyGroupsToView(true);
             return View();
         }
 
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
         public IActionResult AddStudyGroup() 
 		{
+			ViewBag.studyGroups = _context.StudyGroups.ToList();
 			StudyGroupsToView();
 			return View();	
 		} 
 
+		private void EditableStudyGroupToView(int studyGroupId)
+		{
+			StudyGroupsToView(true);
+			ViewBag.studyGroup = _context.StudyGroups.FirstOrDefault(s => s.Id == studyGroupId);
+		}
+
+		private void EditableStudySubgroupToView(int studySubgroupId)
+		{
+			StudyGroupsToView(true);
+			StudySubgroup studySubgroup = _context.StudySubgroups.FirstOrDefault(s => s.Id == studySubgroupId);
+			ViewBag.studySubgroup = studySubgroup;
+			ViewBag.StudyGroup = _context.StudyGroups.FirstOrDefault(s => s.Id == studySubgroup.StudyGroupId);
+		}
+
 		[HttpGet]
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
-		public IActionResult EditStudyGroup(int groupId)
+		public IActionResult EditStudyGroup(int studyGroupId)
 		{
-			StudyGroupsToView();
+			EditableStudyGroupToView(studyGroupId);
 			return View();
 		}
 
 		[HttpGet]
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
-		public IActionResult EditStudySubgroup(int subGroupId)
+		public IActionResult EditStudySubgroup(int studySubgroupId)
 		{
-			StudyGroupsToView();
+			EditableStudySubgroupToView(studySubgroupId);
 			return View();
 		}		
 
@@ -73,7 +92,36 @@ namespace Dotnet.Controllers
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
 		public async Task<IActionResult> ApplyChangesStudyGroup(EditStudyGroupViewModel viewModel)
 		{
-			return null;
+			if (ModelState.IsValid)
+			{
+				StudyGroup studyGroupEdit = await _context.StudyGroups.FirstOrDefaultAsync(s => s.Id == viewModel.Id);
+				StudyGroup rowCheck = await _context.StudyGroups.FirstOrDefaultAsync(
+					s =>
+					(
+						((s.Name == viewModel.Name) ||
+						(s.Code == viewModel.Code)) & (s.Id != viewModel.Id)
+					));
+
+				if (rowCheck == null || (rowCheck.Id == viewModel.Id))
+				{
+					studyGroupEdit.Name				= viewModel.Name;
+					studyGroupEdit.Code				= viewModel.Code;
+					studyGroupEdit.SpecialtyId		= viewModel.SpecialtyId;
+					studyGroupEdit.FormEducationId 	= viewModel.FormEducationId;
+					studyGroupEdit.DateStart		= viewModel.DateStart;
+					studyGroupEdit.DateEnd			= viewModel.DateEnd;
+
+					await _context.SaveChangesAsync();
+
+					return RedirectToAction("StudyGroups", "StudyGroup");
+				}
+				else ModelState.AddModelError("", "В данной специальности уже есть учебная группа с такими данными");
+			}
+			else ModelState.AddModelError("", "Некорректные данные");
+
+			EditableStudyGroupToView(viewModel.Id);
+
+			return View("EditStudyGroup", viewModel);
 		}
 
 		[HttpPost]
@@ -87,34 +135,39 @@ namespace Dotnet.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
-		public async Task<IActionResult> CreateStudyGroup(StudyGroupAndSubgroupViewModel model)
+		public async Task<IActionResult> CreateStudyGroup(StudyGroupAndSubgroupViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
 				StudyGroup studyGroup = await _context.StudyGroups.FirstOrDefaultAsync(g => 
-					(g.Name == model.StudyGroupViewModel.Name) && (g.SpecialtyId == model.StudyGroupViewModel.SpecialtyId)
+					(g.Name == viewModel.StudyGroupViewModel.Name) ||
+					(g.Code == viewModel.StudyGroupViewModel.Code) &&
+					(g.SpecialtyId == viewModel.StudyGroupViewModel.SpecialtyId)
 				);
-				if (studyGroup == null)
+
+				if (studyGroup == null || studyGroup.SpecialtyId != viewModel.StudyGroupViewModel.SpecialtyId)
 				{
 					studyGroup = new StudyGroup {
-						Name			= model.StudyGroupViewModel.Name,
-						Code			= model.StudyGroupViewModel.Code,
-						DateStart		= Convert.ToDateTime(model.StudyGroupViewModel.DateStart),
-						DateEnd			= Convert.ToDateTime(model.StudyGroupViewModel.DateEnd),
-						FormEducationId = model.StudyGroupViewModel.FormEducationId,
-						SpecialtyId		= model.StudyGroupViewModel.SpecialtyId,
+						Name			= viewModel.StudyGroupViewModel.Name,
+						Code			= viewModel.StudyGroupViewModel.Code,
+						DateStart		= Convert.ToDateTime(viewModel.StudyGroupViewModel.DateStart),
+						DateEnd			= Convert.ToDateTime(viewModel.StudyGroupViewModel.DateEnd),
+						FormEducationId = viewModel.StudyGroupViewModel.FormEducationId,
+						SpecialtyId		= viewModel.StudyGroupViewModel.SpecialtyId,
 					};
 
-					_context.StudyGroups.Add(studyGroup);
+					await _context.StudyGroups.AddAsync(studyGroup);
 					await _context.SaveChangesAsync();
+					
+					return RedirectToAction("StudyGroups", "StudyGroup");
 				}
-				else
-					ModelState.AddModelError("", "Некорретные данные");
+				else ModelState.AddModelError("", "Учебная группа с данными названием, кодом и (или) специальностью уже существует");
 			}
-			else
-				ModelState.AddModelError("", "Некорретные данные");
+			else ModelState.AddModelError("", "Некорретные данные");
 
-			return RedirectToAction("AddStudyGroup", "StudyGroup");
+			StudyGroupsToView();
+
+			return View("AddStudyGroup", viewModel);
 		}
 		
 		[HttpPost]

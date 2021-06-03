@@ -16,22 +16,97 @@
 	</ul>
 </div>
 <div>
-	<form asp-action="ApplyChangesStudySubject" asp-controller="StudySubject" asp-anti-forgery="true">
+	<form asp-action="ApplyChangesStudyGroup" asp-controller="StudyGroup" asp-anti-forgery="true">
 		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
 		<div>
-			<input type="hidden" asp-for="Id" class="form-control" value=@ViewBag.EditRow.Id />
+			<input type="hidden" asp-for="Id" class="form-control" value=@ViewBag.studyGroup.Id />
 			<div class="form-group">
 				<label asp-for="Name">Название <span>*</span></label>
-				<input type="text" asp-for="Name" class="form-control" value=@ViewBag.EditRow.Name />
+				<input type="text" asp-for="Name" class="form-control" value=@ViewBag.studyGroup.Name />
 				<span asp-validation-for="Name" />
 			</div>
 			<div class="form-group">
+				<label asp-for="Code">Код</label>
+				<input type="text" asp-for="Code" class="form-control" value=@ViewBag.studyGroup.Code />
+				<span asp-validation-for="Code" />
+			</div>
+			<div class="form-group">
+				<label asp-for="SpecialtyId">Специальность <span>*</span></label>
+				<select asp-for="SpecialtyId" class="form-control" required>
+					@if (ViewBag.specialties.Count > 0)
+					{
+						@foreach (var specialty in ViewBag.specialties)
+						{
+							@foreach (var faculty in ViewBag.faculties)
+							{
+								@if (specialty.FacultyId == faculty.Id)
+								{
+									@foreach (var institution in ViewBag.institutions)
+									{
+										@if (faculty.InstitutionId == institution.Id)
+										{
+											@if (specialty.Id == ViewBag.studyGroup.SpecialtyId)
+											{
+												<option value=@specialty.Id selected>@specialty.Name (@specialty.Code) - @faculty.Name (@faculty.Code) - @institution.Name</option>
+											}
+											else
+											{
+												<option value=@specialty.Id>@specialty.Name (@specialty.Code) - @faculty.Name (@faculty.Code) - @institution.Name</option>
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					else
+					{
+						<option>Нет доступных специальностей</option>
+					}
+				</select>
+				<span asp-validation-for="SpecialtyId" />
+			</div>
+			<div class="form-group">
+				<label asp-for="FormEducationId">Форма обучения <span>*</span></label>
+				<select asp-for="FormEducationId" class="form-control">
+					@if (ViewBag.formsEducation.Count > 0)
+					{
+						@foreach (var formEducation in ViewBag.formsEducation)
+						{
+							@if (formEducation.Id == ViewBag.studyGroup.FormEducationId)
+							{
+								<option value=@formEducation.Id selected>@formEducation.Name</option>
+							}
+							else 
+							{
+								<option value=@formEducation.Id>@formEducation.Name</option>
+							}
+						}
+					}
+					else
+					{
+						<option>Нет доступных форм обучения</option>
+					}
+				</select>
+				<span asp-validation-for="FormEducationId" />
+			</div>
+			<div class="form-group">
+				<label asp-for="DateStart">Дата начала обучения <span>*</span></label>
+				<input type="date" asp-for="DateStart" class="form-control" value=@ViewBag.studyGroup.DateStart.ToString("yyyy-MM-dd") />
+				<span asp-validation-for="DateStart" />
+			</div>
+			<div class="form-group">
+				<label asp-for="DateEnd">Дата окончания обучения <span>*</span></label>
+				<input type="date" asp-for="DateEnd" class="form-control" value=@ViewBag.studyGroup.DateEnd.ToString("yyyy-MM-dd") />
+				<span asp-validation-for="DateEnd" />
+			</div>
+			<div class="form-group">
 				<button type="submit" class="btn btn-primary">
-					<i class="bi bi-plus-circle mr-2"></i>Добавить вид работ
+					<i class="bi bi-save mr-2"></i>Сохранить изменения
 				</button>
 			</div>
 		</div>

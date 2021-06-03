@@ -56,7 +56,7 @@
 													<td>@group.Code</td>
 													<td>@group.DateStart.ToString("dd.MM.yyyy")</td>
 													<td>@group.DateEnd.ToString("dd.MM.yyyy")</td>
-													@foreach (var formEducation in ViewBag.formEducations)
+													@foreach (var formEducation in ViewBag.formsEducation)
 													{
 														@if (group.FormEducationId == formEducation.Id)
 														{
