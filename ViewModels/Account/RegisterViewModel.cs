@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
  
-namespace Dotnet.ViewModels
+namespace Dotnet.ViewModels.Account
 {
-    public class RegisterModel
+    public class RegisterViewModel
     {
 		[Required(ErrorMessage ="Введите имя")]
         public string FirstName { get; set; }

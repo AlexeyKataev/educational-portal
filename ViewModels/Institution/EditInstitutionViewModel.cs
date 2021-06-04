@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
-namespace Dotnet.ViewModels
+namespace Dotnet.ViewModels.Institution
 {
 	public class EditInstitutionViewModel
 	{

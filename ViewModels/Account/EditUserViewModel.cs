@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-/* Редактирование пользователей */
-
-namespace Dotnet.ViewModels
+namespace Dotnet.ViewModels.Account
 {
 	public class EditUserViewModel
 	{

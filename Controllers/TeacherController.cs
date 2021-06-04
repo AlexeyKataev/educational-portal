@@ -200,20 +200,19 @@ namespace Dotnet.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateTeacher(Teacher model)
+		public async Task<IActionResult> CreateTeacher(TeacherViewModel viewModel)
 		{
             if (ModelState.IsValid)
             {
-				User user = await _context.Users.FirstOrDefaultAsync(u => (u.Id == model.UserId));
-                Teacher teacher = await _context.Teachers.FirstOrDefaultAsync(t => (t.UserId == model.UserId));
+				User user = await _context.Users.FirstOrDefaultAsync(u => (u.Id == viewModel.UserId));
+                Teacher teacher = await _context.Teachers.FirstOrDefaultAsync(t => (t.UserId == viewModel.UserId));
 
                 if (user.RoleId == 6 && teacher == null)
                 {
-                    // Добавление записи об учётной записи в базу данных
                     teacher = new Teacher { 
-						UserId			= model.UserId,
-						Post			= model.Post,
-						Specialization	= model.Specialization,
+						UserId			= viewModel.UserId,
+						Post			= viewModel.Post,
+						Specialization	= viewModel.Specialization,
 					};
  
                     _context.Teachers.Add(teacher);
@@ -221,11 +220,9 @@ namespace Dotnet.Controllers
  				
                     return RedirectToAction("AddTeacher", "Teacher");
                 }
-                else
-                    ModelState.AddModelError("", "Некорректные данные");
+                else ModelState.AddModelError("", "Некорректные данные");
             }
-			else
-				ModelState.AddModelError("", "Некорректные данные");
+			else ModelState.AddModelError("", "Некорректные данные");
 
 			return RedirectToAction("AddTeacher", "Teacher");
 		}

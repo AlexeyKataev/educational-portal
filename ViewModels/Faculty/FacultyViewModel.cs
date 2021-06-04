@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-/* Объект "факультет" */
-
-namespace Dotnet.ViewModels
+namespace Dotnet.ViewModels.Faculty
 {
 	public class FacultyViewModel
 	{

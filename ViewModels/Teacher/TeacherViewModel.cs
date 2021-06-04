@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
  
-namespace Dotnet.ViewModels
+namespace Dotnet.ViewModels.Teacher
 {
-    public class TeacherModel
+    public class TeacherViewModel
     {
         [Required(ErrorMessage = "Укажите ID пользователя")]
         public int UserId { get; set; }

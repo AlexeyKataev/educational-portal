@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-/* Объект "Форма обучения" */
-
-namespace Dotnet.ViewModels
+namespace Dotnet.ViewModels.FormEducation
 {
 	public class FormEducationViewModel
 	{

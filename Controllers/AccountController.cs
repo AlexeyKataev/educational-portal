@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dotnet.Models;
-using Dotnet.ViewModels;
+using Dotnet.ViewModels.Account;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
@@ -44,30 +44,30 @@ namespace Dotnet.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterModel model)
+        public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                User user = await _context.Users.FirstOrDefaultAsync(u => (u.Email == model.Email || u.Login == model.Login));
+                User user = await _context.Users.FirstOrDefaultAsync(u => (u.Email == viewModel.Email || u.Login == viewModel.Login));
 
                 if (user == null)
                 {
                     user = new User { 
-						FirstName	= model.FirstName,
-						SecondName	= model.SecondName,
+						FirstName	= viewModel.FirstName,
+						SecondName	= viewModel.SecondName,
 						MiddleName	= null,
 						DateOfBirth = new DateTime(0001, 1, 1, 1, 1, 1),
 						DateAdded	= DateTime.Now,
-						Email 		= model.Email, 
-						Login		= model.Login,
-						Password	= model.Password,
+						Email 		= viewModel.Email, 
+						Login		= viewModel.Login,
+						Password	= viewModel.Password,
 					};
 
                     Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
 
                     if (userRole != null) user.Role = userRole;
  
-                    _context.Users.Add(user);
+                    await _context.Users.AddAsync(user);
                     await _context.SaveChangesAsync();
  
                     await Authenticate(user); 
@@ -76,7 +76,7 @@ namespace Dotnet.Controllers
                 }
                 else ModelState.AddModelError("", "Некорректные логин и (или) пароль");
             }
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -88,11 +88,14 @@ namespace Dotnet.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                User user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => (u.Email == model.Email || u.Login == model.Email) && u.Password == model.Password);
+                User user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => 
+					(u.Email == viewModel.Email || u.Login == viewModel.Email) && 
+					u.Password == viewModel.Password
+				);
 
                 if (user != null)
                 {
@@ -101,7 +104,7 @@ namespace Dotnet.Controllers
                 }
                 ModelState.AddModelError("", "Некорректные логин и (или) пароль");
             }
-            return View(model);
+            return View(viewModel);
         }
 		
         private async Task Authenticate(User user)

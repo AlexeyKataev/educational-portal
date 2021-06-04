@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-/* Редактирование специальности */
-
-namespace Dotnet.ViewModels
+namespace Dotnet.ViewModels.Specialty
 {
 	public class EditSpecialtyViewModel
 	{

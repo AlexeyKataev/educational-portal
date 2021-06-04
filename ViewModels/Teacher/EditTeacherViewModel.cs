@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-/* Редактирование преподавателей */
-
-namespace Dotnet.ViewModels
+namespace Dotnet.ViewModels.Teacher
 {
 	public class EditTeacherViewModel
 	{

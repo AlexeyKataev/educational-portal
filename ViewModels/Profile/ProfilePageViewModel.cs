@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Dotnet.ViewModels.Account;
 
 namespace Dotnet.ViewModels.Profile
 {

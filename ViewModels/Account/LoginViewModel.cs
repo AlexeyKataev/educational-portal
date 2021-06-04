@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
  
-namespace Dotnet.ViewModels
+namespace Dotnet.ViewModels.Account
 {
-    public class LoginModel
+    public class LoginViewModel
     {
         [Required(ErrorMessage = "Введите E-Mail")]
         public string Email { get; set; }

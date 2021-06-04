@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
  
-namespace Dotnet.ViewModels
+namespace Dotnet.ViewModels.TypeWork
 {
     public class TypeWorkViewModel
     {
