@@ -21,7 +21,7 @@
 			<div class="card mb-2">
 				<div class="card-body overflow-auto">
 					<h6 class="card-title ">@ViewBag.allTypeWorks[i].Name</h6>
-					<table class="table table-hover mb-0">
+					<table class="table table-sm table-hover mb-0">
 						<thead>
 							<tr class="text-align-top">
 								<td scope="col">ID</td>
@@ -35,7 +35,7 @@
 					</table>
 					@if (User.IsInRole("admin"))
 					{
-						<a class="btn btn-light btn-block" asp-action="EditTypeWorks" asp-route-typeWorkId="@ViewBag.allTypeWorks[i].Id">
+						<a class="btn btn-sm btn-light btn-block" asp-action="EditTypeWorks" asp-route-typeWorkId="@ViewBag.allTypeWorks[i].Id">
 							<i class="bi bi-pencil-square mr-2"></i>Редактировать
 						</a>
 					}

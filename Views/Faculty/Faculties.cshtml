@@ -9,7 +9,7 @@
 			<i class="bi bi-back mr-2"></i>Назад
 		</a>		
 		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Faculty" asp-action="AddFaculty">
-			<i class="bi bi-plus-circle mr-2"></i> Добавить Факультет
+			<i class="bi bi-plus-circle mr-2"></i> Добавить факультет
 		</a>
 	</ul>
 </div>
@@ -26,7 +26,7 @@
 				<div class="card mb-2">
 					<div class="card-body overflow-auto">
 						<h6 class="card-title">@faculty.Name, @faculty.Code</h6>
-						<table class="table table-hover mb-0">
+						<table class="table table-sm table-hover mb-0">
 							<thead>
 								<tr class="text-align-top">
 									<td scope="col">ID</td>
@@ -51,7 +51,7 @@
 						</table>
 						@if (User.IsInRole("admin"))
 						{
-							<a class="btn btn-light btn-block" asp-action="EditFaculty" asp-route-facultyId="@faculty.Id">
+							<a class="btn btn-sm btn-light btn-block" asp-action="EditFaculty" asp-route-facultyId="@faculty.Id">
 								<i class="bi bi-pencil-square mr-2"></i>Редактировать
 							</a>
 						}

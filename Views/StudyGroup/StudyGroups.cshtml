@@ -40,7 +40,7 @@
 								<div class="card mb-2">
 									<div class="card-body overflow-auto">
 										<h6 class="card-title">@group.Name</h6>
-										<table class="table table-hover mb-0">
+										<table class="table table-sm table-hover mb-0">
 											<thead>
 												<tr class="text-align-top">
 													<td scope="col">ID</td>
@@ -68,7 +68,7 @@
 										</table>
 										@if (User.IsInRole("admin"))
 										{
-											<a class="btn btn-light btn-block" asp-action="EditStudyGroup" asp-route-studyGroupId="@group.Id">
+											<a class="btn btn-sm btn-light btn-block" asp-action="EditStudyGroup" asp-route-studyGroupId="@group.Id">
 												<i class="bi bi-pencil-square mr-2"></i>Редактировать
 											</a>
 										}
@@ -76,13 +76,13 @@
 										{
 											@if (subGroup.StudyGroupId == group.Id)
 											{
-												<table class="table table-hover mt-3 mb-0">											
+												<table class="table table-sm table-hover mt-3 mb-0">											
 													<thead>
 														<tr class="text-align-top">
 															<td scope="col">ID</td>
 															<td scope="col">Название подгруппы</td>
 															<td scope="col">Код подгруппы</td>
-															<td scope="col"></td>
+															<td scope="col">Действие</td>
 														</tr>
 													</thead>
 													<tbody>
@@ -95,8 +95,8 @@
 															<td>@subGroup2.Name</td>
 															<td>@subGroup2.Code</td>
 															<td class="pt-0 pb-0">
-																<a class="btn btn-light btn-block btn-sm" style="margin-top : 9px;" asp-action="EditStudySubgroup" asp-route-studySubgroupId="@subGroup2.Id">
-																	<i class="bi bi-pencil-square"></i>
+																<a class="nav-link m-0 p-0" style="line-height: 30px;" asp-action="EditStudySubgroup" asp-route-studySubgroupId="@subGroup2.Id">
+																	Редактировать
 																</a>
 															</td>
 														</tr>
