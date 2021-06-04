@@ -1,0 +1,86 @@
+@{
+	ViewData["Title"] = "Редактировать учебную подгруппу";	
+    Layout = "~/Views/StudyGroup/_StudyGroupLayout.cshtml";
+}
+
+@model Dotnet.ViewModels.StudyGroup.EditStudySubgroupViewModel
+
+<div class="flex-grow-1">	
+	<ul class="list-group list-group-horizontal mb-4">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
+			<i class="bi bi-back mr-2"></i>Назад
+		</a>
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="StudyGroup" asp-action="StudyGroups">
+			<i class="bi bi-people-fill mr-2"></i>Учебные группы
+		</a>
+	</ul>
+</div>
+<div>
+	<form asp-action="ApplyChangesStudySubgroup" asp-controller="StudyGroup" asp-anti-forgery="true">
+		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div>
+			<input type="hidden" asp-for="Id" class="form-control" value=@ViewBag.studySubgroup.Id />
+			<div class="form-group">
+				<label asp-for="StudyGroupId">Учебная группа <span>*</span></label>
+				<select asp-for="StudyGroupId" class="form-control" required>
+					@if (ViewBag.specialties.Count > 0)
+					{
+						@foreach (var studyGroup in ViewBag.studyGroups)
+						{
+							@foreach (var specialty in ViewBag.specialties)
+							{
+								@if (studyGroup.SpecialtyId == specialty.Id)
+								{
+									@foreach (var faculty in ViewBag.faculties)
+									{
+										@if (specialty.FacultyId == faculty.Id)
+										{
+											@foreach (var institution in ViewBag.institutions)
+											{
+												@if (faculty.InstitutionId == institution.Id)
+												{
+													if (ViewBag.studyGroup.Id == studyGroup.Id)
+													{
+														<option value=@studyGroup.Id selected>@studyGroup.Name (@studyGroup.Code) - @specialty.Name (@specialty.Code) - @faculty.Name (@faculty.Code) - @institution.Name</option>
+													}
+													else
+													{
+														<option value=@studyGroup.Id>@studyGroup.Name (@studyGroup.Code) - @specialty.Name (@specialty.Code) - @faculty.Name (@faculty.Code) - @institution.Name</option>
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					else
+					{
+						<option>Нет доступных учебных групп</option>
+					}
+				</select>
+				<span asp-validation-for="StudyGroupId" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Name">Название <span>*</span></label>
+				<input type="text" asp-for="Name" class="form-control" value=@ViewBag.studySubgroup.Name />
+				<span asp-validation-for="Name" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Code">Код</label>
+				<input type="text" asp-for="Code" class="form-control" value=@ViewBag.studySubgroup.Code />
+				<span asp-validation-for="Code" />
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">
+					<i class="bi bi-save mr-2"></i>Сохранить изменения
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

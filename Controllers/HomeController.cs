@@ -38,32 +38,39 @@ namespace Dotnet.Controllers
 			}
 			else if (me.RoleId == 6)	
 			{
-				Teacher aboutMe = _context.Teachers.FirstOrDefault(x => (x.UserId == me.Id));
+				Teacher aboutMe = _context.Teachers.FirstOrDefault(x => x.UserId == me.Id);
 				
 				if (aboutMe != null) ViewBag.aboutMe = $"{aboutMe.Specialization} • {aboutMe.Post}";
 				else ViewBag.aboutMe = "Вы не входите в штат сотрудников";
 			}
 			else if (me.RoleId == 9)
 			{
-				Student aboutMe = _context.Students.FirstOrDefault(s => (s.UserId == me.Id));
-				StudySubgroup studySubgroup = _context.StudySubgroups.FirstOrDefault(s => (s.Id == aboutMe.StudySubgroupId));
-				StudyGroup studyGroup = _context.StudyGroups.FirstOrDefault(s => (s.Id == studySubgroup.StudyGroupId));
-				Specialty specialty = _context.Specialties.FirstOrDefault(s => (s.Id == studyGroup.SpecialtyId));
+				Student aboutMe = _context.Students.FirstOrDefault(s => s.UserId == me.Id);
 
-				List<StudySubgroupWork> studySubgroupWork = _context.StudySubgroupWork.Where(r => (r.StudySubgroupId == studySubgroup.Id)).ToList();
-				List<Work> works = _context.Works.OrderByDescending(d => d.DateAdded).ToList();
+				StudySubgroup studySubgroup = 
+					aboutMe != null ? _context.StudySubgroups.FirstOrDefault(s => s.Id == aboutMe.StudySubgroupId) : null;
+				StudyGroup studyGroup = 
+					aboutMe != null ? _context.StudyGroups.FirstOrDefault(s => (s.Id == studySubgroup.StudyGroupId)) : null;
+				Specialty specialty = 
+					aboutMe != null ? _context.Specialties.FirstOrDefault(s => (s.Id == studyGroup.SpecialtyId)) : null;
 
-				foreach (var work in works.ToList())
+				List<StudySubgroupWork> studySubgroupWork = 
+					aboutMe != null ? _context.StudySubgroupWork.Where(r => (r.StudySubgroupId == studySubgroup.Id)).ToList() : null;
+				List<Work> works = 
+					aboutMe != null ? _context.Works.OrderByDescending(d => d.DateAdded).ToList() : null;
+
+				foreach (var work in works != null ? works.ToList() : new List<Work>())
 					if (studySubgroupWork.Find(x => x.WorkId == work.Id) == null) works.RemoveAt(works.IndexOf(work));
 
 				if (aboutMe != null) ViewBag.aboutMe = $"{specialty.Code} {specialty.Name} • {studyGroup.Name}, подгруппа {studySubgroup.Name}";
+				else ViewBag.aboutMe = "Вы не входите ни в один список студентов учебных групп";
 
 				ViewBag.subjects = _context.Subjects.ToList();
 				ViewBag.typesWorks = _context.TypesWorks.ToList();
 				ViewBag.fileWork = _context.FileWork.ToList();
 				ViewBag.files = _context.Files.ToList();
 
-				if (works.Count > 5) 
+				if (works?.Count > 5) 
 				{
 					ViewBag.isMuchWorks = true;
 					ViewBag.myWorks = works.GetRange(0, 5);

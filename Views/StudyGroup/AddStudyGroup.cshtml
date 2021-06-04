@@ -15,16 +15,16 @@
 		</a>
 	</ul>
 </div>
-<div>
+<div>		
+	<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
 	<div class="shadow-sm card p-3 mb-2 bg-white rounded">					
 		<h6 class="mb-0">Добавление учебной группы</h6>
 	</div>	
 	<form asp-action="CreateStudyGroup" asp-controller="StudyGroup" asp-anti-forgery="true">
-		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
 		<div>
 			<div class="form-group">
 				<label asp-for="StudyGroupViewModel.Name">Название <span>*</span></label>
@@ -104,11 +104,6 @@
 		<p class="mb-0">Подгруппу возможно добавить только к ранее созданной группе</p>
 	</div>	
 	<form asp-action="CreateStudySubgroup" asp-controller="StudyGroup" asp-anti-forgery="true">
-		<div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show pl-3 pr-3 pt-3 pb-0" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
 		<div>
 			<div class="form-group">
 				<label asp-for="StudySubgroupViewModel.StudyGroupId">Учебная группа <span>*</span></label>

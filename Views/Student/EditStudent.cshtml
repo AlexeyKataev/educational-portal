@@ -71,7 +71,14 @@
 													{
 														@if (subgroup.StudyGroupId == group.Id)
 														{
-															<option value=@subgroup.Id>@group.Name (@group.Code) - @subgroup.Name (@subgroup.Code) - @specialty.Name (@specialty.Code) - @faculty.Name (@faculty.Code) - @institution.Name</option>
+															@if (ViewBag.student.StudySubgroupId == subgroup.Id)
+															{
+																<option value=@subgroup.Id selected>@group.Name (@group.Code) - @subgroup.Name (@subgroup.Code) - @specialty.Name (@specialty.Code) - @faculty.Name (@faculty.Code) - @institution.Name</option>
+															}
+															else
+															{
+																<option value=@subgroup.Id>@group.Name (@group.Code) - @subgroup.Name (@subgroup.Code) - @specialty.Name (@specialty.Code) - @faculty.Name (@faculty.Code) - @institution.Name</option>
+															}
 														}
 													}
 												}

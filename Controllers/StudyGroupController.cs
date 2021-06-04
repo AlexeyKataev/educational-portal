@@ -100,7 +100,8 @@ namespace Dotnet.Controllers
 					(
 						((s.Name == viewModel.Name) ||
 						(s.Code == viewModel.Code)) & (s.Id != viewModel.Id)
-					));
+					)
+				);
 
 				if (rowCheck == null || (rowCheck.Id == viewModel.Id))
 				{
@@ -129,7 +130,34 @@ namespace Dotnet.Controllers
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
 		public async Task<IActionResult> ApplyChangesStudySubgroup(EditStudySubgroupViewModel viewModel)
 		{
-			return null;
+			if (ModelState.IsValid)
+			{
+				StudySubgroup studySubgroupEdit = await _context.StudySubgroups.FirstOrDefaultAsync(s => s.Id == viewModel.Id);
+				StudySubgroup rowCheck = await _context.StudySubgroups.FirstOrDefaultAsync(
+					s =>
+					(
+						((s.Name == viewModel.Name) || 
+						(s.Code == viewModel.Code)) & (s.Id != viewModel.Id)
+					)
+				);
+
+				if (rowCheck == null || rowCheck.Id == viewModel.Id)
+				{
+					studySubgroupEdit.Name			= viewModel.Name;
+					studySubgroupEdit.Code			= viewModel.Code;
+					studySubgroupEdit.StudyGroupId	= viewModel.StudyGroupId;
+
+					await _context.SaveChangesAsync();
+					
+					return RedirectToAction("StudyGroups", "StudyGroup");
+				}
+				else ModelState.AddModelError("", "В данной учебной группе уже есть учебная подгруппа с такими данными");
+			}
+			else ModelState.AddModelError("", "Некорректные данные");
+
+			EditableStudySubgroupToView(viewModel.Id);
+
+			return View("EditStudySubgroup", viewModel);
 		}
 
 		[HttpPost]
@@ -165,7 +193,7 @@ namespace Dotnet.Controllers
 			}
 			else ModelState.AddModelError("", "Некорретные данные");
 
-			StudyGroupsToView();
+			StudyGroupsToView(true);
 
 			return View("AddStudyGroup", viewModel);
 		}
@@ -173,30 +201,35 @@ namespace Dotnet.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
-		public async Task<IActionResult> CreateStudySubgroup(StudyGroupAndSubgroupViewModel model)
+		public async Task<IActionResult> CreateStudySubgroup(StudyGroupAndSubgroupViewModel viewModel)
 		{
 			if (ModelState.IsValid)
 			{
 				StudySubgroup studySubgroup = await _context.StudySubgroups.FirstOrDefaultAsync(s => 
-					(s.StudyGroupId == model.StudySubgroupViewModel.StudyGroupId) && (s.Name == model.StudySubgroupViewModel.Name)
+					(s.StudyGroupId == viewModel.StudySubgroupViewModel.StudyGroupId) && 
+					(s.Name == viewModel.StudySubgroupViewModel.Name)
 				);
+
 				if (studySubgroup == null)
 				{
 					studySubgroup = new StudySubgroup {
-						Name			= model.StudySubgroupViewModel.Name,
-						Code			= model.StudySubgroupViewModel.Code,
-						StudyGroupId	= model.StudySubgroupViewModel.StudyGroupId,
+						Name			= viewModel.StudySubgroupViewModel.Name,
+						Code			= viewModel.StudySubgroupViewModel.Code,
+						StudyGroupId	= viewModel.StudySubgroupViewModel.StudyGroupId,
 					};
 
 					await _context.StudySubgroups.AddAsync(studySubgroup);
 					await _context.SaveChangesAsync();
+
+					return RedirectToAction("AddStudyGroup", "StudyGroup");
 				}
-				else
-					ModelState.AddModelError("", "Некорретные данные");
+				else ModelState.AddModelError("", "Некорретные данные");
 			}
-			else
-				ModelState.AddModelError("", "Некорретные данные");
-			return RedirectToAction("AddStudyGroup", "StudyGroup");
+			else ModelState.AddModelError("", "Некорретные данные");
+
+			StudyGroupsToView(true);
+
+			return View("AddStudyGroup", viewModel);
 		}
 
 		[Authorize(Roles="student")]
