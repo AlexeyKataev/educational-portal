@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dotnet.Controllers
 {
@@ -84,7 +85,7 @@ namespace Dotnet.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				TypeWorks typeWorks = await _context.TypesWorks.FirstOrDefaultAsync(t => (t.Name == viewModel.Name));
+				TypeWorks typeWorks = await _context.TypesWorks.FirstOrDefaultAsync(t => t.Name == viewModel.Name);
 
 				if (typeWorks == null)
 				{
@@ -102,6 +103,31 @@ namespace Dotnet.Controllers
 			TypesWorksToView();
 
 			return View("AddTypeWorks", viewModel);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteTypeWorks(DeleteTypeWorkViewModel viewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				TypeWorks typeWorks = await _context.TypesWorks.FirstOrDefaultAsync(t => t.Id == viewModel.Id);
+				Work rowCheck = await _context.Works.FirstOrDefaultAsync(x => x.TypeWorksId == typeWorks.Id);
+
+				if (typeWorks != null && rowCheck == null)
+				{
+					_context.Remove(typeWorks);
+					await _context.SaveChangesAsync();
+
+					return RedirectToAction("TypesWorks", "TypeWork");
+				}
+				else ModelState.AddModelError("", "Данная запись уже связана с другой записью");
+			}
+			else ModelState.AddModelError("", "Некорректный идентификатор");
+
+			EditableTypeWorks(viewModel.Id);
+
+			return View("EditTypeWorks");
 		}
 	}
 }
