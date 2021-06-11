@@ -178,6 +178,7 @@ namespace Dotnet.Models
 				Login		= adminLogin, 
 				FirstName 	= adminFirstName,
 				SecondName	= adminSecondName,
+				DateAdded	= new System.DateTime(0001, 01, 01, 01, 01, 01),
 				Email 		= adminEmail,
 				Password 	= adminPassword, 
 				RoleId 		= adminRole.Id 
