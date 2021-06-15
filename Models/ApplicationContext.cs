@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Dotnet.Models.Study;
+using Dotnet.Models.Account;
 using System.ComponentModel.DataAnnotations;
+
  
 namespace Dotnet.Models
 {
@@ -23,8 +25,7 @@ namespace Dotnet.Models
 		public DbSet<TypeWorks> TypesWorks { get; set; }
 		public DbSet<Work> Works { get; set; }
 		public DbSet<Student> Students { get; set; }
-
-		/* Many-to-many */
+		public DbSet<UserTicket> UserTickets { get; set; }
 		public DbSet<SubjectTeacher> SubjectTeacher { get; set; }
 		public DbSet<StudySubgroupWork> StudySubgroupWork { get; set; }
 		public DbSet<FileWork> FileWork { get; set; }

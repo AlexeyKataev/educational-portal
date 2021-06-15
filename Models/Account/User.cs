@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Dotnet.Models.Account;
 
 namespace Dotnet.Models
 {
@@ -16,5 +17,6 @@ namespace Dotnet.Models
 		public int? RoleId { get; set; }
     	public Role Role { get; set; }
 		public List<File> Files { get; set; } = new List<File>();
+		public List<UserTicket> UserTickets { get; set; } = new List<UserTicket>();
     }
 }
