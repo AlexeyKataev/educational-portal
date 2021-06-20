@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Dotnet.Models;
-using Dotnet.ViewModels.WebApp.Account;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Dotnet.Models;
+using Dotnet.ViewModels.WebApp.Account;
+using Dotnet.Enums.WebApp;
  
 namespace Dotnet.Controllers.WebApp
 {
@@ -61,9 +61,9 @@ namespace Dotnet.Controllers.WebApp
 					user.Login			= viewModel.Login;
 					user.Password		= viewModel.Password;
 
-                    Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
+                    Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.UserRole == EnumRoles.User);
 
-                    if (userRole != null) user.Role = userRole;
+                    if (userRole != null) user.UserRole = userRole.UserRole;
  
                     await _context.Users.AddAsync(user);
                     await _context.SaveChangesAsync();
@@ -90,7 +90,7 @@ namespace Dotnet.Controllers.WebApp
         {
             if (ModelState.IsValid)
             {
-                User user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => 
+                User user = await _context.Users.FirstOrDefaultAsync(u => 
 					(u.Email == viewModel.Email || u.Login == viewModel.Email) && 
 					u.Password == viewModel.Password
 				);
@@ -114,7 +114,7 @@ namespace Dotnet.Controllers.WebApp
 				claims = new List<Claim>
 				{
 					new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
-					new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
+					new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserRole.ToString())
 				};
 			}
 			else if (user.Email != null)
@@ -122,7 +122,7 @@ namespace Dotnet.Controllers.WebApp
 				claims = new List<Claim>
 				{
 					new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-					new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
+					new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserRole.ToString())
 				};
 			}
 

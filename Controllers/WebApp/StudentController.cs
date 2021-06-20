@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Dotnet.ViewModels.WebApp.Student;
 using Dotnet.Models.Study;
+using Dotnet.Enums.WebApp;
 
 namespace Dotnet.Controllers.WebApp
 {
@@ -31,7 +32,7 @@ namespace Dotnet.Controllers.WebApp
 
         public IActionResult AddStudent()
         {
-			List<User> users = _context.Users.Where(u => u.RoleId == 9).ToList();
+			List<User> users = _context.Users.Where(u => u.UserRole == EnumRoles.Student).ToList();
 
 			foreach (var user in users.ToList())
 			{
@@ -42,7 +43,6 @@ namespace Dotnet.Controllers.WebApp
 			}
 
 			ViewBag.allUsers = users;
-
 			ViewBag.studySubgroups = _context.StudySubgroups.ToList();
 			ViewBag.studyGroups = _context.StudyGroups.ToList();
 			ViewBag.specialties = _context.Specialties.ToList();
@@ -57,8 +57,7 @@ namespace Dotnet.Controllers.WebApp
 			List<User> users = new List<User>();
 			List<Student> students = _context.Students.ToList();
 
-			foreach (var student in students)
-				users.Add(_context.Users.FirstOrDefault(u => u.Id == student.UserId));
+			foreach (var student in students) users.Add(_context.Users.FirstOrDefault(u => u.Id == student.UserId));
 
 			ViewBag.users = users;
 			ViewBag.students = students;
@@ -124,7 +123,7 @@ namespace Dotnet.Controllers.WebApp
 				User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == viewModel.UserId);
 				Student student = await _context.Students.FirstOrDefaultAsync(s => s.UserId == viewModel.UserId);
 				
-				if (user.RoleId == 9 && student == null)
+				if (user.UserRole == EnumRoles.Student && student == null)
 				{
 					student = new Student {
 						UserId			= viewModel.UserId,

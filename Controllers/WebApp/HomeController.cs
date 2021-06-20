@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Dotnet.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Dotnet.Models.Study;
-using System.Net.Http.Headers;
-using System.IO;
-using System.Net.Mime;
+using Dotnet.Models;
+using Dotnet.Enums.WebApp;
 
 namespace Dotnet.Controllers.WebApp
 {
@@ -29,30 +28,30 @@ namespace Dotnet.Controllers.WebApp
 		[Authorize]
         public IActionResult Index()
         {
-			User me = _context.Users.FirstOrDefault(u => (u.Login == User.Identity.Name));
+			User me = _context.Users.FirstOrDefault(u => u.Login == User.Identity.Name);
 			ViewBag.me = me;
 
-			if (me.RoleId == 1)
+			if (me.UserRole == EnumRoles.Admin)
 			{
 				ViewBag.aboutMe = "Главный администратор";
 			}
-			else if (me.RoleId == 6)	
+			else if (me.UserRole == EnumRoles.Teacher)	
 			{
 				Teacher aboutMe = _context.Teachers.FirstOrDefault(x => x.UserId == me.Id);
 				
 				if (aboutMe != null) ViewBag.aboutMe = $"{aboutMe.Specialization} • {aboutMe.Post}";
 				else ViewBag.aboutMe = "Вы не входите в штат сотрудников";
 			}
-			else if (me.RoleId == 9)
+			else if (me.UserRole == EnumRoles.Student)
 			{
 				Student aboutMe = _context.Students.FirstOrDefault(s => s.UserId == me.Id);
 
 				StudySubgroup studySubgroup = 
 					aboutMe != null ? _context.StudySubgroups.FirstOrDefault(s => s.Id == aboutMe.StudySubgroupId) : null;
 				StudyGroup studyGroup = 
-					aboutMe != null ? _context.StudyGroups.FirstOrDefault(s => (s.Id == studySubgroup.StudyGroupId)) : null;
+					aboutMe != null ? _context.StudyGroups.FirstOrDefault(s => s.Id == studySubgroup.StudyGroupId) : null;
 				Specialty specialty = 
-					aboutMe != null ? _context.Specialties.FirstOrDefault(s => (s.Id == studyGroup.SpecialtyId)) : null;
+					aboutMe != null ? _context.Specialties.FirstOrDefault(s => s.Id == studyGroup.SpecialtyId) : null;
 
 				List<StudySubgroupWork> studySubgroupWork = 
 					aboutMe != null ? _context.StudySubgroupWork.Where(r => (r.StudySubgroupId == studySubgroup.Id)).ToList() : null;

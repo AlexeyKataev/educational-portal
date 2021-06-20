@@ -1,17 +1,17 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Dotnet.Models;
-using Dotnet.ViewModels.WebApp.Account;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Dotnet.Models;
+using Dotnet.ViewModels.WebApp.Account;
 using Dotnet.ViewModels.WebApp.Profile;
 
 namespace Dotnet.Controllers.WebApp
@@ -53,39 +53,26 @@ namespace Dotnet.Controllers.WebApp
 			{
 				ProfileViewModel profileViewModel = viewModel.ProfileViewModel;
 
-				User userEdt = await _context.Users.FirstOrDefaultAsync(u => (u.Login == User.Identity.Name));
+				User userEdit = await _context.Users.FirstOrDefaultAsync(u => u.Login == User.Identity.Name);
 
-				User userEmailCheck = await _context.Users.FirstOrDefaultAsync(u => (u.Email == profileViewModel.Email));
+				User userEmailCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == profileViewModel.Email);
 				string email = profileViewModel.Email;
 
-				// Проверка на занятость запрашиваемого адреса электронной почты
-				if (userEmailCheck != null && userEdt.Email != email)
-					email = null;
+				if (userEmailCheck != null && userEdit.Email != email) email = null;
 
-				if (userEdt != null)
-				{
-					// Изменение записи об учётной записи в базе данных
-					User userUpd = new User { 						
-						Id 			= userEdt.Id,
-						FirstName	= profileViewModel.FirstName,
-						SecondName	= profileViewModel.SecondName,
-						MiddleName	= profileViewModel.MiddleName,
-						DateOfBirth = Convert.ToDateTime(profileViewModel.DateOfBirth),
-						DateAdded	= userEdt.DateAdded,
-						Email 		= email, 
-						Login		= userEdt.Login,
-						Password	= userEdt.Password,
-						RoleId		= userEdt.RoleId,
-					};
+				if (userEdit != null)
+				{					
+					userEdit.FirstName		= profileViewModel.FirstName;
+					userEdit.SecondName		= profileViewModel.SecondName;
+					userEdit.MiddleName		= profileViewModel.MiddleName;
+					userEdit.DateOfBirth 	= Convert.ToDateTime(profileViewModel.DateOfBirth);
+					userEdit.Email 			= email;
 
-					_context.Entry(userEdt).CurrentValues.SetValues(userUpd);
 					_context.SaveChanges();
 				}
-				else
-					ModelState.AddModelError("", "Произошла ошибка");
+				else ModelState.AddModelError("", "Произошла ошибка");
 			}
-			else
-				ModelState.AddModelError("", "Некорректные данные");
+			else ModelState.AddModelError("", "Некорректные данные");
 
 			return RedirectToAction("MyProfile", "Profile");
 		}
@@ -106,7 +93,6 @@ namespace Dotnet.Controllers.WebApp
 					await _context.SaveChangesAsync();
 				}
 				else ModelState.AddModelError("", "Некорректные данные");
-
 			}
 			else ModelState.AddModelError("", "Некорректные данные");
 

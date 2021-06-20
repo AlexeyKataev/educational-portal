@@ -23,17 +23,11 @@ namespace Dotnet
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
 
-			/* Установка контекста для развёртывания веб-приложения */
-
-			// Контекст для базы данных по ролям и базовым свойствам пользователей
 			services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
- 
-            /* Конфигурация подключения */
 			
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -45,7 +39,6 @@ namespace Dotnet
             services.AddControllersWithViews();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

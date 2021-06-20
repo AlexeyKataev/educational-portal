@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Dotnet.Enums.WebApp;
 
 namespace Dotnet.ViewModels.WebApp.Account
 {
@@ -22,6 +23,6 @@ namespace Dotnet.ViewModels.WebApp.Account
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Укажите роль пользователя")]
-        public int RoleId { get; set; }
+        public EnumRoles UserRole { get; set; }
 	}
 }

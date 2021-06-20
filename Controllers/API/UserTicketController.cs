@@ -51,7 +51,7 @@ namespace Dotnet.Controllers.API
 			// Сгенерировать новый токен
 			if (((EnumActions)Enum.Parse(typeof(EnumActions), $"{Request.Headers["Action"].ToString()}", true) == EnumActions.Get) && ModelState.IsValid)
 			{
-				Dotnet.Models.User user = await _context.Users.FirstOrDefaultAsync(x => (x.Login == viewModel.Login || x.Email == viewModel.Login) && x.Password == viewModel.Password && x.RoleId == 9);
+				Dotnet.Models.User user = await _context.Users.FirstOrDefaultAsync(x => (x.Login == viewModel.Login || x.Email == viewModel.Login) && x.Password == viewModel.Password && x.UserRole == Enums.WebApp.EnumRoles.Student);
 
 				if (user != null)
 				{

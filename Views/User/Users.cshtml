@@ -39,7 +39,7 @@
 		{
 			@foreach (var user in usersInRole)
 			{
-				@if (role.Id == user.RoleId)
+				@if (role.UserRole == user.UserRole)
 				{
 					<div class="card mb-2">
 						<div class="card-body overflow-auto">

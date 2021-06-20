@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Dotnet.Models.Study;
 using Dotnet.Models.Account;
-using System.ComponentModel.DataAnnotations;
-
+using Dotnet.Enums.WebApp;
  
 namespace Dotnet.Models
 {
@@ -37,143 +36,45 @@ namespace Dotnet.Models
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         { 
-            // Создаём объекты ролей
-
-			/*
-			* Администратор
-			*
-			* ПРАВА:
-			*
-			* - Полные права доступа.
-			*/
-			
-			string adminLogin = "admin";						// Логин по умолчанию от учётной записи администратора
-            string adminPassword = "123";						// Пароль по умолчанию от учётной записи администратора
+			string adminLogin = "admin";						
+            string adminPassword = "123";						
 
             string adminFirstName = "Укажите имя";						
             string adminSecondName = "Укажите фамилию";					
             string adminEmail = "Укажите E-Mail";					
 
-            string adminRoleName = "admin";						// Название роли
-            Role adminRole = new Role { Id = 1, Name = adminRoleName };
 
 
+            string adminRoleName = "admin";						
+            Role adminRole = new Role { Id = 1, Name = adminRoleName, UserRole = EnumRoles.Admin };
 
-			/*
-			* Системный администратор
-			*
-			* ПРАВА:
-			* -
-			*/
+            string systemAdminRoleName = "systemAdmin";			
+            Role systemAdminRole = new Role { Id = 2, Name = systemAdminRoleName, UserRole = EnumRoles.SystemAdmin };
 
-            string systemAdminRoleName = "systemAdmin";			// Название роли
-            Role systemAdminRole = new Role { Id = 2, Name = systemAdminRoleName };
+            string humanResourcesRoleName = "humanResources";	
+            Role humanResourcesRole = new Role { Id = 3, Name = humanResourcesRoleName, UserRole = EnumRoles.HumanResources };
 
+            string trainingDivisionRoleName = "trainingDivision";
+            Role trainingDivisionRole = new Role { Id = 4, Name = trainingDivisionRoleName, UserRole = EnumRoles.TrainingDivision };
 
+            string authorArticlesRoleName = "authorArticles";	
+            Role authorArticlesRole = new Role { Id = 5, Name = authorArticlesRoleName, UserRole = EnumRoles.AuthorArticles };
 
-			/*
-			* Специалист из отдела кадров
-			*
-			* ПРАВА:
-			* -
-			*/
+            string teacherRoleName = "teacher";					
+			Role teacherRole = new Role { Id = 6, Name = teacherRoleName, UserRole = EnumRoles.Teacher };
 
-            string humanResourcesRoleName = "humanResources";	// Название роли
-            Role humanResourcesRole = new Role { Id = 3, Name = humanResourcesRoleName };
+            string enrolleRoleName = "enrolle";					
+            Role enrolleRole = new Role { Id = 7, Name = enrolleRoleName, UserRole = EnumRoles.Enrolle };
 
+            string graduateRoleName = "graduate";			
+            Role graduateRole = new Role { Id = 8, Name = graduateRoleName, UserRole = EnumRoles.Graduate };
 
+            string studentRoleName = "student";				
+            Role studentRole = new Role { Id = 9, Name = studentRoleName, UserRole = EnumRoles.Student };
 
-			/*
-			* Специалист из учебного отдела
-			*
-			* ПРАВА:
-			* -
-			*/
+            string userRoleName = "user";					
+            Role userRole = new Role { Id = 10, Name = userRoleName, UserRole = EnumRoles.User };
 
-            string trainingDivisionRoleName = "trainingDivision";// Название роли
-            Role trainingDivisionRole = new Role { Id = 4, Name = trainingDivisionRoleName };
-
-
-
-			/*
-			* Автор информационных рассылок и создатеть новостных статей
-			*
-			* ПРАВА:
-			* -
-			*/
-
-            string authorArticlesRoleName = "authorArticles";	// Название роли
-            Role authorArticlesRole = new Role { Id = 5, Name = authorArticlesRoleName };
-
-
-
-			/*
-			* Преподаватель
-			*
-			* ПРАВА:
-			*
-			* - Просмотр списков студентов, преподавателем которых он назначен в данный момент либо был назначен в прошлом.
-			* - Создание, редактирование заданий и пересдач в рамках контрольных точек.
-			* - Выставление оценок на основе завершённых заданий.
-			* - Информационная рассылка в рамках своих учебных групп. 
-			* - Рассылка электронных учебных материалов.
-			* - Просмотр расписания студентов.
-			*/
-
-            string teacherRoleName = "teacher";					// Название роли
-			Role teacherRole = new Role { Id = 6, Name = teacherRoleName };
-
-
-
-			/*
-			* Абитуриент
-			*
-			* ПРАВА:
-			* -
-			*/
-
-            string enrolleRoleName = "enrolle";					// Название роли
-            Role enrolleRole = new Role { Id = 7, Name = enrolleRoleName };
-
-
-
-			/*
-			* Выпускник
-			*
-			* ПРАВА:
-			* -
-			*/
-
-            string graduateRoleName = "graduate";				// Название роли
-            Role graduateRole = new Role { Id = 8, Name = graduateRoleName };
-
-
-
-			/*
-			* Студент
-			*
-			* ПРАВА:
-			* -
-			*/
-
-            string studentRoleName = "student";					// Название роли
-            Role studentRole = new Role { Id = 9, Name = studentRoleName };
-
-
-
-			/*
-			* Пользователь
-			*
-			* ПРАВА:
-			* -
-			*/
-
-            string userRoleName = "user";						// Название роли
-            Role userRole = new Role { Id = 10, Name = userRoleName };
-
-
-
-			// Создаём объект учётной записи администратора
             User adminUser = new User { 
 				Id 			= 1, 
 				Login		= adminLogin, 
@@ -182,7 +83,7 @@ namespace Dotnet.Models
 				DateAdded	= new System.DateTime(0001, 01, 01, 01, 01, 01),
 				Email 		= adminEmail,
 				Password 	= adminPassword, 
-				RoleId 		= adminRole.Id 
+				UserRole 	= EnumRoles.Admin, 
 			};
  
             modelBuilder.Entity<Role>().HasData(new Role[] { 

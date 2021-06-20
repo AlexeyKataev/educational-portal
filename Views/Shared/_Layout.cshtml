@@ -1,18 +1,19 @@
 ﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Онлайн-портал</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap-icons-1.3.0/bootstrap-icons.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Онлайн портал</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap-icons-1.3.0/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
+	<link rel="shortcut icon" href="~/icons/icon.png"/>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;" asp-area="" asp-controller="Home" asp-action="Index">Онлайн-распределение заданий</a>
+                <a class="navbar-brand" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;" asp-area="" asp-controller="Home" asp-action="Index">Онлайн портал колледжа</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -39,7 +40,7 @@
     </div>
     <footer class="border-top footer text-muted">
         <div class="container" style="overflow: hidden; text-overflow: ellipsis;">
-            &copy; @DateTime.Now.ToString("yyyy") - Выпускная квалификационная работа
+            &copy; @DateTime.Now.ToString("yyyy") - Онлайн портал колледжа
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Dotnet.Models;
-using Dotnet.ViewModels;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Dotnet.ViewModels.WebApp.Teacher;
 using Dotnet.Models.Study;
+using Dotnet.Models;
+using Dotnet.ViewModels;
+using Dotnet.Enums.WebApp;
 
 namespace Dotnet.Controllers.WebApp
 {
@@ -32,14 +33,12 @@ namespace Dotnet.Controllers.WebApp
 
         public IActionResult AddTeacher()
         {
-			List<User> users = _context.Users.Where(u => u.RoleId == 6).ToList();
+			List<User> users = _context.Users.Where(u => u.UserRole == EnumRoles.Teacher).ToList();
 
 			foreach (var user in users.ToList())
 			{
-				Teacher teacher = _context.Teachers.FirstOrDefault(u => (u.UserId == user.Id));
-
-				if (teacher != null)
-					users.RemoveAt(users.IndexOf(user));
+				Teacher teacher = _context.Teachers.FirstOrDefault(u => u.UserId == user.Id);
+				if (teacher != null) users.RemoveAt(users.IndexOf(user));
 			}
 
 			ViewBag.allUsers = users;
@@ -55,10 +54,8 @@ namespace Dotnet.Controllers.WebApp
 
 			foreach (Teacher teacher in teachers.ToList())
 			{
-				List<User> usersTmp = _context.Users.Where(u => u.Id == (teacher.UserId)).ToList();
-
-				if (usersTmp.Count != 0)
-					users.Add(usersTmp);
+				List<User> usersTmp = _context.Users.Where(u => u.Id == teacher.UserId).ToList();
+				if (usersTmp.Count != 0) users.Add(usersTmp);
 			}
 			
 			ViewBag.allUsers = users;
@@ -70,25 +67,17 @@ namespace Dotnet.Controllers.WebApp
 		[HttpGet]
 		public IActionResult EditTeacher(int userId, int teacherId)
 		{
-			// Получить запрашиваемого на редактирование преподавателя
 			Teacher teacher = _context.Teachers.FirstOrDefault(u => (u.Id == teacherId));
 
-			// Получить список всех зарегистрированных пользователей с ролью "Преподаватель"
-			List<User> users = _context.Users.Where(u => u.RoleId == 6).ToList();
+			List<User> users = _context.Users.Where(u => u.UserRole == EnumRoles.Teacher).ToList();
 
-			// Проверить наличие пользователей в списке действующих преподавателей
 			foreach (var user in users.ToList())
 			{
 				Teacher teacherTmp = _context.Teachers.FirstOrDefault(u => (u.UserId == user.Id));
-
-				if (teacherTmp != null && teacherTmp.Id != teacher.Id)
-					users.RemoveAt(users.IndexOf(user));
+				if (teacherTmp != null && teacherTmp.Id != teacher.Id) users.RemoveAt(users.IndexOf(user));
 			}
 
-			// Получить список всех учебных предметов
 			List<Subject> subjects = _context.Subjects.ToList();
-
-			// Получить ID предметов, которые ведёт данный преподаватель
 			List<SubjectTeacher> subjectTeacher = _context.SubjectTeacher.Where(t => t.TeacherId == teacherId).ToList();
 
 			ViewData["Id"]				= teacher.Id;
@@ -98,7 +87,6 @@ namespace Dotnet.Controllers.WebApp
 
 			List<SubjectForTeacher> subjectsForTeacher = new List<SubjectForTeacher>();
 
-			// Создать объекты для генерации checkbox
 			foreach (var subject in subjects)
 			{
 				if (subjectTeacher.Exists(id => id.SubjectId == (subject.Id))) subjectsForTeacher.Add(new SubjectForTeacher{ Id = subject.Id, Name = subject.Name, IsChecked = true });
@@ -118,10 +106,9 @@ namespace Dotnet.Controllers.WebApp
 		{
 			if (ModelState.IsValid)
 			{
-				Teacher teacherEdt = await _context.Teachers.FirstOrDefaultAsync(u => (u.Id == model.Id));
+				Teacher teacherEdt = await _context.Teachers.FirstOrDefaultAsync(u => u.Id == model.Id);
 
-				// Проверка, есть ли данный пользователь в таблице преподавателей
-				Teacher teacherCheck = await _context.Teachers.FirstOrDefaultAsync(u => (u.Id == model.Id));
+				Teacher teacherCheck = await _context.Teachers.FirstOrDefaultAsync(u => u.Id == model.Id);
 
 				if (teacherCheck == null || teacherCheck.UserId == teacherEdt.UserId)
 				{
@@ -135,11 +122,9 @@ namespace Dotnet.Controllers.WebApp
 					_context.Entry(teacherEdt).CurrentValues.SetValues(teacherUpd);
 					_context.SaveChanges();
 				}
-				else
-				ModelState.AddModelError("", "Некорректные данные");
+				else ModelState.AddModelError("", "Некорректные данные");
 			}
-			else
-				ModelState.AddModelError("", "Некорректные данные");
+			else ModelState.AddModelError("", "Некорректные данные");
 			
 			return RedirectToAction("Teachers", "Teacher");
 		}
@@ -150,7 +135,7 @@ namespace Dotnet.Controllers.WebApp
 		{
 			if (ModelState.IsValid)
 			{
-				Teacher teacherCheck = await _context.Teachers.FirstOrDefaultAsync(t => (t.Id == model.Id));
+				Teacher teacherCheck = await _context.Teachers.FirstOrDefaultAsync(t => t.Id == model.Id);
 				
 				if (teacherCheck != null && model.SubjectsId != null)
 				{
@@ -158,7 +143,6 @@ namespace Dotnet.Controllers.WebApp
 					{
 						var subjectTeacherCheck = _context.SubjectTeacher.Where(r => (r.TeacherId == model.Id) && (r.SubjectId == subjectId)).ToList();
 						
-						// Если выбранный преподаватель не ведёт данный предмет - добавить
 						if (subjectTeacherCheck.Count == 0)
 						{
 							SubjectTeacher subjectTeacher = new SubjectTeacher {
@@ -171,7 +155,6 @@ namespace Dotnet.Controllers.WebApp
 						}
 					}
 
-					// Получить все предметы, которые ведёт данный преподаватель
 					List<SubjectTeacher> allSubjectsForTeacher = _context.SubjectTeacher.Where(s => s.TeacherId == model.Id).ToList();
 
 					foreach (var subject in allSubjectsForTeacher) 
@@ -207,7 +190,7 @@ namespace Dotnet.Controllers.WebApp
 				User user = await _context.Users.FirstOrDefaultAsync(u => (u.Id == viewModel.UserId));
                 Teacher teacher = await _context.Teachers.FirstOrDefaultAsync(t => (t.UserId == viewModel.UserId));
 
-                if (user.RoleId == 6 && teacher == null)
+                if (user.UserRole == EnumRoles.Teacher && teacher == null)
                 {
                     teacher = new Teacher { 
 						UserId			= viewModel.UserId,
@@ -215,7 +198,7 @@ namespace Dotnet.Controllers.WebApp
 						Specialization	= viewModel.Specialization,
 					};
  
-                    _context.Teachers.Add(teacher);
+                    await _context.Teachers.AddAsync(teacher);
                     await _context.SaveChangesAsync();
  				
                     return RedirectToAction("AddTeacher", "Teacher");

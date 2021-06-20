@@ -34,7 +34,7 @@ namespace Dotnet.Controllers.WebApp
 
 			foreach (Role role in roles.ToList())
 			{
-				List<User> tmpUsers = _context.Users.Where(u => u.RoleId == (role.Id)).ToList();
+				List<User> tmpUsers = _context.Users.Where(u => u.UserRole == (role.UserRole)).ToList();
 
 				if (tmpUsers.Count != 0) users.Add(tmpUsers);
 				else roles.RemoveAt(roles.IndexOf(role));
@@ -55,7 +55,7 @@ namespace Dotnet.Controllers.WebApp
 			List<Role> roles = _context.Roles.ToList();
 
 			ViewData["id"]			= user.Id;
-			ViewData["RoleId"]		= user.RoleId;
+			ViewData["RoleId"]		= user.UserRole;
 			ViewData["FirstName"] 	= user.FirstName;
 			ViewData["SecondName"] 	= user.SecondName;
 			ViewData["MiddleName"] 	= user.MiddleName;
@@ -93,7 +93,7 @@ namespace Dotnet.Controllers.WebApp
 					userEdit.MiddleName		= viewModel.MiddleName;
 					userEdit.DateOfBirth	= Convert.ToDateTime(viewModel.DateOfBirth);
 					userEdit.Email 			= email;
-					userEdit.RoleId			= viewModel.RoleId;
+					userEdit.UserRole		= viewModel.UserRole;
 
 					await _context.SaveChangesAsync();
 				}
