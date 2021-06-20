@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dotnet.Models;
-using Dotnet.ViewModels.Account;
+using Dotnet.ViewModels.WebApp.Account;
 using Dotnet.ViewModels.API.App;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -33,7 +33,7 @@ namespace Dotnet.Controllers.API
 		public async Task<ActionResult<List<WorkViewModel>>> GetWork() 
 		{			
 			// Передать информацию о заданиях для определённой подгруппы
-			if (((EnumActions)Enum.Parse(typeof(EnumActions), $"{Request.Headers["Action"].ToString()}", true) == EnumActions.Get) && ModelState.IsValid)
+			if (((EnumActions)Enum.Parse(typeof(EnumActions), $"{Request.Headers["Action"].ToString()}", true) == EnumActions.Get))
 			{
 				Models.Account.UserTicket userTicket = await _context.UserTickets.FirstOrDefaultAsync(x => x.Token == Request.Headers["Token"].ToString());
 				Models.User user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userTicket.UserId);
@@ -42,7 +42,7 @@ namespace Dotnet.Controllers.API
 
 				Models.Student student = await _context.Students.FirstOrDefaultAsync(x => x.UserId == user.Id);
 				Models.StudySubgroup studySubgroup = await _context.StudySubgroups.FirstOrDefaultAsync(x => x.Id == student.StudySubgroupId);
-				List<Models.Study.StudySubgroupWork> studySubgroupWork = await _context.StudySubgroupWork.Where(x => x.StudySubgroupId == studySubgroup.Id).ToListAsync();
+				List<Models.Study.StudySubgroupWork> studySubgroupWork = await _context.StudySubgroupWork.Where(x => x.StudySubgroupId == studySubgroup.Id).OrderByDescending(x => x.Id).ToListAsync();
 
 				List<WorkViewModel> works = new List<WorkViewModel>();
 

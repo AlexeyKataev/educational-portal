@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dotnet.Models;
-using Dotnet.ViewModels.Account;
+using Dotnet.ViewModels.WebApp.Account;
 using Dotnet.ViewModels.API.App;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
