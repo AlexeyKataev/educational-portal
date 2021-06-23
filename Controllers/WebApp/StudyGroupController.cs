@@ -57,13 +57,13 @@ namespace Dotnet.Controllers.WebApp
 			return View();	
 		} 
 
-		private void EditableStudyGroupToView(int studyGroupId)
+		private void EditableStudyGroupToView(ulong studyGroupId)
 		{
 			StudyGroupsToView(true);
 			ViewBag.studyGroup = _context.StudyGroups.FirstOrDefault(s => s.Id == studyGroupId);
 		}
 
-		private void EditableStudySubgroupToView(int studySubgroupId)
+		private void EditableStudySubgroupToView(ulong studySubgroupId)
 		{
 			StudyGroupsToView(true);
 			StudySubgroup studySubgroup = _context.StudySubgroups.FirstOrDefault(s => s.Id == studySubgroupId);
@@ -73,7 +73,7 @@ namespace Dotnet.Controllers.WebApp
 
 		[HttpGet]
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
-		public IActionResult EditStudyGroup(int studyGroupId)
+		public IActionResult EditStudyGroup(ulong studyGroupId)
 		{
 			EditableStudyGroupToView(studyGroupId);
 			return View();
@@ -81,7 +81,7 @@ namespace Dotnet.Controllers.WebApp
 
 		[HttpGet]
 		[Authorize(Roles="admin, systemAdmin, humanResources")]
-		public IActionResult EditStudySubgroup(int studySubgroupId)
+		public IActionResult EditStudySubgroup(ulong studySubgroupId)
 		{
 			EditableStudySubgroupToView(studySubgroupId);
 			return View();

@@ -39,7 +39,7 @@ namespace Dotnet.Controllers.WebApp
         public IActionResult AddInstitution() => View();
 
 		[HttpGet]
-		public IActionResult EditInstitution(int institutionId)
+		public IActionResult EditInstitution(ulong institutionId)
 		{
 			ViewBag.institution = _context.Institutions.FirstOrDefault(i => i.Id == institutionId);
 
@@ -53,7 +53,7 @@ namespace Dotnet.Controllers.WebApp
 			if (ModelState.IsValid)
 			{
 				Institution institution = await _context.Institutions.FirstOrDefaultAsync(i => i.Id == model.Id);
-				Institution rowCheck = await _context.Institutions.FirstOrDefaultAsync(i => (i.Name == model.Name && i.Id != model.Id));
+				Institution rowCheck = await _context.Institutions.FirstOrDefaultAsync(i => i.Name == model.Name && i.Id != model.Id);
 
 				if ((institution.Name == model.Name && institution.Id == model.Id) || rowCheck == null)
 				{

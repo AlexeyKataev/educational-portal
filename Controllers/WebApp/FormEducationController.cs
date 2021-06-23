@@ -40,9 +40,9 @@ namespace Dotnet.Controllers.WebApp
 
         public IActionResult AddFormEducation() => View();
 
-		private void EditableFormEducation(int formEducationId)
+		private void EditableFormEducation(ulong formEducationId)
 		{
-			FormEducation formEducation = _context.FormsEducation.FirstOrDefault(f => (f.Id == formEducationId));
+			FormEducation formEducation = _context.FormsEducation.FirstOrDefault(f => f.Id == formEducationId);
 
 			ViewData["Id"]		= formEducation.Id;
 			ViewData["Name"]	= formEducation.Name;
@@ -50,7 +50,7 @@ namespace Dotnet.Controllers.WebApp
 		}
 
 		[HttpGet]
-		public IActionResult EditFormEducation(int formEducationId)
+		public IActionResult EditFormEducation(ulong formEducationId)
 		{
 			EditableFormEducation(formEducationId);
 			return View();

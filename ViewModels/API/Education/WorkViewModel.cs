@@ -4,7 +4,7 @@ namespace Dotnet.ViewModels.API.Education
 {
 	public class WorkViewModel
 	{
-		public int Id { get; set; } = 0;
+		public ulong Id { get; set; } = 0;
 
 		public string Description { get; set; } = "Нет описания";
 
@@ -14,7 +14,7 @@ namespace Dotnet.ViewModels.API.Education
 
 		public DateTime DateDeparture { get; set; } = new DateTime(01, 01, 01, 01, 01, 01);
 
-		public int CountAttempts { get; set; } = 1;
+		public byte CountAttempts { get; set; } = 1;
 
 		public Dotnet.ViewModels.API.App.UserViewModel Teacher { get; set; } = new Dotnet.ViewModels.API.App.UserViewModel { };
 

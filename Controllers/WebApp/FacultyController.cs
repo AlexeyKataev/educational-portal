@@ -42,7 +42,7 @@ namespace Dotnet.Controllers.WebApp
             return View(viewModel);
         }
 
-		private void EditableFacultyToView(int facultyId)
+		private void EditableFacultyToView(ulong facultyId)
 		{
 			Faculty faculty = _context.Faculties.FirstOrDefault(f => f.Id == facultyId);
 
@@ -56,7 +56,7 @@ namespace Dotnet.Controllers.WebApp
 		}
 
 		[HttpGet]
-		public IActionResult EditFaculty(int facultyId)
+		public IActionResult EditFaculty(ulong facultyId)
 		{
 			EditableFacultyToView(facultyId);
 			return View();
@@ -69,7 +69,7 @@ namespace Dotnet.Controllers.WebApp
 		{
 			if (ModelState.IsValid)
 			{
-				Faculty facultyEdit = await _context.Faculties.FirstOrDefaultAsync(f => (f.Id == viewModel.Id));
+				Faculty facultyEdit = await _context.Faculties.FirstOrDefaultAsync(f => f.Id == viewModel.Id);
 				Faculty rowCheck = await _context.Faculties.FirstOrDefaultAsync(
 					f => 
 					(

@@ -60,7 +60,7 @@ namespace Dotnet.Controllers.WebApp
 
 		[HttpGet]
 		[Authorize(Roles="teacher")]
-		public IActionResult EditTask(int taskId)
+		public IActionResult EditTask(ulong taskId)
 		{
 			User user = _context.Users.AsNoTracking().FirstOrDefault(u => (u.Login == User.Identity.Name));
 			Teacher teacher = _context.Teachers.AsNoTracking().FirstOrDefault(t => (t.UserId == user.Id));
@@ -75,7 +75,7 @@ namespace Dotnet.Controllers.WebApp
 			List<SubjectTeacher> subjectTeacher = _context.SubjectTeacher.Where(x => x.TeacherId == teacher.Id).ToList();
 			List<StudySubgroupWork> studySubgroupWork = _context.StudySubgroupWork.AsNoTracking().Where(x => x.WorkId == taskId).ToList();
 
-			List<int> studySubgroupChecked = new List<int>();
+			List<ulong> studySubgroupChecked = new List<ulong>();
 			List<Subject> subjects = new List<Subject>();
 
 			foreach (var row in subjectTeacher)
@@ -315,7 +315,7 @@ namespace Dotnet.Controllers.WebApp
 
 		[HttpGet]
 		[Authorize(Roles="teacher")]
-		public IActionResult DeleteTask(int taskId)
+		public IActionResult DeleteTask(ulong taskId)
 		{	
 			User user = _context.Users.AsNoTracking().FirstOrDefault(u => (u.Login == User.Identity.Name));
 			Teacher teacher = _context.Teachers.AsNoTracking().FirstOrDefault(t => (t.UserId == user.Id));
@@ -347,7 +347,7 @@ namespace Dotnet.Controllers.WebApp
 
 		[HttpGet]
 		[Authorize(Roles="teacher")]
-		public IActionResult DeleteFile(int fileId)
+		public IActionResult DeleteFile(ulong fileId)
 		{
 			User user = _context.Users.AsNoTracking().FirstOrDefault(u => (u.Login == User.Identity.Name));
 			Teacher teacher = _context.Teachers.AsNoTracking().FirstOrDefault(t => (t.UserId == user.Id));

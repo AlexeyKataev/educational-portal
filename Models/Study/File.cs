@@ -4,7 +4,7 @@ namespace Dotnet.Models
 {
 	public class File
 	{
-		public int Id { get; set; }
+		public ulong Id { get; set; }
 		public string Name { get; set; }
 		public string Pseudonym { get; set; }
 		public string PathFile { get; set; }
@@ -12,7 +12,7 @@ namespace Dotnet.Models
 		public System.DateTime NeedToDelete { get; set; }
 		public System.DateTime DateAdded { get; set; }
 		public List<FileWork> FileWork { get; set; } = new List<FileWork>();
-		public int UserId { get; set; }
+		public ulong UserId { get; set; }
 		public User User { get; set; }
 	}
 }

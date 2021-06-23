@@ -4,7 +4,7 @@ namespace Dotnet.ViewModels.API.Education
 {
 	public class StudyGroupViewModel
 	{
-		public int Id { get; set; } = 0;
+		public ulong Id { get; set; } = 0;
 
 		public string Name { get; set; } = "";
 

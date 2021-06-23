@@ -16,9 +16,9 @@ namespace Dotnet.ViewModels.WebApp.StudyGroup
 		public System.DateTime DateEnd { get; set; }
 
 		[Required(ErrorMessage = "Укажите специальность")]
-		public int FormEducationId { get; set; }
+		public ulong FormEducationId { get; set; }
 
 		[Required(ErrorMessage = "Укажите форму обучения")]
-		public int SpecialtyId { get; set; }
+		public ulong SpecialtyId { get; set; }
     }
 }

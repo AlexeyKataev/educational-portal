@@ -2,10 +2,10 @@ namespace Dotnet.Models
 {
 	public class FileWork
 	{
-		public int Id { get; set; }
-		public int FileId { get; set; }
+		public ulong Id { get; set; }
+		public ulong FileId { get; set; }
 		public File File { get; set; }
-		public int WorkId { get; set; }
+		public ulong WorkId { get; set; }
 		public Work Work { get; set; }
 	}
 }

@@ -6,7 +6,7 @@ namespace Dotnet.ViewModels.WebApp.Work
     public class EditWorkViewModel
     {
 		[Required]
-		public int Id { get; set; } = 0;
+		public ulong Id { get; set; } = 0;
 
         [Required(ErrorMessage = "Укажите описание для задания.")]
 		public string Description { get; set; }
@@ -31,14 +31,14 @@ namespace Dotnet.ViewModels.WebApp.Work
 		}
 
 		[Required(ErrorMessage = "Укажите учебный предмет.")]
-		public int SubjectId { get; set; }
+		public ulong SubjectId { get; set; }
 
 		[Required(ErrorMessage = "Укажите тип работы.")]
-		public int TypeWorksId { get; set; }
+		public ulong TypeWorksId { get; set; }
 
-		private int[] studySubgroupId;
+		private ulong[] studySubgroupId;
 		[Required]
-		public int[] StudySubgroupsId 
+		public ulong[] StudySubgroupsId 
 		{
 			get => studySubgroupId;
 			set 

@@ -7,8 +7,8 @@ namespace Dotnet.ViewModels.WebApp.Teacher
 	public class SubjectsForTeacherViewModel 
 	{
 		[Required]
-		public int Id { get; set; }
+		public ulong Id { get; set; }
 
-		public int[] SubjectsId { get; set; }
+		public ulong[] SubjectsId { get; set; }
 	}
 }

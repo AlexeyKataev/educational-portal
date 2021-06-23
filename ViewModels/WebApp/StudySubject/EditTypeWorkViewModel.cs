@@ -5,7 +5,7 @@ namespace Dotnet.ViewModels.WebApp.StudySubject
     public class EditStudySubjectViewModel
     {
 		[Required]
-		public int Id { get; set; }
+		public ulong Id { get; set; }
 
 		[Required(ErrorMessage = "Укажите название учебного предмета")]
 		public string Name { get; set; }

@@ -65,7 +65,7 @@ namespace Dotnet.Controllers.WebApp
         }
 
 		[HttpGet]
-		public IActionResult EditTeacher(int userId, int teacherId)
+		public IActionResult EditTeacher(ulong userId, ulong teacherId)
 		{
 			Teacher teacher = _context.Teachers.FirstOrDefault(u => (u.Id == teacherId));
 
@@ -187,8 +187,8 @@ namespace Dotnet.Controllers.WebApp
 		{
             if (ModelState.IsValid)
             {
-				User user = await _context.Users.FirstOrDefaultAsync(u => (u.Id == viewModel.UserId));
-                Teacher teacher = await _context.Teachers.FirstOrDefaultAsync(t => (t.UserId == viewModel.UserId));
+				User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == viewModel.UserId);
+                Teacher teacher = await _context.Teachers.FirstOrDefaultAsync(t => t.UserId == viewModel.UserId);
 
                 if (user.UserRole == EnumRoles.Teacher && teacher == null)
                 {

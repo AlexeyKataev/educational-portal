@@ -71,7 +71,7 @@ namespace Dotnet.Controllers.WebApp
 		}
 
 		[HttpGet]
-		public IActionResult EditStudent(int studentId, int userId)
+		public IActionResult EditStudent(ulong studentId, ulong userId)
 		{
 			List<User> users = new List<User>();
 			List<Student> students = _context.Students.ToList();

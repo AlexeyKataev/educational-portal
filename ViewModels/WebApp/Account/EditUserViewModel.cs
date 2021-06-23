@@ -6,7 +6,7 @@ namespace Dotnet.ViewModels.WebApp.Account
 	public class EditUserViewModel
 	{
        	[Required]
-        public int Id { get; set; }
+        public ulong Id { get; set; }
 
         [Required(ErrorMessage = "Введите имя")]
         public string FirstName { get; set; }

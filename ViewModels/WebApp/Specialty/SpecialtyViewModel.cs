@@ -11,6 +11,6 @@ namespace Dotnet.ViewModels.WebApp.Specialty
 		public string Code { get; set; }
 		
 		[Required(ErrorMessage = "Укажите факультет")]
-		public int FacultyId { get; set; }
+		public ulong FacultyId { get; set; }
 	}
 }

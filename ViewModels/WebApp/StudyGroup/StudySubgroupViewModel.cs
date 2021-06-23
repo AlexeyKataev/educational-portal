@@ -5,7 +5,7 @@ namespace Dotnet.ViewModels.WebApp.StudyGroup
     public class StudySubgroupViewModel
     {
 		[Required(ErrorMessage = "Укажите ID учебной группы")]
-		public int StudyGroupId { get; set; }
+		public ulong StudyGroupId { get; set; }
 
 		[Required(ErrorMessage = "Укажите название учебной подгруппы")]
 		public string Name { get; set; }

@@ -48,9 +48,9 @@ namespace Dotnet.Controllers.WebApp
 
 		[HttpGet]
 		[Authorize(Roles="admin")]
-		public IActionResult EditUser(int userId)
+		public IActionResult EditUser(ulong userId)
 		{
-			User user = _context.Users.FirstOrDefault(u => (u.Id == userId));
+			User user = _context.Users.FirstOrDefault(u => u.Id == userId);
 			
 			List<Role> roles = _context.Roles.ToList();
 
@@ -76,7 +76,7 @@ namespace Dotnet.Controllers.WebApp
 		{
 			if (ModelState.IsValid)
 			{
-				User userEdit = await _context.Users.FirstOrDefaultAsync(u => (u.Id == viewModel.Id));
+				User userEdit = await _context.Users.FirstOrDefaultAsync(u => u.Id == viewModel.Id);
 
 				User userEmailCheck = await _context.Users.FirstOrDefaultAsync(u => (u.Email == viewModel.Email));
 				string email = viewModel.Email;
@@ -84,7 +84,7 @@ namespace Dotnet.Controllers.WebApp
 				if (userEmailCheck != null && userEdit.Email != email) email = null;
 
 				User meCheck = await _context.Users.FirstOrDefaultAsync(u => (u.Login == User.Identity.Name));
-				int someoneId = viewModel.Id;
+				ulong someoneId = viewModel.Id;
 
 				if (meCheck.Id != someoneId)
 				{ 

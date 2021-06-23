@@ -46,7 +46,7 @@ namespace Dotnet.Controllers.WebApp
 			return View();
 		}
 
-		private void EditableSpecialtyToView(int specialtyId)
+		private void EditableSpecialtyToView(ulong specialtyId)
 		{
 			Specialty specialty = _context.Specialties.FirstOrDefault(s => s.Id == specialtyId);
 
@@ -63,7 +63,7 @@ namespace Dotnet.Controllers.WebApp
 		}
 
 		[HttpGet]
-		public IActionResult EditSpecialty(int specialtyId)
+		public IActionResult EditSpecialty(ulong specialtyId)
 		{
 			EditableSpecialtyToView(specialtyId);
 			return View();

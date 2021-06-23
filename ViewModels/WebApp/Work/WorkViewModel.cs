@@ -28,14 +28,14 @@ namespace Dotnet.ViewModels.WebApp.Work
 		}
 
 		[Required(ErrorMessage = "Укажите учебный предмет.")]
-		public int SubjectId { get; set; }
+		public ulong SubjectId { get; set; }
 
 		[Required(ErrorMessage = "Укажите тип работы.")]
-		public int TypeWorksId { get; set; }
+		public ulong TypeWorksId { get; set; }
 
-		private int[] studySubgroupId;
+		private ulong[] studySubgroupId;
 		[Required]
-		public int[] StudySubgroupsId 
+		public ulong[] StudySubgroupsId 
 		{
 			get => studySubgroupId;
 			set 
