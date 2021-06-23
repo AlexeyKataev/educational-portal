@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Dotnet.Models.Study;
 using Dotnet.Models.Account;
+using Dotnet.Models.Messenger;
 using Dotnet.Enums.WebApp;
  
 namespace Dotnet.Models
@@ -28,6 +29,11 @@ namespace Dotnet.Models
 		public DbSet<SubjectTeacher> SubjectTeacher { get; set; }
 		public DbSet<StudySubgroupWork> StudySubgroupWork { get; set; }
 		public DbSet<FileWork> FileWork { get; set; }
+		public DbSet<ChatRoom> ChatRooms { get; set; }
+		public DbSet<MessageAttachedFile> MessageAttachedFile { get; set; }
+		public DbSet<UserChatRoom> UserChatRoom { get; set; }
+		public DbSet<UserMessage> UserMessages { get; set; }
+		public DbSet<UserMessageChatRoom> UserMessageChatRoom { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
