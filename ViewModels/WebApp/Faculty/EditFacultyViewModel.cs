@@ -5,7 +5,7 @@ namespace Dotnet.ViewModels.WebApp.Faculty
 	public class EditFacultyViewModel
 	{
 		[Required]
-		public ulong Id { get; set; }
+		public long Id { get; set; }
 
 		[Required(ErrorMessage = "Укажите название факультета")]
 		public string Name { get; set; }
@@ -17,6 +17,6 @@ namespace Dotnet.ViewModels.WebApp.Faculty
 
 
 		[Required(ErrorMessage = "Укажите учебное заведение")]
-		public ulong InstitutionId { get; set; }
+		public long InstitutionId { get; set; }
 	}
 }

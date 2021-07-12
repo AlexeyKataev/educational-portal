@@ -31,18 +31,18 @@ namespace Dotnet.Controllers.WebApp
 			User me = _context.Users.FirstOrDefault(u => u.Login == User.Identity.Name);
 			ViewBag.me = me;
 
-			if (me.UserRole == EnumRoles.Admin)
+			if (me.RoleId == 1)
 			{
 				ViewBag.aboutMe = "Главный администратор";
 			}
-			else if (me.UserRole == EnumRoles.Teacher)	
+			else if (me.RoleId == 6)	
 			{
 				Teacher aboutMe = _context.Teachers.FirstOrDefault(x => x.UserId == me.Id);
 				
 				if (aboutMe != null) ViewBag.aboutMe = $"{aboutMe.Specialization} • {aboutMe.Post}";
 				else ViewBag.aboutMe = "Вы не входите в штат сотрудников";
 			}
-			else if (me.UserRole == EnumRoles.Student)
+			else if (me.RoleId == 9)
 			{
 				Student aboutMe = _context.Students.FirstOrDefault(s => s.UserId == me.Id);
 

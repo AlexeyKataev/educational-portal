@@ -32,7 +32,7 @@ namespace Dotnet.Controllers.WebApp
 
         public IActionResult AddStudent()
         {
-			List<User> users = _context.Users.Where(u => u.UserRole == EnumRoles.Student).ToList();
+			List<User> users = _context.Users.Where(u => u.RoleId == 9).ToList();
 
 			foreach (var user in users.ToList())
 			{
@@ -71,7 +71,7 @@ namespace Dotnet.Controllers.WebApp
 		}
 
 		[HttpGet]
-		public IActionResult EditStudent(ulong studentId, ulong userId)
+		public IActionResult EditStudent(long studentId, long userId)
 		{
 			List<User> users = new List<User>();
 			List<Student> students = _context.Students.ToList();
@@ -123,7 +123,7 @@ namespace Dotnet.Controllers.WebApp
 				User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == viewModel.UserId);
 				Student student = await _context.Students.FirstOrDefaultAsync(s => s.UserId == viewModel.UserId);
 				
-				if (user.UserRole == EnumRoles.Student && student == null)
+				if (user.RoleId == 9 && student == null)
 				{
 					student = new Student {
 						UserId			= viewModel.UserId,

@@ -39,7 +39,7 @@ namespace Dotnet.Controllers.WebApp
         public IActionResult AddInstitution() => View();
 
 		[HttpGet]
-		public IActionResult EditInstitution(ulong institutionId)
+		public IActionResult EditInstitution(long institutionId)
 		{
 			ViewBag.institution = _context.Institutions.FirstOrDefault(i => i.Id == institutionId);
 

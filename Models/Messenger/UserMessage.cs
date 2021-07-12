@@ -5,8 +5,8 @@ namespace Dotnet.Models.Messenger
 {
 	public class UserMessage
 	{
-		public ulong Id { get; set; } = 0;
-		public ulong UserId { get; set; } = 0;
+		public long Id { get; set; } = 0;
+		public long UserId { get; set; } = 0;
 		[JsonIgnore]
 		public User User { get; set; }
 		public string Messsage { get; set; } = null;

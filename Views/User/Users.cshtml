@@ -8,7 +8,7 @@
 
 <div class="flex-grow-1">
 	<ul class="list-group list-group-horizontal mb-4">
-		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Services">
+		<a class="list-group-item list-group-item-action" asp-area="" asp-controller="Home" asp-action="Index">
 			<i class="bi bi-back mr-2"></i>Назад
 		</a>
 	</ul>
@@ -39,7 +39,7 @@
 		{
 			@foreach (var user in usersInRole)
 			{
-				@if (role.UserRole == user.UserRole)
+				@if (role.Id == user.RoleId)
 				{
 					<div class="card mb-2">
 						<div class="card-body overflow-auto">

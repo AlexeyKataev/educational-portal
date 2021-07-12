@@ -5,7 +5,7 @@ namespace Dotnet.ViewModels.WebApp.StudyGroup
     public class EditStudyGroupViewModel
     {
 		[Required]
-		public ulong Id { get; set; }
+		public long Id { get; set; }
 
 		[Required(ErrorMessage = "Укажите название учебной группы")]
 		public string Name { get; set; }
@@ -19,9 +19,9 @@ namespace Dotnet.ViewModels.WebApp.StudyGroup
 		public System.DateTime DateEnd { get; set; }
 
 		[Required(ErrorMessage = "Укажите специальность")]
-		public ulong FormEducationId { get; set; }
+		public long FormEducationId { get; set; }
 
 		[Required(ErrorMessage = "Укажите форму обучения")]
-		public ulong SpecialtyId { get; set; }
+		public long SpecialtyId { get; set; }
     }
 }

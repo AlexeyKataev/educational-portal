@@ -6,7 +6,7 @@ namespace Dotnet.ViewModels.WebApp.Account
 	public class EditUserViewModel
 	{
        	[Required]
-        public ulong Id { get; set; }
+        public long Id { get; set; }
 
         [Required(ErrorMessage = "Введите имя")]
         public string FirstName { get; set; }
@@ -23,6 +23,6 @@ namespace Dotnet.ViewModels.WebApp.Account
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Укажите роль пользователя")]
-        public EnumRoles UserRole { get; set; }
+        public long? RoleId { get; set; }
 	}
 }

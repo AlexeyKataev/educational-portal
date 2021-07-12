@@ -30,7 +30,10 @@ namespace Dotnet.Controllers.API
 				Id		= user.Id,
 				Login	= user.Login,
 				Email	= user.Email,
-				Role	= user.UserRole == EnumRoles.Admin ? EnumRoles.Admin : user.UserRole == EnumRoles.Teacher ? EnumRoles.Teacher : user.UserRole == EnumRoles.Student ? EnumRoles.Student : user.UserRole == EnumRoles.Student ? EnumRoles.User : EnumRoles.Unsettled,
+				Role	= user.RoleId == 1 ? EnumRoles.Admin : 
+					user.RoleId == 6 ? EnumRoles.Teacher : 
+					user.RoleId == 9 ? EnumRoles.Student : 
+					user.RoleId == 10 ? EnumRoles.User : EnumRoles.Unsettled,
 				FirstName	= user.FirstName,
 				SecondName	= user.SecondName,
 				MiddleName	= user.MiddleName,

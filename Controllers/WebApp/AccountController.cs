@@ -48,22 +48,25 @@ namespace Dotnet.Controllers.WebApp
         {
             if (ModelState.IsValid)
             {
-                User user = await _context.Users.FirstOrDefaultAsync(u => (u.Email == viewModel.Email || u.Login == viewModel.Login));
+                User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == viewModel.Email || u.Login == viewModel.Login);
 
                 if (user == null)
-                {                    
-					user.FirstName		= viewModel.FirstName;
-					user.SecondName		= viewModel.SecondName;
-					user.MiddleName		= null;
-					user.DateOfBirth 	= new DateTime(0001, 1, 1, 1, 1, 1);
-					user.DateAdded		= DateTime.Now;
-					user.Email 			= viewModel.Email; 
-					user.Login			= viewModel.Login;
-					user.Password		= viewModel.Password;
+                {       
+					Role userRole = await _context.Roles.FirstOrDefaultAsync(x => x.Name == "user");
 
-                    Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.UserRole == EnumRoles.User);
+					user = new User {
+						FirstName		= viewModel.FirstName,
+						SecondName		= viewModel.SecondName,
+						MiddleName		= null,
+						DateOfBirth 	= new DateTime(01, 01, 01, 01, 01, 01),
+						DateAdded		= DateTime.Now,
+						Email 			= viewModel.Email, 
+						Login			= viewModel.Login,
+						Password		= viewModel.Password,
+						RoleId 			= userRole.Id,
+					};
 
-                    if (userRole != null) user.UserRole = userRole.UserRole;
+					user.Role = userRole;
  
                     await _context.Users.AddAsync(user);
                     await _context.SaveChangesAsync();
@@ -90,7 +93,7 @@ namespace Dotnet.Controllers.WebApp
         {
             if (ModelState.IsValid)
             {
-                User user = await _context.Users.FirstOrDefaultAsync(u => 
+                User user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => 
 					(u.Email == viewModel.Email || u.Login == viewModel.Email) && 
 					u.Password == viewModel.Password
 				);
@@ -114,7 +117,7 @@ namespace Dotnet.Controllers.WebApp
 				claims = new List<Claim>
 				{
 					new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
-					new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserRole.ToString())
+					new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
 				};
 			}
 			else if (user.Email != null)
@@ -122,7 +125,7 @@ namespace Dotnet.Controllers.WebApp
 				claims = new List<Claim>
 				{
 					new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-					new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserRole.ToString())
+					new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
 				};
 			}
 

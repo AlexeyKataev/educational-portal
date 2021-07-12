@@ -5,7 +5,7 @@ namespace Dotnet.ViewModels.WebApp.TypeWork
     public class EditTypeWorkViewModel
     {
 		[Required]
-		public ulong Id { get; set; }
+		public long Id { get; set; }
 
 		[Required(ErrorMessage = "Укажите название типа работ")]
 		public string Name { get; set; }

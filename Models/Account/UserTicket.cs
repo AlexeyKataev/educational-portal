@@ -8,7 +8,7 @@ namespace Dotnet.Models.Account
 {
     public class UserTicket
     {
-        public ulong Id { get; set; } = 0;
+        public long Id { get; set; } = 0;
         
         public string OS { get; set; } = "";
 
@@ -22,6 +22,6 @@ namespace Dotnet.Models.Account
 
         public bool IsValid { get; set; } = false;
 
-		public ulong UserId { get; set; } = 0;
+		public long UserId { get; set; } = 0;
     }
 }

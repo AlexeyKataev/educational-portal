@@ -42,7 +42,7 @@ namespace Dotnet.Controllers.WebApp
             return View(viewModel);
         }
 
-		private void EditableFacultyToView(ulong facultyId)
+		private void EditableFacultyToView(long facultyId)
 		{
 			Faculty faculty = _context.Faculties.FirstOrDefault(f => f.Id == facultyId);
 
@@ -56,7 +56,7 @@ namespace Dotnet.Controllers.WebApp
 		}
 
 		[HttpGet]
-		public IActionResult EditFaculty(ulong facultyId)
+		public IActionResult EditFaculty(long facultyId)
 		{
 			EditableFacultyToView(facultyId);
 			return View();

@@ -35,8 +35,7 @@ namespace Dotnet.Models
 		public DbSet<UserMessage> UserMessages { get; set; }
 		public DbSet<UserMessageChatRoom> UserMessageChatRoom { get; set; }
 
-        public ApplicationContext(DbContextOptions<ApplicationContext> options)
-            : base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
             Database.EnsureCreated();
         }
@@ -52,34 +51,34 @@ namespace Dotnet.Models
 
 
             string adminRoleName = "admin";						
-            Role adminRole = new Role { Id = 1, Name = adminRoleName, UserRole = EnumRoles.Admin };
+            Role adminRole = new Role { Id = 1, Name = adminRoleName };
 
             string systemAdminRoleName = "systemAdmin";			
-            Role systemAdminRole = new Role { Id = 2, Name = systemAdminRoleName, UserRole = EnumRoles.SystemAdmin };
+            Role systemAdminRole = new Role { Id = 2, Name = systemAdminRoleName };
 
             string humanResourcesRoleName = "humanResources";	
-            Role humanResourcesRole = new Role { Id = 3, Name = humanResourcesRoleName, UserRole = EnumRoles.HumanResources };
+            Role humanResourcesRole = new Role { Id = 3, Name = humanResourcesRoleName};
 
             string trainingDivisionRoleName = "trainingDivision";
-            Role trainingDivisionRole = new Role { Id = 4, Name = trainingDivisionRoleName, UserRole = EnumRoles.TrainingDivision };
+            Role trainingDivisionRole = new Role { Id = 4, Name = trainingDivisionRoleName };
 
             string authorArticlesRoleName = "authorArticles";	
-            Role authorArticlesRole = new Role { Id = 5, Name = authorArticlesRoleName, UserRole = EnumRoles.AuthorArticles };
+            Role authorArticlesRole = new Role { Id = 5, Name = authorArticlesRoleName };
 
             string teacherRoleName = "teacher";					
-			Role teacherRole = new Role { Id = 6, Name = teacherRoleName, UserRole = EnumRoles.Teacher };
+			Role teacherRole = new Role { Id = 6, Name = teacherRoleName };
 
             string enrolleRoleName = "enrolle";					
-            Role enrolleRole = new Role { Id = 7, Name = enrolleRoleName, UserRole = EnumRoles.Enrolle };
+            Role enrolleRole = new Role { Id = 7, Name = enrolleRoleName };
 
             string graduateRoleName = "graduate";			
-            Role graduateRole = new Role { Id = 8, Name = graduateRoleName, UserRole = EnumRoles.Graduate };
+            Role graduateRole = new Role { Id = 8, Name = graduateRoleName };
 
             string studentRoleName = "student";				
-            Role studentRole = new Role { Id = 9, Name = studentRoleName, UserRole = EnumRoles.Student };
+            Role studentRole = new Role { Id = 9, Name = studentRoleName };
 
             string userRoleName = "user";					
-            Role userRole = new Role { Id = 10, Name = userRoleName, UserRole = EnumRoles.User };
+            Role userRole = new Role { Id = 10, Name = userRoleName };
 
             User adminUser = new User { 
 				Id 			= 1, 
@@ -89,7 +88,7 @@ namespace Dotnet.Models
 				DateAdded	= new System.DateTime(0001, 01, 01, 01, 01, 01),
 				Email 		= adminEmail,
 				Password 	= adminPassword, 
-				UserRole 	= EnumRoles.Admin, 
+				RoleId 		= adminRole.Id,
 			};
  
             modelBuilder.Entity<Role>().HasData(new Role[] { 
@@ -102,7 +101,7 @@ namespace Dotnet.Models
 				enrolleRole,
 				graduateRole,
 				studentRole,
-				userRole 
+				userRole,
 			});
             modelBuilder.Entity<User>().HasData(new User[] { adminUser });
             base.OnModelCreating(modelBuilder);

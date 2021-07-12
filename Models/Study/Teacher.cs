@@ -5,8 +5,8 @@ namespace Dotnet.Models
 {
 	public class Teacher
 	{
-		public ulong Id { get; set; }
-		public ulong UserId { get; set; }	
+		public long Id { get; set; }
+		public long UserId { get; set; }	
 		private string specialization;
 		public string Specialization 
 		{  

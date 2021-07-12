@@ -5,7 +5,7 @@ namespace Dotnet.ViewModels.WebApp.Specialty
 	public class EditSpecialtyViewModel
 	{
 		[Required]
-		public ulong Id { get; set; }
+		public long Id { get; set; }
 
 		[Required(ErrorMessage = "Укажите название специальности.")]
 		public string Name { get; set; }
@@ -16,6 +16,6 @@ namespace Dotnet.ViewModels.WebApp.Specialty
 
 
 		[Required(ErrorMessage = "Укажите факультет.")]
-		public ulong FacultyId { get; set; }
+		public long FacultyId { get; set; }
 	}
 }

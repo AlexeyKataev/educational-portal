@@ -33,7 +33,7 @@ namespace Dotnet.Controllers.WebApp
 
         public IActionResult AddTeacher()
         {
-			List<User> users = _context.Users.Where(u => u.UserRole == EnumRoles.Teacher).ToList();
+			List<User> users = _context.Users.Where(u => u.RoleId == 6).ToList();
 
 			foreach (var user in users.ToList())
 			{
@@ -65,11 +65,11 @@ namespace Dotnet.Controllers.WebApp
         }
 
 		[HttpGet]
-		public IActionResult EditTeacher(ulong userId, ulong teacherId)
+		public IActionResult EditTeacher(long userId, long teacherId)
 		{
 			Teacher teacher = _context.Teachers.FirstOrDefault(u => (u.Id == teacherId));
 
-			List<User> users = _context.Users.Where(u => u.UserRole == EnumRoles.Teacher).ToList();
+			List<User> users = _context.Users.Where(u => u.RoleId == 6).ToList();
 
 			foreach (var user in users.ToList())
 			{
@@ -190,7 +190,7 @@ namespace Dotnet.Controllers.WebApp
 				User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == viewModel.UserId);
                 Teacher teacher = await _context.Teachers.FirstOrDefaultAsync(t => t.UserId == viewModel.UserId);
 
-                if (user.UserRole == EnumRoles.Teacher && teacher == null)
+                if (user.RoleId == 6 && teacher == null)
                 {
                     teacher = new Teacher { 
 						UserId			= viewModel.UserId,

@@ -5,10 +5,10 @@ namespace Dotnet.ViewModels.WebApp.StudyGroup
     public class EditStudySubgroupViewModel
     {
 		[Required]
-		public ulong Id { get; set; }
+		public long Id { get; set; }
 
 		[Required(ErrorMessage = "Укажите ID учебной группы")]
-		public ulong StudyGroupId { get; set; }
+		public long StudyGroupId { get; set; }
 
 		[Required(ErrorMessage = "Укажите название учебной подгруппы")]
 		public string Name { get; set; }

@@ -5,6 +5,6 @@ namespace Dotnet.ViewModels.WebApp.TypeWork
     public class DeleteTypeWorkViewModel
     {
 		[Required]
-		public ulong Id { get; set; }
+		public long Id { get; set; }
     }
 }

@@ -5,10 +5,10 @@ namespace Dotnet.ViewModels.WebApp.Teacher
 	public class EditTeacherViewModel
 	{
        	[Required]
-        public ulong Id { get; set; }
+        public long Id { get; set; }
 
         [Required(ErrorMessage = "Введите идентификатор пользователя")]
-        public ulong UserId { get; set; }
+        public long UserId { get; set; }
 
         public string Post { get; set; }
 

@@ -4,7 +4,7 @@ namespace Dotnet.ViewModels.API.Education
 {
 	public class WorkViewModel
 	{
-		public ulong Id { get; set; } = 0;
+		public long Id { get; set; } = 0;
 
 		public string Description { get; set; } = "Нет описания";
 

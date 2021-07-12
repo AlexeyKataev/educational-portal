@@ -14,6 +14,6 @@ namespace Dotnet.ViewModels.WebApp.Faculty
 
 
 		[Required(ErrorMessage = "Укажите учебное заведение")]
-		public ulong InstitutionId { get; set; }
+		public long InstitutionId { get; set; }
 	}
 }

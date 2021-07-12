@@ -5,7 +5,7 @@ namespace Dotnet.ViewModels.API.App
 {
 	public class UserViewModel
     {
-		public ulong Id { get; set; } = 0;
+		public long Id { get; set; } = 0;
 
         public string Login { get; set; } = "";
 

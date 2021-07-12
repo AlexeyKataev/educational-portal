@@ -5,13 +5,13 @@ namespace Dotnet.ViewModels.WebApp.Student
 	public class StudentViewModel
 	{
 		[Required(ErrorMessage = "Укажите пользователя.")]
-		public ulong UserId { get; set;}	
+		public long UserId { get; set;}	
 		
 		[Required(ErrorMessage = "Укажите статус.")]
 		public bool IsLearns { get; set; }
 
 		[Required(ErrorMessage = "Укажите учебную подгруппу.")]
-		public ulong StudySubgroupId { get; set; }
+		public long StudySubgroupId { get; set; }
 
 		public bool IsOnline { get; set; } = false;
 	}

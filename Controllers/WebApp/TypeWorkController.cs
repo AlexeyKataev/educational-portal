@@ -41,13 +41,13 @@ namespace Dotnet.Controllers.WebApp
 
         public IActionResult AddTypeWorks() => View();
 
-		private void EditableTypeWorks(ulong typeWorkId)
+		private void EditableTypeWorks(long typeWorkId)
 		{
 			ViewBag.EditRow = _context.TypesWorks.FirstOrDefault(t => t.Id == typeWorkId);;
 		}
 
 		[HttpGet]
-		public IActionResult EditTypeWorks(ulong typeWorkId)
+		public IActionResult EditTypeWorks(long typeWorkId)
 		{
 			EditableTypeWorks(typeWorkId);
 			return View();

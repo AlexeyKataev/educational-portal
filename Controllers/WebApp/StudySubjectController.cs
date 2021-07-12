@@ -40,13 +40,13 @@ namespace Dotnet.Controllers.WebApp
 
 		public IActionResult AddStudySubject() => View();
 
-		private void EditableStudySubject(ulong studySubjectId)
+		private void EditableStudySubject(long studySubjectId)
 		{
 			ViewBag.EditRow = _context.Subjects.FirstOrDefault(s => s.Id == studySubjectId);
 		}
 
 		[HttpGet]
-		public IActionResult EditStudySubject(ulong studySubjectId)
+		public IActionResult EditStudySubject(long studySubjectId)
 		{
 			EditableStudySubject(studySubjectId);
 			return View();

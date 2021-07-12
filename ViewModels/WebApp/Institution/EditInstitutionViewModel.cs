@@ -6,7 +6,7 @@ namespace Dotnet.ViewModels.WebApp.Institution
 	public class EditInstitutionViewModel
 	{
 		[Required]
-		public ulong Id { get; set; }
+		public long Id { get; set; }
 
 		[Required(ErrorMessage = "Укажите название учебного заведения.")]
 		public string Name { get; set; }

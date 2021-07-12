@@ -34,7 +34,7 @@ namespace Dotnet.Controllers.WebApp
 
 			foreach (Role role in roles.ToList())
 			{
-				List<User> tmpUsers = _context.Users.Where(u => u.UserRole == (role.UserRole)).ToList();
+				List<User> tmpUsers = _context.Users.Where(u => u.RoleId == role.Id).ToList();
 
 				if (tmpUsers.Count != 0) users.Add(tmpUsers);
 				else roles.RemoveAt(roles.IndexOf(role));
@@ -48,23 +48,10 @@ namespace Dotnet.Controllers.WebApp
 
 		[HttpGet]
 		[Authorize(Roles="admin")]
-		public IActionResult EditUser(ulong userId)
+		public IActionResult EditUser(long userId)
 		{
-			User user = _context.Users.FirstOrDefault(u => u.Id == userId);
-			
-			List<Role> roles = _context.Roles.ToList();
-
-			ViewData["id"]			= user.Id;
-			ViewData["RoleId"]		= user.UserRole;
-			ViewData["FirstName"] 	= user.FirstName;
-			ViewData["SecondName"] 	= user.SecondName;
-			ViewData["MiddleName"] 	= user.MiddleName;
-			ViewData["Email"] 		= user.Email;
-
-			if (user.DateOfBirth == new DateTime(0001, 1, 1, 1, 1, 1)) ViewData["DateOfBirth"] = new DateTime(2001, 1, 1, 0, 0, 0).ToString("yyyy-MM-dd");
-			else ViewData["DateOfBirth"] = user.DateOfBirth.ToString("yyyy-MM-dd");
-
-			ViewBag.roles = roles;
+			ViewBag.user = _context.Users.FirstOrDefault(u => u.Id == userId);;
+			ViewBag.roles = _context.Roles.ToList();
 
 			return View();
 		}
@@ -84,7 +71,7 @@ namespace Dotnet.Controllers.WebApp
 				if (userEmailCheck != null && userEdit.Email != email) email = null;
 
 				User meCheck = await _context.Users.FirstOrDefaultAsync(u => (u.Login == User.Identity.Name));
-				ulong someoneId = viewModel.Id;
+				long someoneId = viewModel.Id;
 
 				if (meCheck.Id != someoneId)
 				{ 
@@ -93,7 +80,7 @@ namespace Dotnet.Controllers.WebApp
 					userEdit.MiddleName		= viewModel.MiddleName;
 					userEdit.DateOfBirth	= Convert.ToDateTime(viewModel.DateOfBirth);
 					userEdit.Email 			= email;
-					userEdit.UserRole		= viewModel.UserRole;
+					userEdit.RoleId			= viewModel.RoleId;
 
 					await _context.SaveChangesAsync();
 				}
