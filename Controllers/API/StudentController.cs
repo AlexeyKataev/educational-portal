@@ -47,7 +47,6 @@ namespace Dotnet.Controllers.API
 
 				return new StudentViewModel {
 					Id 			= student.Id,
-					UserId		= student.UserId,
 					IsLearns	= student.IsLearns,
 					IsOnline	= student.IsOnline,
 					StudySubgroup = new StudySubgroupViewModel {
@@ -69,7 +68,6 @@ namespace Dotnet.Controllers.API
 					},
 				};
 			}
-
 
 			return BadRequest();
 		}

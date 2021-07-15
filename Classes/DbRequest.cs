@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Dotnet.Models;
-using Dotnet.ViewModels.API;
+using Dotnet.Models.Account;
 
 namespace Dotnet.Classes
 {
