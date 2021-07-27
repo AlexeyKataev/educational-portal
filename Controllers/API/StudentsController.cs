@@ -72,6 +72,11 @@ namespace Dotnet.Controllers.API
 						Models.StudyGroup studyGroup = await _context.StudyGroups.FirstOrDefaultAsync(x => x.Id == studySubgroup.StudyGroupId);
 						Models.Specialty specialty = await _context.Specialties.FirstOrDefaultAsync(x => x.Id == studyGroup.SpecialtyId);
 
+						if (user.Id == userCheck.Id)
+						{
+							continue;
+						}
+
 						students.Add(
 							new StudentViewModel {
 							Id 				= item.Id,
