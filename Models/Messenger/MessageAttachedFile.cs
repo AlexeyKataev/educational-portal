@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Dotnet.Models.Messenger.Chat;
 
 namespace Dotnet.Models.Messenger
 {

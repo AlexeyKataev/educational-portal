@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Dotnet.Models.Account;
-using Dotnet.Models.Messenger;
+using Dotnet.Models.Messenger.Chat;
 
 namespace Dotnet.Models
 {

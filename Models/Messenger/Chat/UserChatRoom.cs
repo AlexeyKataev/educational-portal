@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Dotnet.Models.Messenger
+namespace Dotnet.Models.Messenger.Chat
 {
 	public class UserChatRoom
 	{

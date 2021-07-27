@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Dotnet.Models.Study;
 using Dotnet.Models.Account;
 using Dotnet.Models.Messenger;
-using Dotnet.Enums.WebApp;
+using Dotnet.Models.Messenger.Chat;
  
 namespace Dotnet.Models
 {
