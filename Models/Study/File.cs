@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Dotnet.Models.Messenger.Chat;
 
 namespace Dotnet.Models
 {
@@ -14,5 +15,6 @@ namespace Dotnet.Models
 		public List<FileWork> FileWork { get; set; } = new List<FileWork>();
 		public long UserId { get; set; }
 		public User User { get; set; }
+		public List<ChatRoom> ChatRoom { get; set; } = new List<ChatRoom>();
 	}
 }

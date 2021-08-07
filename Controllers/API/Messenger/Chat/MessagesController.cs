@@ -83,6 +83,7 @@ namespace Dotnet.Controllers.API.Messenger.Chat
 										Id 			= chatRoomCheck.Id,
 									},
 									Message		= item.Messsage,
+									ThisIsMe	= item.UserId == userCheck.Id ? true : false,
 								});
 							}
 						}						

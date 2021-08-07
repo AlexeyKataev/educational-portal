@@ -13,5 +13,6 @@ namespace Dotnet.ViewModels.API.Messenger.Chat
         public DateTime EditingTime { get; set; } = new DateTime(01, 01, 01, 01, 01, 01);
         public DateTime IsArchival { get; set; } = new DateTime(01, 01, 01, 01, 01, 01);
         public bool WhetherDelivered { get; set; } = true;
+		public bool ThisIsMe { get; set; } = false;
     }
 }

@@ -31,7 +31,7 @@
 					{
 						@foreach (var user in ViewBag.allUsers)
 						{
-							@if (user.Id == (int)ViewData["UserId"])
+							@if (user.Id == (long)ViewData["UserId"])
 							{
 								<option value=@user.Id selected>@user.Login - @user.FirstName @user.SecondName - @user.Email</option>
 							}	

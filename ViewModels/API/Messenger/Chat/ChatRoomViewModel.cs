@@ -14,5 +14,6 @@ namespace Dotnet.ViewModels.API.Messenger.Chat
 		public bool CanInviteParticipants { get; set; } = true;
         public bool CanParticipantsWriteMessages { get; set; } = true;
         public bool CanThereBeVideoCalls { get; set; } = true;
+		public bool PersonalChat { get; set; } = true;
 	}
 }

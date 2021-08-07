@@ -63,7 +63,7 @@ namespace Dotnet.Controllers.API.Messenger.Chat
 					List<Dotnet.Models.Messenger.Chat.UserChatRoom> companionUserChatRoomCheck = await _context.UserChatRoom.Where(x => x.UserId == companion.Id).ToListAsync();
 					
 					
-					//получение сводных записей с отправителем
+					// Получение сводных записей с отправителем
 					List<Dotnet.Models.Messenger.Chat.UserChatRoom> senderUserChatRoomCheck = await _context.UserChatRoom.Where(x => x.UserId == userCheck.Id).ToListAsync();
 
 

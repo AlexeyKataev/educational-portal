@@ -87,6 +87,44 @@ namespace Dotnet.Controllers.API.Messenger.Chat
 						await _context.UserMessageChatRoom.AddAsync(newUserMessageChatRoom);
 						await _context.SaveChangesAsync();
 					}
+					else if (chatRoomCheck != null && userMessage.ChatRoom.Members.Count == 0)
+					{
+						// Проверить, существует ли собеседник
+						Dotnet.Models.User companionCheck = await _context.Users.FirstOrDefaultAsync(x => x.Id == userMessage.ChatRoom.Members[0].Id);
+
+						// Если собеседника не существует
+						if (companionCheck == null)
+						{
+							return BadRequest();
+						}
+
+						// Проверить, входят ли соеседники в общий чат
+						Dotnet.Models.Messenger.Chat.UserChatRoom senderInChatCheck = await _context.UserChatRoom.FirstOrDefaultAsync(x => x.UserId == userCheck.Id && x.ChatRoomId == chatRoomCheck.Id);
+						Dotnet.Models.Messenger.Chat.UserChatRoom companionInChatCheck = await _context.UserChatRoom.FirstOrDefaultAsync(x => x.UserId == companionCheck.Id && x.ChatRoomId == chatRoomCheck.Id);
+
+						if (senderInChatCheck != null && companionInChatCheck != null)
+						{
+							Dotnet.Models.Messenger.Chat.UserMessage newUserMessage = new Models.Messenger.Chat.UserMessage {
+								Messsage 	= userMessage.Message,
+								UserId		= userCheck.Id,
+							};
+
+							await _context.UserMessages.AddAsync(newUserMessage);
+
+							Dotnet.Models.Messenger.Chat.UserMessageChatRoom newUserMessageChatRoom = new Models.Messenger.Chat.UserMessageChatRoom {
+								UserMessageId	= newUserMessage.Id,
+								ChatRoomId		= chatRoomCheck.Id,
+							};
+
+							await _context.UserMessageChatRoom.AddAsync(newUserMessageChatRoom);
+
+							await _context.SaveChangesAsync();
+						}
+						else 
+						{
+							return BadRequest();
+						}
+					}
 					else 
 					{
 						return BadRequest();
